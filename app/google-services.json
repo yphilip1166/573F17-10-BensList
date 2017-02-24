@@ -1,64 +1,27 @@
 {
   "project_info": {
-    "project_number": "884022588466",
-    "project_id": "firebase-benslist"
+    "project_number": "411733005514",
+    "firebase_url": "https://s17-37-benslist.firebaseio.com",
+    "project_id": "s17-37-benslist",
+    "storage_bucket": "s17-37-benslist.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:884022588466:android:27d689d63f1b7a06",
-        "android_client_info": {
-          "package_name": "com.google.samples.quickstart.signin"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "884022588466-tloa8hqdss189fpj68194ogsa324muq8.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDKVSsTmJ7Nf-bne7mVXAcBma6ck40cDKQ"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 1
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:884022588466:android:c0a056d3df080ca9",
+        "mobilesdk_app_id": "1:411733005514:android:c0a056d3df080ca9",
         "android_client_info": {
           "package_name": "edu.upenn.benslist"
         }
       },
       "oauth_client": [
         {
-          "client_id": "884022588466-3oashaluu0abvcbcd4jf612vr14n6vr0.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "edu.upenn.benslist",
-            "certificate_hash": "66143188b3ce30f377aa8af617622e77b8e693ff"
-          }
-        },
-        {
-          "client_id": "884022588466-tloa8hqdss189fpj68194ogsa324muq8.apps.googleusercontent.com",
+          "client_id": "411733005514-p0g663bhqhs2b7ou4rhbr0heu7sdrflr.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDKVSsTmJ7Nf-bne7mVXAcBma6ck40cDKQ"
+          "current_key": "AIzaSyCHDCQ85Hwfu6Lv59Yt7Xc6-syPf0Rk8W4"
         }
       ],
       "services": {
@@ -66,11 +29,16 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "411733005514-p0g663bhqhs2b7ou4rhbr0heu7sdrflr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }
