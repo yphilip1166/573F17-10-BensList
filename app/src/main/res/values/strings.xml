@@ -39,4 +39,25 @@
         determined at our sole discretion.</string>
     <string name="terms_contact_header">Contact Us</string>
     <string name="terms_contact">If you have any questions about these Terms, please contact us.</string>
+
+    <string-array name="product_categories_search_array">
+        <item>Furniture</item>
+        <item>Electronics</item>
+        <item>Books</item>
+        <item>Kitchen Supplies</item>
+        <item>Clothes</item>
+        <item>Services</item>
+        <item>All Categories</item>
+    </string-array>
+
+    <string-array name="product_categories_array">
+        <item>Furniture</item>
+        <item>Electronics</item>
+        <item>Books</item>
+        <item>Kitchen Supplies</item>
+        <item>Clothes</item>
+        <item>Services</item>
+        <item>Other</item>
+    </string-array>
+
 </resources>
