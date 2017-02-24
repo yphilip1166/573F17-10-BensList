@@ -24,6 +24,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".AboutActivity" />
+        <activity android:name=".TermsActivity"></activity>
+        <activity android:name=".SearchPageActivity"/>
+        <activity android:name=".FilterSearchResultsActivity"/>
+        <activity android:name=".SearchResultsActivity"/>
+        <activity android:name=".HomePageActivity"/>
+        <activity android:name=".UploadProductActivity"/>
+
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
 </manifest>
