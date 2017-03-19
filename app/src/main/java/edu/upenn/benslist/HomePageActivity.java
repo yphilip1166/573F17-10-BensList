@@ -3,7 +3,6 @@ package edu.upenn.benslist;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,8 +17,7 @@ import android.widget.Toast;
 
 public class HomePageActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final int RESULT_GO_TO_SEARCH_PAGE_FROM_HOME = 6;
-    private static final int RESULT_GO_TO_UPLOAD_PAGE_FROM_HOME = 7;
+    private static final int RESULT_UPLOAD_PRODUCT = 2;
 
 
     @Override
@@ -32,8 +30,6 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
         uploadProductButton.setOnClickListener(this);
         searchProductsButton.setOnClickListener(this);
-        Log.d("debugging", "creating home activity");
-
     }
 
     @Override
@@ -41,17 +37,20 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         switch (v.getId()) {
             case (R.id.beginUploadingProductButton) :
                 Intent i = new Intent(this, UploadProductActivity.class);
-                //startActivityForResult(i, RESULT_GO_TO_UPLOAD_PAGE_FROM_HOME);
-                startActivity(i);
+                startActivityForResult(i, RESULT_UPLOAD_PRODUCT);
                 break;
             case (R.id.beginSearchingProductsButton) :
                 Intent intent = new Intent(this, SearchPageActivity.class);
-                //startActivityForResult(intent, RESULT_GO_TO_SEARCH_PAGE_FROM_HOME);
                 startActivity(intent);
                 break;
             default :
                 break;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
 

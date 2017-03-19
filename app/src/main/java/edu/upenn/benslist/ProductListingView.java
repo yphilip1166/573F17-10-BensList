@@ -1,7 +1,6 @@
 package edu.upenn.benslist;
 
 import android.content.Context;
-import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.Button;
@@ -15,16 +14,20 @@ import android.widget.TextView;
 
 public class ProductListingView extends LinearLayout {
 
+    private Product product;
+    /*
     private ImageView image;
     private Button checkOutThisListingButton;
     private TextView productName, productDescription, productPrice, productLocation,
             uploaderPhoneNumber, uploaderName;
+            */
 
     public ProductListingView(Context context, AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater inflater = LayoutInflater.from(context);
         inflater.inflate(R.layout.product_listing_layout, this);
 
+        /*
         image = (ImageView) findViewById(R.id.productListingImage);
         checkOutThisListingButton = (Button) findViewById(R.id.productListingCheckOutListingButton);
         productName = (TextView) findViewById(R.id.productListingProductName);
@@ -33,8 +36,43 @@ public class ProductListingView extends LinearLayout {
         productLocation = (TextView) findViewById(R.id.productListingProductLocation);
         uploaderPhoneNumber = (TextView) findViewById(R.id.productListingUploaderPhoneNumber);
         uploaderName = (TextView) findViewById(R.id.productListingUploaderName);
+        */
     }
 
+    public ProductListingView(Context context, Product product) {
+        super(context);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        inflater.inflate(R.layout.product_listing_layout, this);
+        this.product = product;
+
+        ImageView image = (ImageView) findViewById(R.id.productListingImage);
+        image.setImageURI(product.getUri());
+
+        TextView productName = (TextView) findViewById(R.id.productListingProductName);
+        productName.setText(product.getName());
+
+        TextView productDescription = (TextView) findViewById(R.id.productListingProductDescription);
+        productDescription.setText(product.getDescription());
+
+        TextView productPrice = (TextView) findViewById(R.id.productListingProductPrice);
+        productPrice.setText(product.getPrice());
+
+        TextView productLocation = (TextView) findViewById(R.id.productListingProductLocation);
+        productLocation.setText(product.getLocation());
+
+
+        TextView uploaderPhoneNumber = (TextView) findViewById(R.id.productListingUploaderPhoneNumber);
+        uploaderPhoneNumber.setText(product.getPhoneNumber());
+
+        TextView uploaderName = (TextView) findViewById(R.id.productListingUploaderName);
+        uploaderName.setText(product.getUploaderName());
+    }
+
+    protected Button getCheckOutThisListingButton() {
+        return (Button) findViewById(R.id.productListingCheckOutListingButton);
+    }
+
+    /*
     protected void setImageUri(Uri imagesUri) {
         image.setImageURI(imagesUri);
     }
@@ -62,5 +100,10 @@ public class ProductListingView extends LinearLayout {
     protected void setUploaderName(String name) {
         uploaderName.setText(name);
     }
+
+    protected Button getCheckOutButton() {
+        return checkOutThisListingButton;
+    }
+    */
 
 }
