@@ -32,6 +32,8 @@ public class UserProfileActivity extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.favoriteUsersList);
         listView.setAdapter(itemsAdapter);
 
+        //FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
         /*
 
         Clicking on one of the user's of a person's favorite users doesn't do anything right now,
