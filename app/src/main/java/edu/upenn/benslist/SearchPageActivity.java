@@ -21,7 +21,6 @@ import android.widget.Toast;
 public class SearchPageActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,
         View.OnClickListener {
 
-    private static final int RESULT_GO_TO_SEARCH_RESULTS = 3;
     private String searchCategory;
 
 
@@ -61,7 +60,7 @@ public class SearchPageActivity extends AppCompatActivity implements AdapterView
             case (R.id.searchButton) :
                 Intent i = new Intent(this, SearchResultsActivity.class);
                 i.putExtra("Search Category", searchCategory);
-                //startActivityForResult(i, RESULT_GO_TO_SEARCH_RESULTS);
+                i.putExtra("Search Query", searchQuery);
                 startActivity(i);
                 break;
             default :

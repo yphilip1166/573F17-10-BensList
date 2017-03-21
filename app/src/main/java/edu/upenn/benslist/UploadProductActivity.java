@@ -1,11 +1,11 @@
 package edu.upenn.benslist;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -21,14 +20,9 @@ import android.widget.Toast;
 public class UploadProductActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,
 View.OnClickListener {
 
-
     private static final int RESULT_LOAD_IMAGE = 1;
-    private static final int RESULT_GO_TO_HOME_PAGE = 2;
 
     private ImageView imageToUpload;
-    private Button uploadImageButton;
-    private Button doneButton;
-    private EditText nameText, descriptionText, priceText, locationText, phoneNumberText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,17 +30,11 @@ View.OnClickListener {
         setContentView(R.layout.activity_upload_product);
 
         imageToUpload = (ImageView) findViewById(R.id.imageToUpload);
-        uploadImageButton = (Button) findViewById(R.id.uploadPictureButton);
-        nameText = (EditText) findViewById(R.id.editProductName);
-        descriptionText = (EditText) findViewById(R.id.editProductDescription);
-        priceText = (EditText) findViewById(R.id.editPrice);
-        locationText = (EditText) findViewById(R.id.editLocation);
-        phoneNumberText = (EditText) findViewById(R.id.editPhoneNumber);
-        doneButton = (Button) findViewById(R.id.doneButton);
+        Button uploadImageButton = (Button) findViewById(R.id.uploadPictureButton);
+        Button doneButton = (Button) findViewById(R.id.doneButton);
 
         uploadImageButton.setOnClickListener(this);
         doneButton.setOnClickListener(this);
-
 
 
         Spinner spinner = (Spinner) findViewById(R.id.productCategorySpinner);
@@ -75,10 +63,10 @@ View.OnClickListener {
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
                 break;
             case (R.id.doneButton) :
-                Log.d("debugging", "clicking done button");
-                Intent i = new Intent(this, HomePageActivity.class);
-                //startActivityForResult(i, RESULT_GO_TO_HOME_PAGE);
-                startActivity(i);
+                //TODO - ADD THE NEW PRODUCT TO THE DATABASE
+                Intent returnIntent = new Intent(this, HomePageActivity.class);
+                setResult(Activity.RESULT_OK, returnIntent);
+                finish();
                 break;
             default :
                 break;
