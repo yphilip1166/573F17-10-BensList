@@ -1,5 +1,7 @@
 package edu.upenn.benslist;
 
+import android.util.Log;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -8,9 +10,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -18,11 +20,11 @@ import java.util.Set;
  * Created by johnquinn on 3/13/17.
  */
 
-public class User implements Serializable {
+public class User {
 
     private String name;
     private int age;
-    private Set<User> favoriteUsersIveBoughtFrom;
+    private List<String> favoriteUsersIveBoughtFrom;
     private int sumRatings;
     private int numRatings;
     private double rating;
@@ -33,13 +35,13 @@ public class User implements Serializable {
         this.sumRatings = 0;
         this.numRatings = 0;
         this.rating = 0.0;
-        favoriteUsersIveBoughtFrom = new HashSet<>();
+        favoriteUsersIveBoughtFrom = new LinkedList<>();
     }
 
     public User(String name, int age) {
         this.name = name;
         this.age = age;
-        this.favoriteUsersIveBoughtFrom = new HashSet<>();
+        this.favoriteUsersIveBoughtFrom = new LinkedList<>();
         this.sumRatings = 0;
         this.numRatings = 0;
         this.rating = 0.0;
@@ -63,22 +65,22 @@ public class User implements Serializable {
 
     protected List<String> getFavoriteUsersNames() {
         List<String> favorites = new ArrayList<String>();
-        for (User user : favoriteUsersIveBoughtFrom) {
-            favorites.add(user.getName());
+        for (String userID : favoriteUsersIveBoughtFrom) {
+            favorites.add(User.getUserFromDatabase(userID).getName());
         }
         return favorites;
     }
 
-    protected void addFavoriteUserLocally(User user) {
-        favoriteUsersIveBoughtFrom.add(user);
+    protected void addFavoriteUserLocally(String userID) {
+        favoriteUsersIveBoughtFrom.add(userID);
     }
 
-    protected static void addFavoriteUserToDatabase(User user) {
+    protected static void addFavoriteUserToDatabase(String userID) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
         String currentUserID = fbUser.getUid();
         User currentUser = User.getUserFromDatabase(currentUserID);
-        currentUser.addFavoriteUserLocally(user);
+        currentUser.addFavoriteUserLocally(userID);
         mDatabase.child("users").child(currentUserID).setValue(currentUser);
     }
 
@@ -102,18 +104,22 @@ public class User implements Serializable {
         return rating;
     }
 
-    protected static User getUserFromDatabase(String userID) {
-        final String uID = userID;
+    protected static User getUserFromDatabase(String userName) {
+        final String uName = userName;
         final Set<User> users = new HashSet<User>();
 
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("users");
+        Log.d("debugging", "in get user from database");
         mDatabase.addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot user: snapshot.getChildren()) {
-                    if (user.getKey().equals(uID)){
-                        users.add(user.getValue((User.class)));
+                    Log.d("debugging", "user's key is " + user.getKey());
+                    User thisUser = user.getValue(User.class);
+                    if (thisUser.getName().equals(uName)) {
+                        users.add(thisUser);
+                        break;
                     }
                 }
             }

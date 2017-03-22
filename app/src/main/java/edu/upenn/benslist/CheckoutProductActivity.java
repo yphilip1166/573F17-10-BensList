@@ -21,7 +21,8 @@ public class CheckoutProductActivity extends AppCompatActivity implements View.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.purchase_product);
-        this.product = (Product) getIntent().getSerializableExtra("Product");
+        String productID = (String) getIntent().getStringExtra("ProductID");
+        this.product = Product.getProductFromDatabase(productID);
 
         Button purchaseProductButton = (Button) findViewById(R.id.detailedListingConfirmPurchase);
         purchaseProductButton.setOnClickListener(this);
@@ -33,7 +34,9 @@ public class CheckoutProductActivity extends AppCompatActivity implements View.O
                 (Button) findViewById(R.id.detailedListingCheckUploadersPage);
         checkOutUploadersProfileButton.setOnClickListener(this);
 
-        checkOutUploadersProfileButton.setText("Check Out " + product.getUploaderName() + "'s Profile");
+        String uploaderName = product.getUploaderName();
+        //checkOutUploadersProfileButton.setText("Check Out " + uploaderName + "'s Profile");
+        checkOutUploadersProfileButton.setText("Check Out " + product.getUploaderID() + "'s Profile");
 
         addCommentsSection();
     }
@@ -50,14 +53,13 @@ public class CheckoutProductActivity extends AppCompatActivity implements View.O
     }
 
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case (R.id.detailedListingConfirmPurchase) :
                 //TODO - notify the uploader that someone bought their product - next iteration??
                 Intent i = new Intent(this, ProductPurchaseConfirmationActivity.class);
-                i.putExtra("User", product.getUploader());
+                i.putExtra("UploaderID", product.getUploaderID());
                 startActivity(i);
                 break;
 
@@ -66,14 +68,14 @@ public class CheckoutProductActivity extends AppCompatActivity implements View.O
                 String review = editText.getText().toString();
                 product.addReview(review);
                 Intent intent = getIntent();
-                intent.putExtra("Product", product);
+                intent.putExtra("ProductID", product.getProductID());
                 finish();
                 startActivity(intent);
                 break;
 
             case (R.id.detailedListingCheckUploadersPage) :
                 Intent newIntent = new Intent(this, UserProfileActivity.class);
-                newIntent.putExtra("User", product.getUploader());
+                newIntent.putExtra("UserID", product.getUploaderID());
                 startActivity(newIntent);
                 break;
 

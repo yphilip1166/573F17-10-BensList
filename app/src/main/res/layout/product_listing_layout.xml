@@ -9,12 +9,6 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <ImageView
-        android:id="@+id/productListingImage"
-        android:layout_gravity="center"
-        android:layout_width="200dp"
-        android:layout_height="200dp" />
-
     <TextView
         android:id="@+id/productListingProductDescription"
         android:layout_width="match_parent"

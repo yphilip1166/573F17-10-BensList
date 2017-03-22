@@ -49,7 +49,6 @@ public class SearchPageActivity extends AppCompatActivity implements AdapterView
 
     }
 
-
     @Override
     public void onClick(View v) {
         SearchView searchView = (SearchView) findViewById(R.id.editSearch);

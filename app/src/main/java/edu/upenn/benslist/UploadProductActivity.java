@@ -17,17 +17,24 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class UploadProductActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,
 View.OnClickListener {
 
     private static final int RESULT_LOAD_IMAGE = 1;
     private ImageView imageToUpload;
     private String itemCategory;
+    private String currentUserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_product);
+        this.currentUserName = (String) getIntent().getStringExtra("Logged In User Name");
 
         imageToUpload = (ImageView) findViewById(R.id.imageToUpload);
         Button uploadImageButton = (Button) findViewById(R.id.uploadPictureButton);
@@ -77,10 +84,17 @@ View.OnClickListener {
                 EditText productLocation = (EditText) findViewById(R.id.editLocation);
                 EditText productPhoneNumber = (EditText) findViewById(R.id.editPhoneNumber);
 
-                Product.writeNewProductToDatabase(imageToUpload, productName.getText().toString(),
+                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+                FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
+                String currentUserID = fbUser.getUid();
+
+                //System.out.println(mDatabase.child("users").child(currentUserID).child("name").getKey());
+                //String uploaderName = User.getUserFromDatabase(currentUserID).getName();
+
+                Product.writeNewProductToDatabase(productName.getText().toString(),
                         productDescription.getText().toString(), productPrice.getText().toString(),
                         productLocation.getText().toString(), productPhoneNumber.getText().toString(),
-                        itemCategory);
+                        itemCategory, currentUserName);
 
                 setResult(RESULT_OK, returnIntent);
                 finish();

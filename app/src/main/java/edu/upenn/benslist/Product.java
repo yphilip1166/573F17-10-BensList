@@ -1,7 +1,5 @@
 package edu.upenn.benslist;
 
-import android.widget.ImageView;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -10,7 +8,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,106 +17,150 @@ import java.util.Set;
  * Created by johnquinn on 3/13/17.
  */
 
-public class Product implements Serializable {
+public class Product {
 
-    private ImageView image;
-    private String name, description, price, location, phoneNumber, category;
-    private User uploader;
-    private Set<String> reviews;
-    private static int numProducts = 0;
+    public String name, description, price, location, phoneNumber, category;
+    public String uploaderID;
+    public String uploaderName;
+    public List<String> reviews;
+    public String productID;
+    public static int numProducts = 0;
 
     public Product() {
-        this.image = null;
         this.name = "";
         this.description = "";
         this.price = "";
         this.location = "";
         this.phoneNumber = "";
         this.category = "";
-        this.uploader = null;
-        this.reviews = new HashSet<>();
+        this.uploaderID = "";
+        this.uploaderName = "";
+        this.reviews = new LinkedList<>();
         this.numProducts++;
+        this.productID = numProducts + "";
     }
 
-    public Product(ImageView image, String name, String description, String price, String location,
-                   String phoneNumber, String category, User uploader) {
-        this.image = image;
+    public Product(String name, String description, String price, String location,
+                   String phoneNumber, String category, String uploaderID, String uploaderName) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.location = location;
         this.phoneNumber = phoneNumber;
         this.category = category;
-        this.uploader = uploader;
-        this.reviews = new HashSet<>();
+        this.uploaderID = uploaderID;
+        this.uploaderName = uploaderName;
+        this.reviews = new LinkedList<>();
         this.numProducts++;
+        this.productID = numProducts + "";
     }
 
-    protected static void writeNewProductToDatabase(ImageView image, String name, String description,
+    public static void writeNewProductToDatabase(String name, String description,
                                                     String price, String location, String phoneNumber,
-                                                    String category) {
+                                                    String category, String currentUserName) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
         String currentUserID = fbUser.getUid();
-        String productID = numProducts + "";
-        User currentUser = User.getUserFromDatabase(currentUserID);
-        Product newProduct = new Product(image, name, description, price, location, phoneNumber,
-                category, currentUser);
-        mDatabase.child("products").child(productID).setValue(newProduct);
+        Product newProduct = new Product(name, description, price, location, phoneNumber,
+                category, currentUserID, currentUserName);
+        //Product newProduct = new Product();
+        mDatabase.child("products").child(newProduct.getProductID()).setValue(newProduct);
     }
 
-    protected void setUploader(User uploader) {
-        this.uploader = uploader;
+
+    public String getProductID() {
+        return productID;
     }
 
-    protected ImageView getImageView() {
-        return image;
+    public void setProductID(String productID) {
+        this.productID = productID;
     }
 
-    protected String getName() {
+    public String getUploaderName() {
+        return uploaderName;
+    }
+
+    public void setUploaderName(String uploaderName) {
+        this.uploaderName = uploaderName;
+    }
+
+    public String getName() {
         return name;
     }
 
-    protected String getDescription() {
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
         return description;
     }
 
-    protected String getPrice() {
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getPrice() {
         return price;
     }
 
-    protected String getLocation() {
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getLocation() {
         return location;
     }
 
-    protected String getPhoneNumber() {
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    protected String getUploaderName() {
-        return uploader.getName();
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    protected void addReview(String review) {
+
+    public void addReview(String review) {
         reviews.add(review);
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("products").child(productID).child("reviews").setValue(reviews);
     }
 
-    protected Set<String> getReviews() {
+    public List<String> getReviews() {
         return reviews;
     }
 
-    protected User getUploader() {
-        return uploader;
+    public void setReviews(List<String> reviews) {
+        this.reviews = reviews;
     }
 
-    protected String getCategory() {
+    public String getUploaderID() {
+        return uploaderID;
+    }
+
+    public void setUploaderID(String uploaderID) {
+        this.uploaderID = uploaderID;
+    }
+
+
+    public String getCategory() {
         return category;
     }
 
-    protected static List<Product> getProductsFromDatabase(final String searchCategory, String searchQuery) {
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public static List<Product> getProductsFromDatabaseSearch(final String searchCategory, String searchQuery) {
         final List<Product> products = new LinkedList<Product>();
 
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("products");
+
         mDatabase.addValueEventListener(new ValueEventListener() {
 
             @Override
@@ -140,6 +181,37 @@ public class Product implements Serializable {
         });
 
         return products;
+    }
+
+    protected static Product getProductFromDatabase(String productID) {
+        final String uID = productID;
+        final Set<Product> products = new HashSet<Product>();
+
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("products");
+        mDatabase.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for (DataSnapshot product: snapshot.getChildren()) {
+                    if (product.getKey().equals(uID)){
+                        products.add(product.getValue((Product.class)));
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        if (products.size() == 1) {
+            for (Product wantedProduct : products) {
+                return wantedProduct;
+            }
+        }
+        return null;
     }
 
 }

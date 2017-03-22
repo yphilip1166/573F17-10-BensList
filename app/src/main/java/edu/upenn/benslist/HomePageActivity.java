@@ -10,6 +10,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 
 /**
  * Created by johnquinn on 2/23/17.
@@ -18,6 +23,7 @@ import android.widget.Toast;
 public class HomePageActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int RESULT_UPLOAD_PRODUCT = 2;
+    private String currentUserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +35,14 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
         uploadProductButton.setOnClickListener(this);
         searchProductsButton.setOnClickListener(this);
+
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
+        String currentUserID = fbUser.getUid();
+        User newUser = new User("JP", 21);
+        mDatabase.child("users").child(currentUserID).setValue(newUser);
+        this.currentUserName = "JP"; //CHANGE THIS TO WHOEVER IS ACTUALLY LOGGED IN
+
     }
 
     @Override
@@ -36,6 +50,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         switch (v.getId()) {
             case (R.id.beginUploadingProductButton) :
                 Intent i = new Intent(this, UploadProductActivity.class);
+                i.putExtra("Logged In User Name", currentUserName);
                 startActivityForResult(i, RESULT_UPLOAD_PRODUCT);
                 break;
 

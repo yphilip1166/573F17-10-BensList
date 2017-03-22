@@ -16,7 +16,7 @@ import android.widget.Spinner;
 public class ProductPurchaseConfirmationActivity extends AppCompatActivity implements
         AdapterView.OnItemSelectedListener, View.OnClickListener {
 
-    private User user;
+    private String uploaderID;
     private int rating;
 
     @Override
@@ -24,7 +24,7 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
         super.onCreate(savedInstanceState);
         setContentView(R.layout.product_purchase_confirmation_layout);
 
-        this.user = (User) getIntent().getSerializableExtra("User");
+        this.uploaderID = (String) getIntent().getStringExtra("UploaderID");
 
         Spinner spinner = (Spinner) findViewById(R.id.userRatingSpinner);
         spinner.setOnItemSelectedListener(this);
@@ -55,10 +55,11 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
             case (R.id.addUserToFavsButton) :
                 //TODO - ADD THIS PERSON TO YOUR FAVORITES - where "user" is the person you want to add
                 //DONE - check line below
-                User.addFavoriteUserToDatabase(user);
+                User.addFavoriteUserToDatabase(uploaderID);
                 break;
 
             case (R.id.doneRatingButton) :
+                User user = User.getUserFromDatabase(uploaderID);
                 user.addRating(rating);
                 Intent i = new Intent(this, HomePageActivity.class);
                 startActivity(i);

@@ -23,7 +23,8 @@ public class UserProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_profile); //TYLER - design user_profile.xml to your liking
-        this.user = (User) getIntent().getSerializableExtra("User"); //when called from CheckoutProductActivity
+        String userID = (String) getIntent().getStringExtra("UseID"); //when called from CheckoutProductActivity
+        this.user = User.getUserFromDatabase(userID);
 
         //this next list displays the perosn's favorite users that they've bought from
         ArrayAdapter<String> itemsAdapter =

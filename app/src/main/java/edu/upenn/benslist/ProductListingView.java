@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -45,9 +44,6 @@ public class ProductListingView extends LinearLayout {
         inflater.inflate(R.layout.product_listing_layout, this);
         this.product = product;
 
-        ImageView image = (ImageView) findViewById(R.id.productListingImage);
-        //image.setImageURI(product.getUri());
-
         TextView productName = (TextView) findViewById(R.id.productListingProductName);
         productName.setText(product.getName());
 
@@ -59,7 +55,6 @@ public class ProductListingView extends LinearLayout {
 
         TextView productLocation = (TextView) findViewById(R.id.productListingProductLocation);
         productLocation.setText(product.getLocation());
-
 
         TextView uploaderPhoneNumber = (TextView) findViewById(R.id.productListingUploaderPhoneNumber);
         uploaderPhoneNumber.setText(product.getPhoneNumber());
