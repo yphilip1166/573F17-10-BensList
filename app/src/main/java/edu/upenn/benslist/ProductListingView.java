@@ -46,7 +46,7 @@ public class ProductListingView extends LinearLayout {
         this.product = product;
 
         ImageView image = (ImageView) findViewById(R.id.productListingImage);
-        image.setImageURI(product.getUri());
+        //image.setImageURI(product.getUri());
 
         TextView productName = (TextView) findViewById(R.id.productListingProductName);
         productName.setText(product.getName());

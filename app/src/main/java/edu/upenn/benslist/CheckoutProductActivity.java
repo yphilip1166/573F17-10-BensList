@@ -55,25 +55,28 @@ public class CheckoutProductActivity extends AppCompatActivity implements View.O
     public void onClick(View v) {
         switch (v.getId()) {
             case (R.id.detailedListingConfirmPurchase) :
-                //TODO - notify the uploader that someone bought their product
+                //TODO - notify the uploader that someone bought their product - next iteration??
                 Intent i = new Intent(this, ProductPurchaseConfirmationActivity.class);
                 i.putExtra("User", product.getUploader());
                 startActivity(i);
                 break;
+
             case (R.id.submitReviewButton) :
                 EditText editText = (EditText) findViewById(R.id.detailedListingEditReviewText);
                 String review = editText.getText().toString();
                 product.addReview(review);
                 Intent intent = getIntent();
-                finish();
                 intent.putExtra("Product", product);
+                finish();
                 startActivity(intent);
                 break;
+
             case (R.id.detailedListingCheckUploadersPage) :
                 Intent newIntent = new Intent(this, UserProfileActivity.class);
                 newIntent.putExtra("User", product.getUploader());
                 startActivity(newIntent);
                 break;
+
             default :
                 break;
         }

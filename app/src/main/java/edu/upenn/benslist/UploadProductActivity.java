@@ -1,6 +1,5 @@
 package edu.upenn.benslist;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -21,8 +21,8 @@ public class UploadProductActivity extends AppCompatActivity implements AdapterV
 View.OnClickListener {
 
     private static final int RESULT_LOAD_IMAGE = 1;
-
     private ImageView imageToUpload;
+    private String itemCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +43,12 @@ View.OnClickListener {
                 R.array.product_categories_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+        itemCategory = "Furniture";
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String item = parent.getItemAtPosition(position).toString();
+        itemCategory = parent.getItemAtPosition(position).toString();
     }
 
     public void onNothingSelected(AdapterView<?> arg0) {
@@ -62,12 +63,29 @@ View.OnClickListener {
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
                 break;
+
             case (R.id.doneButton) :
                 //TODO - ADD THE NEW PRODUCT TO THE DATABASE
+                /*
+                DONE - now test!!!
+                 */
                 Intent returnIntent = new Intent(this, HomePageActivity.class);
-                setResult(Activity.RESULT_OK, returnIntent);
+
+                EditText productName = (EditText) findViewById(R.id.editProductName);
+                EditText productDescription = (EditText) findViewById(R.id.editProductDescription);
+                EditText productPrice = (EditText) findViewById(R.id.editPrice);
+                EditText productLocation = (EditText) findViewById(R.id.editLocation);
+                EditText productPhoneNumber = (EditText) findViewById(R.id.editPhoneNumber);
+
+                Product.writeNewProductToDatabase(imageToUpload, productName.getText().toString(),
+                        productDescription.getText().toString(), productPrice.getText().toString(),
+                        productLocation.getText().toString(), productPhoneNumber.getText().toString(),
+                        itemCategory);
+
+                setResult(RESULT_OK, returnIntent);
                 finish();
                 break;
+
             default :
                 break;
         }

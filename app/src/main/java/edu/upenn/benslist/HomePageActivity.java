@@ -19,7 +19,6 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
     private static final int RESULT_UPLOAD_PRODUCT = 2;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,10 +38,12 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                 Intent i = new Intent(this, UploadProductActivity.class);
                 startActivityForResult(i, RESULT_UPLOAD_PRODUCT);
                 break;
+
             case (R.id.beginSearchingProductsButton) :
                 Intent intent = new Intent(this, SearchPageActivity.class);
                 startActivity(intent);
                 break;
+
             default :
                 break;
         }

@@ -10,8 +10,7 @@ import android.widget.Button;
 import android.widget.ScrollView;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Created by johnquinn on 2/16/17.
@@ -50,7 +49,10 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
         /*
         TODO - create function that returns set of Products that fit the search criteria above
          */
-        Set<Product> productsFromSearch = new HashSet<>(); //dummy set for now
+
+        //DONE - check line below
+        List<Product> productsFromSearch = Product.getProductsFromDatabase(searchCategory, searchQuery);
+
 
         ActionBar.LayoutParams lp = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
                 ActionBar.LayoutParams.WRAP_CONTENT);
