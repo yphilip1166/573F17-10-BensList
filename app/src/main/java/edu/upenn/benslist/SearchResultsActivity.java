@@ -3,9 +3,7 @@ package edu.upenn.benslist;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,15 +26,16 @@ import java.util.List;
 public class SearchResultsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int RESULT_GO_TO_FILTER_SEARCH_RESULTS = 4;
-    private static final int RESULT_GO_TO_HOME_PAGE_FROM_SEARCH_RESULTS = 8;
     private String searchCategory;
     private String searchQuery;
     private ArrayList<String> filterCategories;
+    private ViewGroup mLinearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_results_layout);
+
         this.searchCategory = getIntent().getStringExtra("Search Category");
         this.searchQuery = getIntent().getStringExtra("Search Query");
         this.filterCategories = getIntent().getStringArrayListExtra("Filter Categories");
@@ -46,7 +45,7 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
         Button backToHomePageButton = (Button) findViewById(R.id.goBackToHomePageFromSearchResultsButton);
         backToHomePageButton.setOnClickListener(this);
 
-        Log.d("debugging", "herereerere");
+        mLinearLayout = (ViewGroup) findViewById(R.id.searchResultsLinearLayout);
 
         addProductsFromSearch();
     }
@@ -70,10 +69,6 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
         //Dummy results
         List<Product> productsFromSearch = getExampleProductSearch();
 
-        ActionBar.LayoutParams lp = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
-                ActionBar.LayoutParams.WRAP_CONTENT);
-        ViewGroup mLinearLayout = (ViewGroup) findViewById(R.id.searchResultsLinearLayout);
-
         final Context thisContext = this;
 
         //add each product to the activity
@@ -81,25 +76,25 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
 
             View view = LayoutInflater.from(this).inflate(R.layout.product_listing_layout, mLinearLayout, false);
 
-            TextView productName = (TextView) findViewById(R.id.productListingProductName);
-            productName.setText(product.getName());
+            TextView productName = (TextView) view.findViewById(R.id.productListingProductName);
+            productName.setText("Name: " + product.getName());
 
-            TextView productDescription = (TextView) findViewById(R.id.productListingProductDescription);
-            productDescription.setText(product.getDescription());
+            TextView productDescription = (TextView) view.findViewById(R.id.productListingProductDescription);
+            productDescription.setText("Description: " + product.getDescription());
 
-            TextView productPrice = (TextView) findViewById(R.id.productListingProductPrice);
-            productPrice.setText(product.getPrice());
+            TextView productPrice = (TextView) view.findViewById(R.id.productListingProductPrice);
+            productPrice.setText("Price: " + product.getPrice());
 
-            TextView productLocation = (TextView) findViewById(R.id.productListingProductLocation);
-            productLocation.setText(product.getLocation());
+            TextView productLocation = (TextView) view.findViewById(R.id.productListingProductLocation);
+            productLocation.setText("Location: " + product.getLocation());
 
-            TextView uploaderPhoneNumber = (TextView) findViewById(R.id.productListingUploaderPhoneNumber);
-            uploaderPhoneNumber.setText(product.getPhoneNumber());
+            TextView uploaderPhoneNumber = (TextView) view.findViewById(R.id.productListingUploaderPhoneNumber);
+            uploaderPhoneNumber.setText("Phone Number: " + product.getPhoneNumber());
 
-            TextView uploaderName = (TextView) findViewById(R.id.productListingUploaderName);
-            uploaderName.setText(product.getUploaderName());
+            TextView uploaderName = (TextView) view.findViewById(R.id.productListingUploaderName);
+            uploaderName.setText("Uploader Name: " + product.getUploaderName());
 
-            Button checkOutButton = (Button) findViewById(R.id.productListingCheckOutListingButton);
+            Button checkOutButton = (Button) view.findViewById(R.id.productListingCheckOutListingButton);
             checkOutButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -110,25 +105,6 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
             });
 
             mLinearLayout.addView(view);
-
-
-
-            /*
-            ProductListingView productView = new ProductListingView(this, product);
-            final Context thisContext = this;
-            Button checkOutListingButton = productView.getCheckOutThisListingButton();
-            checkOutListingButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(thisContext, CheckoutProductActivity.class);
-                    i.putExtra("ProductID", product.getProductID());
-                    startActivity(i);
-                }
-            });
-
-            Log.d("debugging", "add new product to search results");
-            sv.addView(productView, lp);
-            */
         }
     }
 

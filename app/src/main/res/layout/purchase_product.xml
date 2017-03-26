@@ -10,78 +10,53 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="edu.upenn.benslist.CheckoutProductActivity">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/purchaseProductRL"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/purchaseProductLL"
         android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/detailedListingImage"
-            android:layout_gravity="center"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_centerHorizontal="true" />
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/detailedListingProductName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_below="@+id/detailedListingImage"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
             android:id="@+id/detailedListingProductDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_below="@+id/detailedListingProductName"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
             android:id="@+id/detailedListingProductPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_below="@+id/detailedListingProductDescription"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
-
-        <TextView
-            android:id="@+id/detailedListingUploaderName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_below="@+id/detailedListingProductPrice"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-        <TextView
-            android:id="@+id/detailedListingUploaderPhoneNumber"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_below="@+id/detailedListingUploaderName"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
             android:id="@+id/detailedListingProductLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_below="@+id/detailedListingUploaderPhoneNumber"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/detailedListingUploaderName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/detailedListingUploaderPhoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
 
         <Button
             android:id="@+id/detailedListingCheckUploadersPage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Check Out This Uploader's Profile"
-            android:layout_below="@+id/detailedListingProductLocation"
             android:textAlignment="center"
             android:textStyle="normal|bold" />
 
@@ -90,39 +65,38 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Confirm This Purchase"
-            android:layout_below="@+id/detailedListingCheckUploadersPage"
             android:textAlignment="center"
             android:textStyle="normal|bold" />
+
+        <TextView
+            android:id="@+id/detailedListingProductReviews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Product Reviews: " />
 
         <TextView
             android:id="@+id/detailedListingLeaveReviewText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Leave A Review: "
-            android:layout_below="@+id/detailedListingConfirmPurchase"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:text="Leave A Review: " />
 
         <EditText
             android:id="@+id/detailedListingEditReviewText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/detailedListingConfirmPurchase"
-            android:layout_toRightOf="@+id/detailedListingLeaveReviewText"
-            android:layout_toEndOf="@+id/detailedListingLeaveReviewText"/>
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/submitReviewButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Submit Review"
-            android:layout_below="@+id/detailedListingEditReviewText"
             android:textAlignment="center"
             android:textStyle="normal|bold" />
 
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </ScrollView>
 

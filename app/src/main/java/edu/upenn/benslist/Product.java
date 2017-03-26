@@ -55,6 +55,7 @@ public class Product {
         this.productID = numProducts + "";
     }
 
+    //this functino works fine
     public static void writeNewProductToDatabase(String name, String description,
                                                     String price, String location, String phoneNumber,
                                                     String category, String currentUserName) {
@@ -63,7 +64,6 @@ public class Product {
         String currentUserID = fbUser.getUid();
         Product newProduct = new Product(name, description, price, location, phoneNumber,
                 category, currentUserID, currentUserName);
-        //Product newProduct = new Product();
         mDatabase.child("products").child(newProduct.getProductID()).setValue(newProduct);
     }
 
@@ -125,6 +125,7 @@ public class Product {
     }
 
 
+    //haven't tested it out yet, but this function should work fine
     public void addReview(String review) {
         reviews.add(review);
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -156,6 +157,7 @@ public class Product {
         this.category = category;
     }
 
+    //this function does NOT work yet
     public static List<Product> getProductsFromDatabaseSearch(final String searchCategory, String searchQuery) {
         final List<Product> products = new LinkedList<Product>();
 
@@ -183,6 +185,7 @@ public class Product {
         return products;
     }
 
+    //this function does NOT work yet
     protected static Product getProductFromDatabase(String productID) {
         final String uID = productID;
         final Set<Product> products = new HashSet<Product>();
