@@ -31,6 +31,11 @@
         <activity android:name=".SearchResultsActivity"/>
         <activity android:name=".HomePageActivity"/>
         <activity android:name=".UploadProductActivity"/>
+        <activity android:name=".UserProfile"/>
+        <activity android:name=".SearchUsers"/>
+        <activity android:name=".PreviousPurchasedItems"/>
+        <activity android:name=".UserProfileActivity"/>
+        <activity android:name=".MyProductsActivity"/>
 
     </application>
 
