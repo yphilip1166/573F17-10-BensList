@@ -23,7 +23,6 @@ public class SearchPageActivity extends AppCompatActivity implements AdapterView
 
     private String searchCategory;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +49,6 @@ public class SearchPageActivity extends AppCompatActivity implements AdapterView
 
     }
 
-
     @Override
     public void onClick(View v) {
         SearchView searchView = (SearchView) findViewById(R.id.editSearch);
@@ -63,6 +61,7 @@ public class SearchPageActivity extends AppCompatActivity implements AdapterView
                 i.putExtra("Search Query", searchQuery);
                 startActivity(i);
                 break;
+
             default :
                 break;
         }

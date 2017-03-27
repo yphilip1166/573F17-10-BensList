@@ -3,15 +3,21 @@ package edu.upenn.benslist;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ScrollView;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by johnquinn on 2/16/17.
@@ -20,15 +26,16 @@ import java.util.Set;
 public class SearchResultsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int RESULT_GO_TO_FILTER_SEARCH_RESULTS = 4;
-    private static final int RESULT_GO_TO_HOME_PAGE_FROM_SEARCH_RESULTS = 8;
     private String searchCategory;
     private String searchQuery;
     private ArrayList<String> filterCategories;
+    private ViewGroup mLinearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_results_layout);
+
         this.searchCategory = getIntent().getStringExtra("Search Category");
         this.searchQuery = getIntent().getStringExtra("Search Query");
         this.filterCategories = getIntent().getStringArrayListExtra("Filter Categories");
@@ -37,6 +44,8 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
         filterResultsButton.setOnClickListener(this);
         Button backToHomePageButton = (Button) findViewById(R.id.goBackToHomePageFromSearchResultsButton);
         backToHomePageButton.setOnClickListener(this);
+
+        mLinearLayout = (ViewGroup) findViewById(R.id.searchResultsLinearLayout);
 
         addProductsFromSearch();
     }
@@ -50,29 +59,88 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
         /*
         TODO - create function that returns set of Products that fit the search criteria above
          */
-        Set<Product> productsFromSearch = new HashSet<>(); //dummy set for now
 
-        ActionBar.LayoutParams lp = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
-                ActionBar.LayoutParams.WRAP_CONTENT);
-        ScrollView sv = (ScrollView) findViewById(R.id.search_results_layout);
+        /*
+        This commented out line should actually return the search results. We are using a dummy
+        function to get search results
+         */
+        //List<Product> productsFromSearch = Product.getProductsFromDatabaseSearch(searchCategory, searchQuery);
+
+        //Dummy results
+        List<Product> productsFromSearch = getExampleProductSearch();
+
+        final Context thisContext = this;
 
         //add each product to the activity
         for (final Product product : productsFromSearch) {
-            ProductListingView productView = new ProductListingView(this, product);
-            sv.addView(productView);
-            final Context thisContext = this;
-            Button checkOutListingButton = productView.getCheckOutThisListingButton();
-            checkOutListingButton.setOnClickListener(new View.OnClickListener() {
+
+            View view = LayoutInflater.from(this).inflate(R.layout.product_listing_layout, mLinearLayout, false);
+
+            TextView productName = (TextView) view.findViewById(R.id.productListingProductName);
+            productName.setText("Name: " + product.getName());
+
+            TextView productDescription = (TextView) view.findViewById(R.id.productListingProductDescription);
+            productDescription.setText("Description: " + product.getDescription());
+
+            TextView productPrice = (TextView) view.findViewById(R.id.productListingProductPrice);
+            productPrice.setText("Price: " + product.getPrice());
+
+            TextView productLocation = (TextView) view.findViewById(R.id.productListingProductLocation);
+            productLocation.setText("Location: " + product.getLocation());
+
+            TextView uploaderPhoneNumber = (TextView) view.findViewById(R.id.productListingUploaderPhoneNumber);
+            uploaderPhoneNumber.setText("Phone Number: " + product.getPhoneNumber());
+
+            TextView uploaderName = (TextView) view.findViewById(R.id.productListingUploaderName);
+            uploaderName.setText("Uploader Name: " + product.getUploaderName());
+
+            Button checkOutButton = (Button) view.findViewById(R.id.productListingCheckOutListingButton);
+            checkOutButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(thisContext, CheckoutProductActivity.class);
-                    i.putExtra("Product", product);
+                    i.putExtra("ProductID", product.getProductID());
                     startActivity(i);
                 }
             });
+
+            mLinearLayout.addView(view);
         }
     }
 
+
+    protected List<Product> getExampleProductSearch() {
+        List<Product> products = new LinkedList<>();
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
+        String currentUserID = fbUser.getUid();
+
+        Product product1 = new Product("Air Force Ones", "sick shoes", "$50", "Philadelphia", "123-456-7890",
+                "Clothes", currentUserID, "JP");
+
+        Product product2 = new Product("Jordan VIIs", "sicker shoes", "$10", "Philadelphia", "123-456-4560",
+                "Clothes", currentUserID, "JP");
+
+        Product product3 = new Product("Leather Couch", "good condition", "$50", "Philadelphia", "123-456-7890",
+                "Furniture", currentUserID, "JP");
+
+        Product product4 = new Product("Nike Crewneck", "Black", "$40", "Philadelphia", "123-456-7890",
+                "Clothes", currentUserID, "JP");
+
+        Product product5 = new Product("Blue Nike Elites", "sick socks", "$15", "Philadelphia", "123-456-7890",
+                "Clothes", currentUserID, "JP");
+
+        Product product6 = new Product("Nike Joggers", "Grey", "$75", "Philadelphia", "123-456-7890",
+                "Clothes", currentUserID, "JP");
+
+        products.add(product1);
+        products.add(product2);
+        products.add(product3);
+        products.add(product4);
+        products.add(product5);
+        products.add(product6);
+        return products;
+    }
 
 
 

@@ -26,11 +26,10 @@ public class UserProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_profile); //design user_profile.xml to your liking
-        fbuser = FirebaseAuth.getInstance().getCurrentUser();
-        String userID = fbuser.getUid();
-        this.user = (User) getIntent().getSerializableExtra("User"); //when called from CheckoutProductActivity
-        System.out.println(user.toString());
+        setContentView(R.layout.user_profile); //TYLER - design user_profile.xml to your liking
+        String userID = (String) getIntent().getStringExtra("UseID"); //when called from CheckoutProductActivity
+        this.user = User.getUserFromDatabase(userID);
+
 
         //this next list displays the perosn's favorite users that they've bought from
         ArrayAdapter<String> itemsAdapter =
