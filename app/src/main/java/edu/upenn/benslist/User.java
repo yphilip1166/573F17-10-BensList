@@ -25,6 +25,10 @@ public class User implements Serializable {
         this.numRatings = 0;
     }
 
+    public User() {
+
+    }
+
     protected String getName() {
         return name;
     }
@@ -46,6 +50,11 @@ public class User implements Serializable {
         numRatings++;
         rating += r;
         rating /= numRatings;
+    }
+
+    @Override
+    public String toString() {
+        return "User Name: " + name;
     }
 
 

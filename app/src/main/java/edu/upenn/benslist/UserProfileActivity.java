@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 /**
  * Created by johnquinn on 3/14/17.
  */
@@ -18,12 +21,16 @@ edit his profile.
 public class UserProfileActivity extends AppCompatActivity {
 
     private User user;
+    private FirebaseUser fbuser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_profile); //design user_profile.xml to your liking
+        fbuser = FirebaseAuth.getInstance().getCurrentUser();
+        String userID = fbuser.getUid();
         this.user = (User) getIntent().getSerializableExtra("User"); //when called from CheckoutProductActivity
+        System.out.println(user.toString());
 
         //this next list displays the perosn's favorite users that they've bought from
         ArrayAdapter<String> itemsAdapter =

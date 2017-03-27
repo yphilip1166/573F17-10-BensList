@@ -19,4 +19,18 @@
         android:textAlignment="center"
         android:textStyle="normal|bold" />
 
+    <Button
+        android:id="@+id/profilePage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="User Profile"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/searchUsers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Search Users"
+        android:textStyle="bold" />
+
 </LinearLayout>

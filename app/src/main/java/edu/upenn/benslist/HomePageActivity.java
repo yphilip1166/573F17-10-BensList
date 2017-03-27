@@ -27,9 +27,13 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
         Button uploadProductButton = (Button) findViewById(R.id.beginUploadingProductButton);
         Button searchProductsButton = (Button) findViewById(R.id.beginSearchingProductsButton);
+        Button userProfilePage = (Button) findViewById(R.id.profilePage);
+        Button searchUsers = (Button) findViewById(R.id.searchUsers);
 
         uploadProductButton.setOnClickListener(this);
         searchProductsButton.setOnClickListener(this);
+        userProfilePage.setOnClickListener(this);
+        searchUsers.setOnClickListener(this);
     }
 
     @Override
@@ -43,6 +47,13 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                 Intent intent = new Intent(this, SearchPageActivity.class);
                 startActivity(intent);
                 break;
+            case (R.id.profilePage) :
+                Intent profileIntent = new Intent(this, UserProfile.class);
+                startActivity(profileIntent);
+                break;
+            case (R.id.searchUsers) :
+                Intent searchIntent = new Intent(this, SearchUsers.class);
+                startActivity(searchIntent);
             default :
                 break;
         }

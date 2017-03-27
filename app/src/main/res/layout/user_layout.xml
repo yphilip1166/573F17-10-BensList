@@ -1,5 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="@android:dimen/thumbnail_width"
+        android:layout_height="@android:dimen/thumbnail_height"
+        android:layout_alignParentTop="true"
+        app:srcCompat="@drawable/default_profile_picture" />
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="28dp"
+        android:layout_toEndOf="@+id/imageButton"
+        android:layout_toRightOf="@+id/imageButton"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name" />
+
+    <EditText
+        android:id="@+id/address"
+        android:layout_width="wrap_content"
+        android:layout_height="@android:dimen/notification_large_icon_width"
+        android:ems="10"
+        android:inputType="textPostalAddress"
+        android:text="Enter Address Here"
+        android:layout_below="@+id/ratingBar"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:id="@+id/interests"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/address"
+        android:layout_alignRight="@+id/address"
+        android:layout_below="@+id/address"
+        android:layout_marginTop="11dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Interests" />
+
+    <Button
+        android:id="@+id/viewProductsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View my Products"
+        android:layout_below="@+id/interests"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/favoriteUsers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View Favorite Users"
+        android:layout_below="@+id/prevousProducts"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:id="@+id/emailAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:text="Enter Email Here"
+        android:layout_below="@+id/userName"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/imageButton"
+        android:layout_toEndOf="@+id/imageButton" />
+
+    <EditText
+        android:id="@+id/userName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Enter Username"
+        android:layout_below="@+id/name"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/imageButton"
+        android:layout_toEndOf="@+id/imageButton" />
+
+    <Button
+        android:id="@+id/prevousProducts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Previous Purchases"
+        android:layout_below="@+id/viewProductsButton"
+        android:layout_centerHorizontal="true" />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="56dp"
+        android:layout_marginStart="56dp" />
 </RelativeLayout>
