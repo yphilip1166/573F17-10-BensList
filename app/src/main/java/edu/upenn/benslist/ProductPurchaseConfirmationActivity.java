@@ -24,7 +24,7 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
         super.onCreate(savedInstanceState);
         setContentView(R.layout.product_purchase_confirmation_layout);
 
-        this.uploaderID = (String) getIntent().getStringExtra("UploaderID");
+        this.uploaderID = getIntent().getStringExtra("UploaderID");
 
         Spinner spinner = (Spinner) findViewById(R.id.userRatingSpinner);
         spinner.setOnItemSelectedListener(this);
