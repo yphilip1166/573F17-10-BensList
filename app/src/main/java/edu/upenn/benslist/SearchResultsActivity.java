@@ -9,12 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -31,26 +36,65 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
     private ArrayList<String> filterCategories;
     private ViewGroup mLinearLayout;
 
+    private DatabaseReference mProductReference;
+    private ValueEventListener mProductListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_results_layout);
 
+        // Get search specifications from intent
         this.searchCategory = getIntent().getStringExtra("Search Category");
         this.searchQuery = getIntent().getStringExtra("Search Query");
         this.filterCategories = getIntent().getStringArrayListExtra("Filter Categories");
 
+        // Initialize Database
+        mProductReference = FirebaseDatabase.getInstance().getReference()
+                .child("products");
+
+        //Initialize views
         Button filterResultsButton = (Button) findViewById(R.id.filterSearchResultsButton);
         filterResultsButton.setOnClickListener(this);
         Button backToHomePageButton = (Button) findViewById(R.id.goBackToHomePageFromSearchResultsButton);
         backToHomePageButton.setOnClickListener(this);
 
         mLinearLayout = (ViewGroup) findViewById(R.id.searchResultsLinearLayout);
-
-        addProductsFromSearch();
     }
 
-    protected void addProductsFromSearch() {
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        ValueEventListener productListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<Product> products = new LinkedList<>();
+                for (DataSnapshot productSnapshot : dataSnapshot.getChildren()) {
+                    Product product = productSnapshot.getValue(Product.class);
+                    if (product.getCategory().equals(searchCategory) &&
+                            product.getName().contains(searchQuery)) {
+                        products.add(product);
+                    }
+
+                    System.out.println(product.getName());
+                }
+                addProductsFromSearch(products);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+                Toast.makeText(SearchResultsActivity.this, "Failed to load products.",
+                        Toast.LENGTH_SHORT).show();
+                // [END_EXCLUDE]
+            }
+        };
+
+        mProductReference.addValueEventListener(productListener);
+    }
+
+    protected void addProductsFromSearch(List<Product> products) {
 
         /*
         TODO - use searchCategory, searchQuery, and searchFilters to access the database
@@ -72,7 +116,7 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
         final Context thisContext = this;
 
         //add each product to the activity
-        for (final Product product : productsFromSearch) {
+        for (final Product product : products) {
 
             View view = LayoutInflater.from(this).inflate(R.layout.product_listing_layout, mLinearLayout, false);
 
@@ -99,7 +143,7 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(thisContext, CheckoutProductActivity.class);
-                    i.putExtra("ProductID", product.getProductID());
+                    i.putExtra("Product", (Serializable) product);
                     startActivity(i);
                 }
             });

@@ -21,8 +21,7 @@ public class CheckoutProductActivity extends AppCompatActivity implements View.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.purchase_product);
-        String productID = (String) getIntent().getStringExtra("ProductID");
-        this.product = Product.getProductFromDatabase(productID);
+        this.product = (Product) getIntent().getExtras().getSerializable("Product");
 
         Button purchaseProductButton = (Button) findViewById(R.id.detailedListingConfirmPurchase);
         purchaseProductButton.setOnClickListener(this);
