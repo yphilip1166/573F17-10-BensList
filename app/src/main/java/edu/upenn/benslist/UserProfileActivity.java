@@ -32,7 +32,7 @@ public class UserProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_profile); //TYLER - design user_profile.xml to your liking
-        String userID = (String) getIntent().getStringExtra("UseID"); //when called from CheckoutProductActivity
+        String userID = getIntent().getStringExtra("UseID"); //when called from CheckoutProductActivity
         this.user = User.getUserFromDatabase(userID);
 
 

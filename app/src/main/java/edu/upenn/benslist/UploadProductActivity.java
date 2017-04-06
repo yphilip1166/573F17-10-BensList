@@ -34,7 +34,7 @@ View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_product);
-        this.currentUserName = (String) getIntent().getStringExtra("Logged In User Name");
+        this.currentUserName = getIntent().getStringExtra("Logged In User Name");
 
         imageToUpload = (ImageView) findViewById(R.id.imageToUpload);
         Button uploadImageButton = (Button) findViewById(R.id.uploadPictureButton);
