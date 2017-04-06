@@ -6,7 +6,9 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -14,7 +16,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name">
@@ -25,21 +30,18 @@
             </intent-filter>
         </activity>
         <activity android:name=".AboutActivity" />
-        <activity android:name=".TermsActivity"></activity>
-        <activity android:name=".SearchPageActivity"/>
-        <activity android:name=".FilterSearchResultsActivity"/>
-        <activity android:name=".SearchResultsActivity"/>
-        <activity android:name=".HomePageActivity"/>
-        <activity android:name=".UploadProductActivity"/>
-        <activity android:name=".UserProfile"/>
-        <activity android:name=".SearchUsers"/>
-        <activity android:name=".PreviousPurchasedItems"/>
-        <activity android:name=".UserProfileActivity"/>
-        <activity android:name=".MyProductsActivity"/>
-
+        <activity android:name=".TermsActivity" />
+        <activity android:name=".SearchPageActivity" />
+        <activity android:name=".FilterSearchResultsActivity" />
+        <activity android:name=".SearchResultsActivity" />
+        <activity android:name=".HomePageActivity" />
+        <activity android:name=".UploadProductActivity" />
+        <activity android:name=".UserProfile" />
+        <activity android:name=".SearchUsers" />
+        <activity android:name=".PreviousPurchasedItems" />
+        <activity android:name=".UserProfileActivity" />
+        <activity android:name=".MyProductsActivity" />
+        <activity android:name=".PublicForumActivity"></activity>
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
 </manifest>

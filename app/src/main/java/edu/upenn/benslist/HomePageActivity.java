@@ -123,6 +123,12 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                 startActivity(intent);
                 return true;
 
+            case R.id.action_forum:
+                //Go to forum page
+                intent = new Intent(this, PublicForumActivity.class);
+                startActivity(intent);
+                return true;
+
             default:
                 //Could not recognize a button press
                 Toast.makeText(this, "Could not recognize a button press", Toast.LENGTH_SHORT).show();
