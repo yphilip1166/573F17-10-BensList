@@ -33,4 +33,10 @@
         android:text="Search Users"
         android:textStyle="bold" />
 
+    <Button
+        android:id="@+id/mapButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View Listings Nearby" />
+
 </LinearLayout>

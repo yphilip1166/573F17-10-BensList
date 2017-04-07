@@ -36,6 +36,7 @@
         <activity android:name=".PreviousPurchasedItems"/>
         <activity android:name=".UserProfileActivity"/>
         <activity android:name=".MyProductsActivity"/>
+        <activity android:name=".Map"/>
 
     </application>
 
