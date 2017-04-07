@@ -8,35 +8,19 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="edu.upenn.benslist.SearchResultsActivity">
+    tools:context="edu.upenn.benslist.ViewUploadedProductsActivity">
 
     <LinearLayout
-        android:id="@+id/searchResultsLinearLayout"
+        android:id="@+id/uploadedProductsLinearLayout"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
         <Button
-            android:id="@+id/filterSearchResultsButton"
+            android:id="@+id/doneViewingProductsButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Filter Search Results"
-            android:textAlignment="center"
-            android:textStyle="normal|bold" />
-
-        <Button
-            android:id="@+id/sortResultsByPriceButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sort Results By Price"
-            android:textAlignment="center"
-            android:textStyle="normal|bold" />
-
-        <Button
-            android:id="@+id/goBackToHomePageFromSearchResultsButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Go Back To Home Page"
+            android:text="Done"
             android:textAlignment="center"
             android:textStyle="normal|bold" />
 

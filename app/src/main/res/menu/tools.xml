@@ -19,4 +19,9 @@
             android:id="@+id/action_terms"
             android:title="Terms of Use">
          </item>
+
+        <item
+            android:id="@+id/action_forum"
+            android:title="Public Forum">
+        </item>
 </menu>

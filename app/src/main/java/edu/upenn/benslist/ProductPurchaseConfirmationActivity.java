@@ -24,7 +24,7 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
         super.onCreate(savedInstanceState);
         setContentView(R.layout.product_purchase_confirmation_layout);
 
-        this.uploaderID = (String) getIntent().getStringExtra("UploaderID");
+        this.uploaderID = getIntent().getStringExtra("UploaderID");
 
         Spinner spinner = (Spinner) findViewById(R.id.userRatingSpinner);
         spinner.setOnItemSelectedListener(this);
@@ -54,6 +54,7 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
         switch (v.getId()) {
             case (R.id.addUserToFavsButton) :
                 //TODO - ADD THIS PERSON TO YOUR FAVORITES - where "user" is the person you want to add
+
                 //DONE - check line below
                 User.addFavoriteUserToDatabase(uploaderID);
                 break;

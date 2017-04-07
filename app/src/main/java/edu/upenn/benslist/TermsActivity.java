@@ -28,7 +28,6 @@ public class TermsActivity extends AppCompatActivity {
 
     /**
      * Handle the button presses
-     * TODO link the home button to the home page
      * TODO add code that will log the user out when they click logout
      */
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -42,6 +41,8 @@ public class TermsActivity extends AppCompatActivity {
 
             case R.id.action_home:
                 //Go to Home page
+                intent = new Intent(this, HomePageActivity.class);
+                startActivity(intent);
                 return true;
 
             case R.id.action_logout:
@@ -54,6 +55,12 @@ public class TermsActivity extends AppCompatActivity {
             case R.id.action_terms:
                 //Go to terms page
                 intent = new Intent(this, TermsActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.action_forum:
+                //Go to forum page
+                intent = new Intent(this, PublicForumActivity.class);
                 startActivity(intent);
                 return true;
 

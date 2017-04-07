@@ -8,6 +8,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.Set;
  * Created by johnquinn on 3/13/17.
  */
 
-public class Product {
+public class Product implements Serializable, Comparable {
 
     public String name, description, price, location, phoneNumber, category;
     public String uploaderID;
@@ -36,7 +37,7 @@ public class Product {
         this.uploaderID = "";
         this.uploaderName = "";
         this.reviews = new LinkedList<>();
-        this.numProducts++;
+        numProducts++;
         this.productID = numProducts + "";
     }
 
@@ -51,7 +52,7 @@ public class Product {
         this.uploaderID = uploaderID;
         this.uploaderName = uploaderName;
         this.reviews = new LinkedList<>();
-        this.numProducts++;
+        numProducts++;
         this.productID = numProducts + "";
     }
 
@@ -215,6 +216,34 @@ public class Product {
             }
         }
         return null;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (o == null) {
+            return 1;
+        }
+
+        Product that = (Product) o;
+        int thisPrice = 0;
+        int thatPrice = 0;
+
+        try {
+            thisPrice = Integer.parseInt(this.getPrice());
+            thatPrice = Integer.parseInt(that.getPrice());
+            if (thisPrice > thatPrice) {
+                return 1;
+            }
+            else if (thisPrice < thatPrice) {
+                return -1;
+            }
+            else {
+                return 0;
+            }
+        }
+        catch (NumberFormatException e) {
+            return 0;
+        }
     }
 
 }

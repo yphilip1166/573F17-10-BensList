@@ -34,7 +34,7 @@ View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_product);
-        this.currentUserName = (String) getIntent().getStringExtra("Logged In User Name");
+        this.currentUserName = getIntent().getStringExtra("Logged In User Name");
 
         imageToUpload = (ImageView) findViewById(R.id.imageToUpload);
         Button uploadImageButton = (Button) findViewById(R.id.uploadPictureButton);
@@ -88,13 +88,11 @@ View.OnClickListener {
                 FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
                 String currentUserID = fbUser.getUid();
 
-                //System.out.println(mDatabase.child("users").child(currentUserID).child("name").getKey());
-                //String uploaderName = User.getUserFromDatabase(currentUserID).getName();
-
                 Product.writeNewProductToDatabase(productName.getText().toString(),
                         productDescription.getText().toString(), productPrice.getText().toString(),
                         productLocation.getText().toString(), productPhoneNumber.getText().toString(),
                         itemCategory, currentUserName);
+
 
                 setResult(RESULT_OK, returnIntent);
                 finish();
@@ -127,7 +125,6 @@ View.OnClickListener {
 
     /**
      * Handle the button presses
-     * TODO link the home button to the home page
      * TODO add code that will log the user out when they click logout
      */
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -155,6 +152,12 @@ View.OnClickListener {
             case R.id.action_terms:
                 //Go to terms page
                 intent = new Intent(this, TermsActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.action_forum:
+                //Go to forum page
+                intent = new Intent(this, PublicForumActivity.class);
                 startActivity(intent);
                 return true;
 
