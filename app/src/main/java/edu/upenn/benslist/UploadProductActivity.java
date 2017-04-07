@@ -125,7 +125,6 @@ View.OnClickListener {
 
     /**
      * Handle the button presses
-     * TODO link the home button to the home page
      * TODO add code that will log the user out when they click logout
      */
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -153,6 +152,12 @@ View.OnClickListener {
             case R.id.action_terms:
                 //Go to terms page
                 intent = new Intent(this, TermsActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.action_forum:
+                //Go to forum page
+                intent = new Intent(this, PublicForumActivity.class);
                 startActivity(intent);
                 return true;
 
