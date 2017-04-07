@@ -3,47 +3,55 @@ package edu.upenn.benslist;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 /**
- * Created by tylerdouglas on 3/27/17.
+ * Created by johnquinn on 3/31/17.
  */
 
-public class SearchUsers extends AppCompatActivity implements
-        View.OnClickListener {
-
+public class SearchUsers extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.search_page_layout);
+        setContentView(R.layout.user_search_page_layout);
 
-        Button searchButton = (Button) findViewById(R.id.searchButton);
+        Button searchButton = (Button) findViewById(R.id.searchUserButton);
         searchButton.setOnClickListener(this);
-    }
 
-
-    public void onNothingSelected(AdapterView<?> arg0) {
-
+        Button doneButton = (Button) findViewById(R.id.goBackToHomePageButton);
+        doneButton.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        SearchView searchView = (SearchView) findViewById(R.id.editSearch);
+        SearchView searchView = (SearchView) findViewById(R.id.editUserSearch);
         String searchQuery = searchView.getQuery().toString();
 
         switch (v.getId()) {
-            case (R.id.searchButton) :
-                Intent i = new Intent(this, SearchResultsActivity.class);
-                i.putExtra("Search Query", searchQuery);
-                startActivity(i);
+            case (R.id.searchUserButton) :
+
+
+                /*
+                TODO - actually implement the following line of code (MAX)
+                Do the DataSnapshot thing. Iterate over the database, obtain a user object, and check
+                to see if the current user's name matches the searchQuery exactly. If it's an exact match,
+                then start a new intent for the activity ViewUsersProfileActivity. Make sure that
+                before you call startActivity, you do intent.putExtra("User", currentUser) where
+                currentUser is the User object that matches the searchQuery.
+
+                If there is no match, then simply call Toast for 5 seconds saying "No match". You don't
+                have to start a new intent in this case. The user will simply just stay on this page.
+                 */
+
+
+                break;
+
+            case (R.id.goBackToHomePageButton) :
+                Intent intent = new Intent(this, HomePageActivity.class);
+                startActivity(intent);
                 break;
 
             default :
@@ -51,53 +59,5 @@ public class SearchUsers extends AppCompatActivity implements
         }
     }
 
-    /**
-     * Code Snippet for adding the menu bar 3 points to select Logout, About, Home, Terms
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.tools, menu);
-        return true;
-    }
 
-    /**
-     * Handle the button presses
-     * TODO link the home button to the home page
-     * TODO add code that will log the user out when they click logout
-     */
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
-        switch (item.getItemId()) {
-            case R.id.action_about:
-                //Go to About page
-                intent = new Intent(this, AboutActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.action_home:
-                //Go to Home page
-                intent = new Intent(this, HomePageActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.action_logout:
-                //Logs out the current user and brings user to the logout page
-                //Need to add code for actually logging out a user
-                intent = new Intent(this, LoginActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.action_terms:
-                //Go to terms page
-                intent = new Intent(this, TermsActivity.class);
-                startActivity(intent);
-                return true;
-
-            default:
-                //Could not recognize a button press
-                Toast.makeText(this, "Could not recognize a button press", Toast.LENGTH_SHORT).show();
-                return false;
-        }
-    }
 }

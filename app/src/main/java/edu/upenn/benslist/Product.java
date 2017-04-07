@@ -18,7 +18,7 @@ import java.util.Set;
  * Created by johnquinn on 3/13/17.
  */
 
-public class Product implements Serializable {
+public class Product implements Serializable, Comparable {
 
     public String name, description, price, location, phoneNumber, category;
     public String uploaderID;
@@ -216,6 +216,34 @@ public class Product implements Serializable {
             }
         }
         return null;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (o == null) {
+            return 1;
+        }
+
+        Product that = (Product) o;
+        int thisPrice = 0;
+        int thatPrice = 0;
+
+        try {
+            thisPrice = Integer.parseInt(this.getPrice());
+            thatPrice = Integer.parseInt(that.getPrice());
+            if (thisPrice > thatPrice) {
+                return 1;
+            }
+            else if (thisPrice < thatPrice) {
+                return -1;
+            }
+            else {
+                return 0;
+            }
+        }
+        catch (NumberFormatException e) {
+            return 0;
+        }
     }
 
 }
