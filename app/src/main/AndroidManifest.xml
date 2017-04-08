@@ -41,8 +41,7 @@
         <activity android:name=".PreviousPurchasedItems"/>
         <activity android:name=".favoriteUsersActivity"/>
         <activity android:name=".MyProductsActivity"/>
-        <activity android:name=".MapActivity" />
-        <activity android:name=".MapFragment"/>
+        <activity android:name=".MapsActivity"/>
         <activity android:name=".ViewUsersProfileActivity"/>
         <activity android:name=".ViewUploadedProductsActivity"/>
         <activity android:name=".PublicForumActivity" />
