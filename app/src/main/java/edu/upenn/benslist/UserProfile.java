@@ -271,6 +271,8 @@ public class UserProfile extends AppCompatActivity {
                     editButton.setTitle("Submit");
                 }
                 submitMode();
+                return true;
+
             case R.id.action_forum:
                 //Go to forum page
                 intent = new Intent(this, PublicForumActivity.class);
