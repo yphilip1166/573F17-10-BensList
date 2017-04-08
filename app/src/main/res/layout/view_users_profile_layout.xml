@@ -67,5 +67,13 @@
         android:layout_below="@+id/viewPreviousPurchasesButton"
         android:layout_centerHorizontal="true" />
 
+    <Button
+        android:id="@+id/messageUserButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/reportUserButton"
+        android:layout_centerHorizontal="true"
+        android:text="Message User" />
+
 
 </RelativeLayout>

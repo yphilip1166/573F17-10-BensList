@@ -119,12 +119,6 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             case R.id.action_logout:
                 //Logs out the current user and brings user to the logout page
                 //Need to add code for actually logging out a user
-                SendBird.disconnect(new SendBird.DisconnectHandler() {
-                    @Override
-                    public void onDisconnected() {
-                        // You are disconnected from SendBird.
-                    }
-                });
                 intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 return true;
@@ -138,6 +132,16 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             case R.id.action_forum:
                 //Go to forum page
                 intent = new Intent(this, PublicForumActivity.class);
+                startActivity(intent);
+                return true;
+
+            case (R.id.action_message) :
+                intent = new Intent(this, InboxMessageActivity.class);
+                /*
+                Todo get the user email and pass it into the InboxMessageActivity. Fix line below
+                 */
+                intent.putExtra("Email", "mdop1102@gmail.com");
+                intent.putExtra("Name", "Max Doppelt");
                 startActivity(intent);
                 return true;
 

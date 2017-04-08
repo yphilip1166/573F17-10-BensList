@@ -58,7 +58,7 @@ implements GoogleApiClient.OnConnectionFailedListener {
         private static final int REQUEST_INVITE = 1;
         private static final int REQUEST_IMAGE = 2;
         private static final String LOADING_IMAGE_URL = "https://www.google.com/images/spin-32.gif";
-        public static final int DEFAULT_MSG_LENGTH_LIMIT = 50;
+        public static final int DEFAULT_MSG_LENGTH_LIMIT = 100;
         public static final String ANONYMOUS = "anonymous";
         private static final String MESSAGE_SENT_EVENT = "message_sent";
         private String mUsername;
@@ -244,12 +244,6 @@ implements GoogleApiClient.OnConnectionFailedListener {
             case R.id.action_logout:
                 //Logs out the current user and brings user to the logout page
                 //Need to add code for actually logging out a user
-                SendBird.disconnect(new SendBird.DisconnectHandler() {
-                    @Override
-                    public void onDisconnected() {
-                        // You are disconnected from SendBird.
-                    }
-                });
                 intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 return true;
