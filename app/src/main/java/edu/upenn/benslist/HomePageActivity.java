@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.sendbird.android.SendBird;
 
 
 /**
@@ -117,6 +118,12 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             case R.id.action_logout:
                 //Logs out the current user and brings user to the logout page
                 //Need to add code for actually logging out a user
+                SendBird.disconnect(new SendBird.DisconnectHandler() {
+                    @Override
+                    public void onDisconnected() {
+                        // You are disconnected from SendBird.
+                    }
+                });
                 intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 return true;

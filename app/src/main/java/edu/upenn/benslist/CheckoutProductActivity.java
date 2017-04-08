@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sendbird.android.SendBird;
+
 /**
  * Created by johnquinn on 3/14/17.
  */
@@ -139,6 +141,12 @@ public class CheckoutProductActivity extends AppCompatActivity implements View.O
             case R.id.action_logout:
                 //Logs out the current user and brings user to the logout page
                 //Need to add code for actually logging out a user
+                SendBird.disconnect(new SendBird.DisconnectHandler() {
+                    @Override
+                    public void onDisconnected() {
+                        // You are disconnected from SendBird.
+                    }
+                });
                 intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 return true;

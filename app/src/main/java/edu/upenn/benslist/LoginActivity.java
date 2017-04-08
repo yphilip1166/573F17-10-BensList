@@ -22,6 +22,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.sendbird.android.SendBird;
+import com.sendbird.android.SendBirdException;
+
+import static android.provider.UserDictionary.Words.APP_ID;
 
 /**
  * A login screen that offers login via email/password.
@@ -48,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        SendBird.init("16445C8B-8470-4296-8408-882BA37AFC8E", getApplicationContext());
 
 
         // Set up the login form.
@@ -120,6 +125,17 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
+    private void connectToSendBird(String email) {
+        SendBird.connect(email, "d394b41e2e9fef451fda8e0e3e90611d40d46e32", new SendBird.ConnectHandler() {
+            @Override
+            public void onConnected(com.sendbird.android.User user, SendBirdException e) {
+                if (e != null) {
+                    // Error.
+                    return;
+                }
+            }
+        });
+    }
 
 
     /**
@@ -130,7 +146,7 @@ public class LoginActivity extends AppCompatActivity {
     private void attemptSignin() {
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
+        final String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         System.out.println(email + password);
@@ -151,6 +167,7 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                         }
                         else {
+                            connectToSendBird(email);
                             Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
                             startActivity(intent);
                         }
@@ -164,7 +181,7 @@ public class LoginActivity extends AppCompatActivity {
     private void createAccount() {
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
+        final String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         System.out.println(email + password);
@@ -181,6 +198,9 @@ public class LoginActivity extends AppCompatActivity {
                         if (!task.isSuccessful()) {
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            connectToSendBird(email);
                         }
 
                         // ...

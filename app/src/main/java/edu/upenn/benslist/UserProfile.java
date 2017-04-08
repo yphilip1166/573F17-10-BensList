@@ -28,6 +28,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.sendbird.android.SendBird;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -213,7 +214,6 @@ public class UserProfile extends AppCompatActivity {
 
     /**
      * Handle the button presses
-     * TODO link the home button to the home page
      * TODO add code that will log the user out when they click logout
      */
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -234,6 +234,12 @@ public class UserProfile extends AppCompatActivity {
             case R.id.action_logout:
                 //Logs out the current user and brings user to the logout page
                 //Need to add code for actually logging out a user
+                SendBird.disconnect(new SendBird.DisconnectHandler() {
+                    @Override
+                    public void onDisconnected() {
+                        // You are disconnected from SendBird.
+                    }
+                });
                 intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 return true;
@@ -265,6 +271,11 @@ public class UserProfile extends AppCompatActivity {
                     editButton.setTitle("Submit");
                 }
                 submitMode();
+            case R.id.action_forum:
+                //Go to forum page
+                intent = new Intent(this, PublicForumActivity.class);
+                startActivity(intent);
+                return true;
 
             default:
                 //Could not recognize a button press
