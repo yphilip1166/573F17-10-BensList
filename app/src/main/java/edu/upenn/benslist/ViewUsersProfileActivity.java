@@ -89,7 +89,7 @@ public class ViewUsersProfileActivity extends AppCompatActivity implements View.
                 /*
                 Todo get the user email and pass it into the InboxMessageActivity. Fix line below
                  */
-                mIntent.putExtra("Email", user.getName());
+                mIntent.putExtra("Email", user.getEmail());
                 mIntent.putExtra("Name", user.getName());
                 startActivity(mIntent);
                 break;

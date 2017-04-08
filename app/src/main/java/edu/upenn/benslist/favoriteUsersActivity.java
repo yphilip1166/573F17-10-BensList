@@ -7,11 +7,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.sendbird.android.SendBird;
 
 
 /**
@@ -32,7 +27,7 @@ public class favoriteUsersActivity extends AppCompatActivity implements View.OnC
         User user = (User) getIntent().getSerializableExtra("User");
 
         ArrayAdapter<String> itemsAdapter =
-                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, user.getFavoriteUsersNames());
+                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, user.getFavoriteUsersIveBoughtFrom());
 
         ListView listView = (ListView) findViewById(R.id.favoriteUsersList);
         listView.setAdapter(itemsAdapter);
