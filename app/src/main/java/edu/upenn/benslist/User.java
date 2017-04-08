@@ -10,7 +10,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.Set;
  * Created by johnquinn on 3/13/17.
  */
 
-public class User {
+public class User implements Serializable{
 
     private String name;
     private int age;
@@ -28,6 +28,8 @@ public class User {
     private int sumRatings;
     private int numRatings;
     private double rating;
+    private List<Product> productsIveUploaded;
+    private List<Product> productsIveBought;
 
     public User() {
         this.name = "";
@@ -35,16 +37,20 @@ public class User {
         this.sumRatings = 0;
         this.numRatings = 0;
         this.rating = 0.0;
-        favoriteUsersIveBoughtFrom = new LinkedList<>();
+        favoriteUsersIveBoughtFrom = new LinkedList<String>();
+        productsIveBought = new LinkedList<Product>();
+        productsIveUploaded = new LinkedList<Product>();
     }
 
     public User(String name, int age) {
         this.name = name;
         this.age = age;
-        this.favoriteUsersIveBoughtFrom = new LinkedList<>();
+        this.favoriteUsersIveBoughtFrom = new LinkedList<String>();
         this.sumRatings = 0;
         this.numRatings = 0;
         this.rating = 0.0;
+        productsIveBought = new LinkedList<Product>();
+        productsIveUploaded = new LinkedList<Product>();
     }
 
     public String getName() {
@@ -64,28 +70,18 @@ public class User {
     }
 
     protected List<String> getFavoriteUsersNames() {
-        List<String> favorites = new ArrayList<String>();
-        for (String userID : favoriteUsersIveBoughtFrom) {
-            favorites.add(User.getUserFromDatabase(userID).getName());
+        if (favoriteUsersIveBoughtFrom == null) {
+            favoriteUsersIveBoughtFrom = new LinkedList<String>();
         }
-        return favorites;
+        return favoriteUsersIveBoughtFrom;
     }
 
-    protected void addFavoriteUserLocally(String userID) {
-        favoriteUsersIveBoughtFrom.add(userID);
-    }
-
-    protected static void addFavoriteUserToDatabase(String userID) {
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
-        String currentUserID = fbUser.getUid();
-        User currentUser = User.getUserFromDatabase(currentUserID);
-        currentUser.addFavoriteUserLocally(userID);
-        mDatabase.child("users").child(currentUserID).setValue(currentUser);
+    protected void setFavoriteUsersNames(List<String> favoriteUsers) {
+        this.favoriteUsersIveBoughtFrom = favoriteUsers;
     }
 
 
-    protected void addRating(int rating) {
+    protected double addRating(int rating) {
         sumRatings += rating;
         numRatings++;
         setRating((((double) sumRatings) / numRatings));
@@ -93,7 +89,7 @@ public class User {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
         String currentUserID = fbUser.getUid();
-        mDatabase.child("users").child(currentUserID).child("rating").setValue((((double) sumRatings) / numRatings));
+        return ((double) sumRatings) / numRatings;
     }
 
     public void setRating(double rating) {
@@ -136,6 +132,20 @@ public class User {
             }
         }
         return null;
+    }
+
+    public List<Product> getProductsIveBought() {
+        if (productsIveBought == null) {
+            productsIveBought = new LinkedList<Product>();
+        }
+        return productsIveBought;
+    }
+
+    public List<Product> getProductsIveUploaded() {
+        if (productsIveUploaded == null) {
+            productsIveUploaded = new LinkedList<Product>();
+        }
+        return productsIveUploaded;
     }
 
     @Override
