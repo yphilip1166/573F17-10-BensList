@@ -72,7 +72,8 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                 startActivity(searchIntent);
                 break;
             case (R.id.mapButton) :
-                Intent mapIntent = new Intent(this, Map.class);
+                System.out.println("Hitting MapFragment Button");
+                Intent mapIntent = new Intent(this, MapFragment.class);
                 startActivity(mapIntent);
             default :
                 break;
