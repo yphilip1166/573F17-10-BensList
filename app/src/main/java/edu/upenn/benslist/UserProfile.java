@@ -17,6 +17,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,14 +38,18 @@ import java.io.IOException;
 
 public class UserProfile extends AppCompatActivity {
 
-    private User user;
     private FirebaseUser fbuser;
+    private Boolean submitMode;
     private static final int REQUEST_CODE = 5;
+    DatabaseReference mDatabase;
+    String currentUserID;
+    private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_layout);
+        submitMode = false;
 
         ImageButton imageButton = (ImageButton) findViewById(R.id.imageButton);
         imageButton.setOnClickListener(new ImageButton.OnClickListener() {
@@ -59,14 +64,15 @@ public class UserProfile extends AppCompatActivity {
         });
 
 
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("users");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("users");
         fbuser = FirebaseAuth.getInstance().getCurrentUser();
-        final String currentUserID = fbuser.getUid();
+        currentUserID = fbuser.getUid();
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                System.out.println(dataSnapshot.hasChild(currentUserID));
-                user = dataSnapshot.child(currentUserID).getValue(User.class);
+                User user = dataSnapshot.child(currentUserID).getValue(User.class);
+                setUserValues(user);
+                createButtons(user);
             }
 
             @Override
@@ -75,22 +81,30 @@ public class UserProfile extends AppCompatActivity {
             }
         });
 
-        setUserValues();
-        createButtons();
-
-
     }
 
-    protected void setUserValues() {
+    protected void setUserValues(User user) {
         EditText nameField = (EditText) findViewById(R.id.name);
-        nameField.setText(fbuser.getDisplayName());
+        nameField.setText(user.getName());
 
         EditText emailField = (EditText) findViewById(R.id.emailAddress);
         emailField.setText(fbuser.getEmail());
 
+        EditText address = (EditText) findViewById(R.id.address);
+        String homeAddress = (user.getHomeAddress().equals("")) ? "Enter Home Address" : user.getHomeAddress() ;
+        address.setText(homeAddress);
+
+        EditText interests = (EditText) findViewById(R.id.interests);
+        String userInterests = (user.getInterets().equals("")) ? "Enter Interests" : user.getInterets();
+        interests.setText(userInterests);
+
+        RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
+        int rating = Double.valueOf(user.getRating()/2.0).intValue(); //divide by 2 because rating is out of 5
+        ratingBar.setNumStars(rating);
+
     }
 
-    protected void createButtons() {
+    protected void createButtons(final User user) {
 
         EditText nameField = (EditText) findViewById(R.id.name);
         nameField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -111,6 +125,7 @@ public class UserProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(v.getContext(), MyProductsActivity.class);
+                i.putExtra("User", user);
                 startActivity(i);
 
             }
@@ -121,6 +136,7 @@ public class UserProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(v.getContext(), PreviousPurchasedItems.class);
+                i.putExtra("User", user);
                 startActivity(i);
             }
         });
@@ -130,8 +146,8 @@ public class UserProfile extends AppCompatActivity {
         favoriteUsers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), UserProfileActivity.class);
-                i.putExtra("UseID", fbuser.getUid());
+                Intent i = new Intent(v.getContext(), favoriteUsersActivity.class);
+                i.putExtra("User", user);
                 startActivity(i);
             }
         });
@@ -159,12 +175,39 @@ public class UserProfile extends AppCompatActivity {
     }
 
     /**
+     * Checks if UserProfile is in submitMode.
+     * If SubmitMode = true then it changes all EditText Fields to editable
+     * If SubmitMode = false then it changes all EditText fields to non-editable
+     */
+    private void submitMode() {
+        EditText nameField = (EditText) findViewById(R.id.name);
+        EditText address = (EditText) findViewById(R.id.address);
+        EditText interests = (EditText) findViewById(R.id.interests);
+        EditText emailAddress = (EditText) findViewById(R.id.emailAddress);
+
+        if (submitMode) {
+            nameField.setEnabled(true);
+            address.setEnabled(true);
+            interests.setEnabled(true);
+            emailAddress.setEnabled(true);
+        } else {
+            nameField.setEnabled(false);
+            address.setEnabled(false);
+            interests.setEnabled(false);
+            emailAddress.setEnabled(false);
+        }
+    }
+
+    /**
      * Code Snippet for adding the menu bar 3 points to select Logout, About, Home, Terms
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
+        this.menu = menu;
         inflater.inflate(R.menu.tools, menu);
+        inflater.inflate(R.menu.submit, menu);
+
         return true;
     }
 
@@ -200,6 +243,28 @@ public class UserProfile extends AppCompatActivity {
                 intent = new Intent(this, TermsActivity.class);
                 startActivity(intent);
                 return true;
+
+            case R.id.Edit:
+                //Enable Editting fields
+                MenuItem editButton = menu.findItem(R.id.Edit);
+                if (submitMode) {
+                    submitMode = false;
+                    EditText nameField = (EditText) findViewById(R.id.name);
+                    EditText address = (EditText) findViewById(R.id.address);
+                    EditText interests = (EditText) findViewById(R.id.interests);
+                    EditText emailAddress = (EditText) findViewById(R.id.emailAddress);
+                    mDatabase.child(currentUserID).child("email").setValue(String.valueOf(emailAddress.getText()));
+                    mDatabase.child(currentUserID).child("name").setValue(String.valueOf(nameField.getText()));
+                    mDatabase.child(currentUserID).child("address").setValue(String.valueOf(address.getText()));
+                    mDatabase.child(currentUserID).child("interests").setValue(String.valueOf(interests.getText()));
+
+                    editButton.setTitle("Edit");
+
+                } else {
+                    submitMode = true;
+                    editButton.setTitle("Submit");
+                }
+                submitMode();
 
             default:
                 //Could not recognize a button press

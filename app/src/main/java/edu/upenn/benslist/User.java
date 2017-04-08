@@ -31,6 +31,8 @@ public class User implements Serializable {
     private double rating;
     private List<Product> productsIveUploaded;
     private List<Product> productsIveBought;
+    private String homeAddress;
+    private String interets;
 
     public User() {
         this.name = "";
@@ -41,6 +43,8 @@ public class User implements Serializable {
         this.favoriteUsersIveBoughtFrom = new LinkedList<>();
         this.productsIveUploaded = new LinkedList<>();
         this.productsIveBought = new LinkedList<>();
+        this.interets = "";
+        this.homeAddress = "";
     }
 
     public User(String name, int age) {
@@ -52,6 +56,8 @@ public class User implements Serializable {
         this.rating = 0.0;
         this.productsIveUploaded = new LinkedList<>();
         this.productsIveBought = new LinkedList<>();
+        this.interets = "";
+        this.homeAddress = "";
     }
 
     public void setProductsIveBought(List<Product> productsIveBought) {
@@ -84,6 +90,20 @@ public class User implements Serializable {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public String getInterets() {
+        return interets;
+    }
+    public void setInterets(String interets) {
+        this.interets = interets;
+    }
+    public String getHomeAddress() {
+        return homeAddress;
+    }
+
+    public void setHomeAddress(String address) {
+        this.homeAddress = address;
     }
 
     protected List<String> getFavoriteUsersNames() {

@@ -66,7 +66,7 @@ public class ViewUsersProfileActivity extends AppCompatActivity implements View.
                 break;
 
             case (R.id.viewFavoriteUsersButton) :
-                Intent intent = new Intent(this, UserProfileActivity.class);
+                Intent intent = new Intent(this, favoriteUsersActivity.class);
                 intent.putExtra("User", user);
                 startActivityForResult(intent, RESULT_VIEW_FAVORITE_USERS);
                 break;

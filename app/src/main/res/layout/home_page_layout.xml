@@ -37,6 +37,7 @@
         android:id="@+id/mapButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="View Listings Nearby" />
+        android:text="View Listings Nearby"
+        android:textStyle="bold" />
 
 </LinearLayout>
