@@ -25,6 +25,14 @@
             android:textStyle="normal|bold" />
 
         <Button
+            android:id="@+id/sortResultsByPriceButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sort Results By Price"
+            android:textAlignment="center"
+            android:textStyle="normal|bold" />
+
+        <Button
             android:id="@+id/goBackToHomePageFromSearchResultsButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

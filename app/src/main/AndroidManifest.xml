@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -30,7 +32,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".AboutActivity" />
-        <activity android:name=".TermsActivity"/>
+
+        <activity android:name=".TermsActivity"></activity>
         <activity android:name=".SearchPageActivity"/>
         <activity android:name=".FilterSearchResultsActivity"/>
         <activity android:name=".SearchResultsActivity"/>
@@ -46,7 +49,10 @@
         <activity android:name=".ViewUploadedProductsActivity"/>
         <activity android:name=".ViewUsersProfileActivity"/>
       <activity android:name=".PublicForumActivity"></activity>
-
+        <activity android:name=".favoriteUsersActivity"/>
+        <activity android:name=".MapsActivity"/>
+      <activity android:name=".InboxMessageActivity"></activity>
+      
     </application>
 
 </manifest>

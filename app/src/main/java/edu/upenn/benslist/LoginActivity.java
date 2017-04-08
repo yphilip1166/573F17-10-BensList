@@ -22,6 +22,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.sendbird.android.SendBird;
+import com.sendbird.android.SendBirdException;
+
+import static android.provider.UserDictionary.Words.APP_ID;
 
 /**
  * A login screen that offers login via email/password.
@@ -48,7 +52,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -120,8 +123,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-
-
     /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
@@ -130,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
     private void attemptSignin() {
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
+        final String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         System.out.println(email + password);
@@ -164,7 +165,7 @@ public class LoginActivity extends AppCompatActivity {
     private void createAccount() {
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
+        final String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         System.out.println(email + password);

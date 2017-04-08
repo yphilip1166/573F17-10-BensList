@@ -8,6 +8,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.sendbird.android.SendBird;
+
+/**
+ * Created by joshross
+ */
+
 public class AboutActivity extends AppCompatActivity {
 
     @Override

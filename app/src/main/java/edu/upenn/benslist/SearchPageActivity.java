@@ -14,6 +14,8 @@ import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.sendbird.android.SendBird;
+
 /**
  * Created by johnquinn on 2/14/17.
  */
@@ -59,6 +61,7 @@ public class SearchPageActivity extends AppCompatActivity implements AdapterView
                 Intent i = new Intent(this, SearchResultsActivity.class);
                 i.putExtra("Search Category", searchCategory);
                 i.putExtra("Search Query", searchQuery);
+                i.putExtra("Sort By Price", false);
                 startActivity(i);
                 break;
 

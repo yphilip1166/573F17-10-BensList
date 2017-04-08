@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.sendbird.android.SendBird;
 
 
 /**
@@ -66,6 +67,11 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             case (R.id.searchUsers) :
                 Intent searchIntent = new Intent(this, SearchUsers.class);
                 startActivity(searchIntent);
+                break;
+            case (R.id.mapButton) :
+                System.out.println("clicked map button");
+                Intent mapIntent = new Intent(this, MapsActivity.class);
+                startActivity(mapIntent);
             default :
                 break;
         }
@@ -123,6 +129,16 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             case R.id.action_forum:
                 //Go to forum page
                 intent = new Intent(this, PublicForumActivity.class);
+                startActivity(intent);
+                return true;
+
+            case (R.id.action_message) :
+                intent = new Intent(this, InboxMessageActivity.class);
+                /*
+                Todo get the user email and pass it into the InboxMessageActivity. Fix line below
+                 */
+                intent.putExtra("Email", "mdop1102@gmail.com");
+                intent.putExtra("Name", "Max Doppelt");
                 startActivity(intent);
                 return true;
 

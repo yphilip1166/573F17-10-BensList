@@ -31,6 +31,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.sendbird.android.SendBird;
+
+/**
+ * Created by joshross
+ */
 
 public class PublicForumActivity extends AppCompatActivity
 implements GoogleApiClient.OnConnectionFailedListener {
@@ -48,12 +53,12 @@ implements GoogleApiClient.OnConnectionFailedListener {
             }
         }
 
-        private static final String TAG = "MainActivity";
+        private static final String TAG = "PublicForumActivity";
         public static final String MESSAGES_CHILD = "messages";
         private static final int REQUEST_INVITE = 1;
         private static final int REQUEST_IMAGE = 2;
         private static final String LOADING_IMAGE_URL = "https://www.google.com/images/spin-32.gif";
-        public static final int DEFAULT_MSG_LENGTH_LIMIT = 10;
+        public static final int DEFAULT_MSG_LENGTH_LIMIT = 100;
         public static final String ANONYMOUS = "anonymous";
         private static final String MESSAGE_SENT_EVENT = "message_sent";
         private String mUsername;
@@ -65,7 +70,6 @@ implements GoogleApiClient.OnConnectionFailedListener {
         private Button mSendButton;
         private RecyclerView mMessageRecyclerView;
         private LinearLayoutManager mLinearLayoutManager;
-        private ProgressBar mProgressBar;
         private EditText mMessageEditText;
         private ImageView mAddMessageImageView;
 
@@ -102,7 +106,6 @@ implements GoogleApiClient.OnConnectionFailedListener {
                     .build();
 
             // Initialize ProgressBar and RecyclerView.
-            mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
             mMessageRecyclerView = (RecyclerView) findViewById(R.id.messageRecyclerView);
             mLinearLayoutManager = new LinearLayoutManager(this);
             mLinearLayoutManager.setStackFromEnd(true);
@@ -117,7 +120,6 @@ implements GoogleApiClient.OnConnectionFailedListener {
                 @Override
                 protected void populateViewHolder(final MessageViewHolder viewHolder,
                                                   Message friendlyMessage, int position) {
-                    mProgressBar.setVisibility(ProgressBar.INVISIBLE);
                     if (friendlyMessage.getText() != null) {
                         viewHolder.messageTextView.setText(friendlyMessage.getText());
                         viewHolder.messageTextView.setVisibility(TextView.VISIBLE);
@@ -183,13 +185,13 @@ implements GoogleApiClient.OnConnectionFailedListener {
                 }
             });
 
-            mAddMessageImageView = (ImageView) findViewById(R.id.addMessageImageView);
-            mAddMessageImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //Todo include capability to send images if we want to
-                }
-            });
+//            mAddMessageImageView = (ImageView) findViewById(R.id.addMessageImageView);
+//            mAddMessageImageView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    //Todo include capability to send images if we want to
+//                }
+//            });
 
         }
 

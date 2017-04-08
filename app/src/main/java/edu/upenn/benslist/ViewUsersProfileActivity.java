@@ -35,6 +35,8 @@ public class ViewUsersProfileActivity extends AppCompatActivity implements View.
         Button previousPurchasesButton = (Button) findViewById(R.id.viewPreviousPurchasesButton);
         Button reportUserButton = (Button) findViewById(R.id.reportUserButton);
 
+        Button messageUserButton = (Button) findViewById(R.id.messageUserButton);
+
         TextView usersNameText = (TextView) findViewById(R.id.usersNameTextField);
         TextView usersAgeText = (TextView) findViewById(R.id.usersAgeTextField);
         TextView usersRatingText = (TextView) findViewById(R.id.usersRatingTextField);
@@ -47,6 +49,8 @@ public class ViewUsersProfileActivity extends AppCompatActivity implements View.
         viewFavoriteUsersButton.setOnClickListener(this);
         previousPurchasesButton.setOnClickListener(this);
         reportUserButton.setOnClickListener(this);
+
+        messageUserButton.setOnClickListener(this);
     }
 
 
@@ -63,12 +67,14 @@ public class ViewUsersProfileActivity extends AppCompatActivity implements View.
             case (R.id.viewPreviousPurchasesButton) :
                 Intent i = new Intent(this, ViewUploadedProductsActivity.class);
                 i.putExtra("User", (Serializable) user);
+
                 i.putExtra("Type", "previousPurchases");
                 startActivityForResult(i, RESULT_VIEW_PREVIOUS_PURCHASES);
                 break;
 
             case (R.id.viewFavoriteUsersButton) :
-                Intent intent = new Intent(this, UserProfileActivity.class);
+
+                Intent intent = new Intent(this, favoriteUsersActivity.class);
                 intent.putExtra("User", (Serializable) user);
                 startActivityForResult(intent, RESULT_VIEW_FAVORITE_USERS);
                 break;
@@ -76,6 +82,16 @@ public class ViewUsersProfileActivity extends AppCompatActivity implements View.
             case (R.id.reportUserButton) :
                 //all reporting does is decrease their rating
                 user.addRating(-10);
+                break;
+
+            case (R.id.messageUserButton) :
+                Intent mIntent = new Intent(this, InboxMessageActivity.class);
+                /*
+                Todo get the user email and pass it into the InboxMessageActivity. Fix line below
+                 */
+                mIntent.putExtra("Email", user.getName());
+                mIntent.putExtra("Name", user.getName());
+                startActivity(mIntent);
                 break;
 
             default :

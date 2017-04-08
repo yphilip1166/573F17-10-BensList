@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sendbird.android.SendBird;
+
 /**
  * Created by johnquinn on 3/14/17.
  */
@@ -97,7 +99,7 @@ public class CheckoutProductActivity extends AppCompatActivity implements View.O
                 break;
 
             case (R.id.detailedListingCheckUploadersPage) :
-                Intent newIntent = new Intent(this, UserProfileActivity.class);
+                Intent newIntent = new Intent(this, favoriteUsersActivity.class);
                 newIntent.putExtra("UserID", product.getUploaderID());
                 startActivity(newIntent);
                 break;
