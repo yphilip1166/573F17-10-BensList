@@ -24,4 +24,9 @@
             android:id="@+id/action_forum"
             android:title="Public Forum">
         </item>
+
+    <item
+        android:id="@+id/action_message"
+        android:title="Test Message">
+    </item>
 </menu>

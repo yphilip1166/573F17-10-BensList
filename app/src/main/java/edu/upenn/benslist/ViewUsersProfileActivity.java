@@ -32,6 +32,7 @@ public class ViewUsersProfileActivity extends AppCompatActivity implements View.
         Button viewFavoriteUsersButton = (Button) findViewById(R.id.viewFavoriteUsersButton);
         Button previousPurchasesButton = (Button) findViewById(R.id.viewPreviousPurchasesButton);
         Button reportUserButton = (Button) findViewById(R.id.reportUserButton);
+        Button messageUserButton = (Button) findViewById(R.id.messageUserButton);
 
         TextView usersNameText = (TextView) findViewById(R.id.usersNameTextField);
         TextView usersAgeText = (TextView) findViewById(R.id.usersAgeTextField);
@@ -45,6 +46,7 @@ public class ViewUsersProfileActivity extends AppCompatActivity implements View.
         viewFavoriteUsersButton.setOnClickListener(this);
         previousPurchasesButton.setOnClickListener(this);
         reportUserButton.setOnClickListener(this);
+        messageUserButton.setOnClickListener(this);
     }
 
 
@@ -74,6 +76,16 @@ public class ViewUsersProfileActivity extends AppCompatActivity implements View.
             case (R.id.reportUserButton) :
                 //all reporting does is decrease their rating
                 user.addRating(-10);
+                break;
+
+            case (R.id.messageUserButton) :
+                Intent mIntent = new Intent(this, InboxMessageActivity.class);
+                /*
+                Todo get the user email and pass it into the InboxMessageActivity. Fix line below
+                 */
+                mIntent.putExtra("Email", user.getName());
+                mIntent.putExtra("Name", user.getName());
+                startActivity(mIntent);
                 break;
 
             default :
