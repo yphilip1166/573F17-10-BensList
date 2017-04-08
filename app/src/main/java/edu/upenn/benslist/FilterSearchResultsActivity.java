@@ -14,6 +14,8 @@ import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
+import com.sendbird.android.SendBird;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -216,6 +218,12 @@ public class FilterSearchResultsActivity extends AppCompatActivity implements Vi
             case R.id.action_logout:
                 //Logs out the current user and brings user to the logout page
                 //Need to add code for actually logging out a user
+                SendBird.disconnect(new SendBird.DisconnectHandler() {
+                    @Override
+                    public void onDisconnected() {
+                        // You are disconnected from SendBird.
+                    }
+                });
                 intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 return true;

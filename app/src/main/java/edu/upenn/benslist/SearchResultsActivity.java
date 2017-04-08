@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.sendbird.android.SendBird;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -280,6 +281,12 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
             case R.id.action_logout:
                 //Logs out the current user and brings user to the logout page
                 //Need to add code for actually logging out a user
+                SendBird.disconnect(new SendBird.DisconnectHandler() {
+                    @Override
+                    public void onDisconnected() {
+                        // You are disconnected from SendBird.
+                    }
+                });
                 intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 return true;
