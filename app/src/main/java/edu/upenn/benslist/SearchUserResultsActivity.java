@@ -29,7 +29,7 @@ import java.util.List;
  * Created by maxdoppelt on 4/1/17.
  */
 
-public class SearchUserResultsActivity extends AppCompatActivity implements View.OnClickListener {
+public class SearchUserResultsActivity extends AppCompatActivity implements View.OnClickListener, Serializable {
 
     private static final int RESULT_GO_TO_FILTER_SEARCH_RESULTS = 4;
     private String searchQuery;

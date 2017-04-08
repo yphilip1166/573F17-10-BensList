@@ -82,7 +82,7 @@ public class CheckoutProductActivity extends AppCompatActivity implements View.O
         switch (v.getId()) {
             case (R.id.detailedListingConfirmPurchase) :
                 //TODO - notify the uploader that someone bought their product - next iteration??
-                //add this to the current users list of products that they've bought
+
                 Intent i = new Intent(this, ProductPurchaseConfirmationActivity.class);
                 i.putExtra("UploaderID", product.getUploaderID());
                 startActivity(i);

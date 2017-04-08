@@ -57,7 +57,7 @@ public class Product implements Serializable, Comparable {
     }
 
     //this functino works fine
-    public static void writeNewProductToDatabase(String name, String description,
+    public static Product writeNewProductToDatabase(String name, String description,
                                                     String price, String location, String phoneNumber,
                                                     String category, String currentUserName) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -65,7 +65,8 @@ public class Product implements Serializable, Comparable {
         String currentUserID = fbUser.getUid();
         Product newProduct = new Product(name, description, price, location, phoneNumber,
                 category, currentUserID, currentUserName);
-        mDatabase.child("products").child(newProduct.getProductID()).setValue(newProduct);
+        //mDatabase.child("products").child(newProduct.getProductID()).setValue(newProduct);
+        return newProduct;
     }
 
 

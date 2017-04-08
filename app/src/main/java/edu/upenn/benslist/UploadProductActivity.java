@@ -85,15 +85,22 @@ View.OnClickListener {
                 EditText productLocation = (EditText) findViewById(R.id.editLocation);
                 EditText productPhoneNumber = (EditText) findViewById(R.id.editPhoneNumber);
 
-                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+                final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
                 FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
-                String currentUserID = fbUser.getUid();
+                final String currentUserID = fbUser.getUid();
 
+
+                final Product product = Product.writeNewProductToDatabase(productName.getText().toString(),
                 Product.writeNewProductToDatabase(productName.getText().toString(),
                         productDescription.getText().toString(), productPrice.getText().toString(),
                         productLocation.getText().toString(), productPhoneNumber.getText().toString(),
                         itemCategory, currentUserName);
 
+                DatabaseReference ref = mDatabase.child("products").push();
+                ref.setValue(product);
+
+                mDatabase.child("users").child(currentUserID).child("productsIveUploaded").child(
+                        ref.getKey()).setValue(productName.getText().toString());
 
                 setResult(RESULT_OK, returnIntent);
                 finish();

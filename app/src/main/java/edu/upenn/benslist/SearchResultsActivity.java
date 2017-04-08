@@ -43,6 +43,7 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
     private boolean sortByPrice;
 
     private DatabaseReference mProductReference;
+    private DatabaseReference mUserReference;
     private ValueEventListener mProductListener;
 
     @Override
@@ -59,6 +60,8 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
         // Initialize Database
         mProductReference = FirebaseDatabase.getInstance().getReference()
                 .child("products");
+        mUserReference = FirebaseDatabase.getInstance().getReference()
+                .child("users");
 
         //Initialize views
         Button filterResultsButton = (Button) findViewById(R.id.filterSearchResultsButton);
@@ -75,12 +78,16 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
     public void onStart() {
         super.onStart();
 
+        FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
+
+
         ValueEventListener productListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<Product> products = new LinkedList<>();
                 for (DataSnapshot productSnapshot : dataSnapshot.getChildren()) {
                     Product product = productSnapshot.getValue(Product.class);
+
                     if (product.getCategory().equals(searchCategory) &&
                             product.getName().contains(searchQuery)) {
                         products.add(product);

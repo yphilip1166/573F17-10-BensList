@@ -108,5 +108,4 @@ public class ViewUploadedProductsActivity extends AppCompatActivity implements V
         }
     }
 
-
 }
