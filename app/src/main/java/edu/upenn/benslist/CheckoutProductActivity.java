@@ -99,7 +99,7 @@ public class CheckoutProductActivity extends AppCompatActivity implements View.O
                 break;
 
             case (R.id.detailedListingCheckUploadersPage) :
-                Intent newIntent = new Intent(this, UserProfileActivity.class);
+                Intent newIntent = new Intent(this, favoriteUsersActivity.class);
                 newIntent.putExtra("UserID", product.getUploaderID());
                 startActivity(newIntent);
                 break;
