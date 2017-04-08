@@ -89,13 +89,11 @@ View.OnClickListener {
                 FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
                 String currentUserID = fbUser.getUid();
 
-                //System.out.println(mDatabase.child("users").child(currentUserID).child("name").getKey());
-                //String uploaderName = User.getUserFromDatabase(currentUserID).getName();
-
                 Product.writeNewProductToDatabase(productName.getText().toString(),
                         productDescription.getText().toString(), productPrice.getText().toString(),
                         productLocation.getText().toString(), productPhoneNumber.getText().toString(),
                         itemCategory, currentUserName);
+
 
                 setResult(RESULT_OK, returnIntent);
                 finish();

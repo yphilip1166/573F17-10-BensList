@@ -25,6 +25,7 @@ import com.sendbird.android.SendBird;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -39,6 +40,7 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
     private String searchQuery;
     private ArrayList<String> filterCategories;
     private ViewGroup mLinearLayout;
+    private boolean sortByPrice;
 
     private DatabaseReference mProductReference;
     private ValueEventListener mProductListener;
@@ -52,6 +54,7 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
         this.searchCategory = getIntent().getStringExtra("Search Category");
         this.searchQuery = getIntent().getStringExtra("Search Query");
         this.filterCategories = getIntent().getStringArrayListExtra("Filter Categories");
+        this.sortByPrice = getIntent().getBooleanExtra("Sort By Price", false);
 
         // Initialize Database
         mProductReference = FirebaseDatabase.getInstance().getReference()
@@ -62,6 +65,8 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
         filterResultsButton.setOnClickListener(this);
         Button backToHomePageButton = (Button) findViewById(R.id.goBackToHomePageFromSearchResultsButton);
         backToHomePageButton.setOnClickListener(this);
+        Button sortByPriceButton = (Button) findViewById(R.id.sortResultsByPriceButton);
+        sortByPriceButton.setOnClickListener(this);
 
         mLinearLayout = (ViewGroup) findViewById(R.id.searchResultsLinearLayout);
     }
@@ -96,9 +101,12 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
         };
 
         mProductReference.addValueEventListener(productListener);
+
     }
 
     protected void addProductsFromSearch(List<Product> products) {
+
+        Collections.sort(products);
 
         /*
         TODO - use searchCategory, searchQuery, and searchFilters to access the database
@@ -107,15 +115,6 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
         /*
         TODO - create function that returns set of Products that fit the search criteria above
          */
-
-        /*
-        This commented out line should actually return the search results. We are using a dummy
-        function to get search results
-         */
-        //List<Product> productsFromSearch = Product.getProductsFromDatabaseSearch(searchCategory, searchQuery);
-
-        //Dummy results
-        List<Product> productsFromSearch = getExampleProductSearch();
 
         final Context thisContext = this;
 
@@ -203,6 +202,12 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
             case (R.id.goBackToHomePageFromSearchResultsButton) :
                 Intent intent = new Intent(this, HomePageActivity.class);
                 startActivity(intent);
+                break;
+            case (R.id.sortResultsByPriceButton) :
+                Intent newIntent = new Intent(this, SearchResultsActivity.class);
+                newIntent.putExtra("Search Category", searchCategory);
+                newIntent.putExtra("Search Query", searchQuery);
+                newIntent.putExtra("Sort By Price", true);
                 break;
             default :
                 break;

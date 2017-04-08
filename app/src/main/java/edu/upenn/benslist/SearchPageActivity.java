@@ -61,6 +61,7 @@ public class SearchPageActivity extends AppCompatActivity implements AdapterView
                 Intent i = new Intent(this, SearchResultsActivity.class);
                 i.putExtra("Search Category", searchCategory);
                 i.putExtra("Search Query", searchQuery);
+                i.putExtra("Sort By Price", false);
                 startActivity(i);
                 break;
 

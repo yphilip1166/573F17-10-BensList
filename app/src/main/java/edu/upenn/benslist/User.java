@@ -10,6 +10,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -20,7 +21,7 @@ import java.util.Set;
  * Created by johnquinn on 3/13/17.
  */
 
-public class User {
+public class User implements Serializable {
 
     private String name;
     private int age;
@@ -28,6 +29,8 @@ public class User {
     private int sumRatings;
     private int numRatings;
     private double rating;
+    private List<Product> productsIveUploaded;
+    private List<Product> productsIveBought;
 
     public User() {
         this.name = "";
@@ -35,7 +38,9 @@ public class User {
         this.sumRatings = 0;
         this.numRatings = 0;
         this.rating = 0.0;
-        favoriteUsersIveBoughtFrom = new LinkedList<>();
+        this.favoriteUsersIveBoughtFrom = new LinkedList<>();
+        this.productsIveUploaded = new LinkedList<>();
+        this.productsIveBought = new LinkedList<>();
     }
 
     public User(String name, int age) {
@@ -45,6 +50,24 @@ public class User {
         this.sumRatings = 0;
         this.numRatings = 0;
         this.rating = 0.0;
+        this.productsIveUploaded = new LinkedList<>();
+        this.productsIveBought = new LinkedList<>();
+    }
+
+    public void setProductsIveBought(List<Product> productsIveBought) {
+        this.productsIveBought = productsIveBought;
+    }
+
+    public List<Product> getProductsIveBought() {
+        return productsIveBought;
+    }
+
+    public void setProductsIveUploaded(List<Product> productsIveUploaded) {
+        this.productsIveUploaded = productsIveUploaded;
+    }
+
+    public List<Product> getProductsIveUploaded() {
+        return productsIveUploaded;
     }
 
     public String getName() {
@@ -69,6 +92,40 @@ public class User {
             favorites.add(User.getUserFromDatabase(userID).getName());
         }
         return favorites;
+    }
+
+    protected void addProductIveUploadedLocally(Product product) {
+        productsIveUploaded.add(product);
+    }
+
+    protected static void addProductIveUploadedToDatabase(Product product) {
+        //HOW DO WE DO THIS??
+        //Let's try this:
+
+        FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
+        String currentUserID = fbUser.getUid();
+
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("users");
+        mDatabase.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for (DataSnapshot user: snapshot.getChildren()) {
+                    Log.d("debugging", "user's key is " + user.getKey());
+                    User thisUser = user.getValue(User.class);
+                    //if (thisUser.getName().equals(uName)) {
+                        //users.add(thisUser);
+                        //break;
+                    //}
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     protected void addFavoriteUserLocally(String userID) {

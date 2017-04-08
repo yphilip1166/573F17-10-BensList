@@ -6,9 +6,11 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
 
     <application
         android:allowBackup="true"
@@ -16,10 +18,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
-
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name">
@@ -30,7 +29,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".AboutActivity" />
-        <activity android:name=".TermsActivity"/>
+        <activity android:name=".TermsActivity"></activity>
         <activity android:name=".SearchPageActivity"/>
         <activity android:name=".FilterSearchResultsActivity"/>
         <activity android:name=".SearchResultsActivity"/>
@@ -42,8 +41,12 @@
         <activity android:name=".PreviousPurchasedItems"/>
         <activity android:name=".UserProfileActivity"/>
         <activity android:name=".MyProductsActivity"/>
-      <activity android:name=".PublicForumActivity"></activity>
+        <activity android:name=".ViewUsersProfileActivity"/>
+        <activity android:name=".ViewUploadedProductsActivity"/>
 
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
 </manifest>

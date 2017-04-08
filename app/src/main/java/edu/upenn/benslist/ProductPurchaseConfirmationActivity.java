@@ -60,6 +60,7 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
         switch (v.getId()) {
             case (R.id.addUserToFavsButton) :
                 //TODO - ADD THIS PERSON TO YOUR FAVORITES - where "user" is the person you want to add
+
                 //DONE - check line below
                 User.addFavoriteUserToDatabase(uploaderID);
                 break;
