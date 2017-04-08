@@ -21,7 +21,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.sendbird.android.SendBird;
 
 public class UploadProductActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,
 View.OnClickListener {
@@ -90,8 +89,7 @@ View.OnClickListener {
                 final String currentUserID = fbUser.getUid();
 
 
-                final Product product = Product.writeNewProductToDatabase(productName.getText().toString(),
-                Product.writeNewProductToDatabase(productName.getText().toString(),
+                Product product = Product.writeNewProductToDatabase(productName.getText().toString(),
                         productDescription.getText().toString(), productPrice.getText().toString(),
                         productLocation.getText().toString(), productPhoneNumber.getText().toString(),
                         itemCategory, currentUserName);
