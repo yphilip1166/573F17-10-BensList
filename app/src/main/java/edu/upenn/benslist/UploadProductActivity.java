@@ -113,17 +113,16 @@ View.OnClickListener {
                     FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
                     final String currentUserID = fbUser.getUid();
 
-
+                  DatabaseReference ref = mDatabase.child("products").push();
                     Product product = Product.writeNewProductToDatabase(productName.getText().toString(),
                             productDescription.getText().toString(), priceAsDouble,
                             productLocation.getText().toString(), productPhoneNumber.getText().toString(),
-                            itemCategory, currentUserName, distance);
+                            itemCategory, currentUserName, ref.getKey(), distance);
 
-                    DatabaseReference ref = mDatabase.child("products").push();
                     ref.setValue(product);
 
-                    mDatabase.child("users").child(currentUserID).child("productsIveUploaded").child(
-                            ref.getKey()).setValue(productName.getText().toString());
+                    ref = mDatabase.child("users").child(currentUserID).child("productsIveUploaded").push();
+                ref.setValue(product);
 
                     setResult(RESULT_OK, returnIntent);
                     finish();

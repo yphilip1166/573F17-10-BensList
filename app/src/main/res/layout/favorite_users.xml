@@ -3,11 +3,6 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ListView
-        android:id="@+id/favoriteUsersList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
     <Button
         android:id="@+id/doneViewingFavoriteUsersButton"
         android:layout_width="match_parent"
@@ -15,5 +10,11 @@
         android:text="Done"
         android:textAlignment="center"
         android:textStyle="normal|bold" />
+
+    <ListView
+        android:id="@+id/favoriteUsersList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 
 </LinearLayout>

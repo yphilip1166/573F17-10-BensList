@@ -2,10 +2,10 @@ package edu.upenn.benslist;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -30,7 +30,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.sendbird.android.SendBird;
 
 public class InboxMessageActivity extends AppCompatActivity
         implements GoogleApiClient.OnConnectionFailedListener{
@@ -62,6 +61,7 @@ public class InboxMessageActivity extends AppCompatActivity
     private ImageView mAddMessageImageView;
 
     //Messenger information
+    private String userId;
     private String toEmail;
     private String toName;
     private String mEmail;
@@ -85,8 +85,9 @@ public class InboxMessageActivity extends AppCompatActivity
         /*
         Todo fix the ViewUsersProfileActivity so that the real email of the other user is passed in
          */
-        this.toEmail = (String) getIntent().getStringExtra("Email");
+        this.userId = (String) getIntent().getStringExtra("UserId");
         this.toName = (String) getIntent().getStringExtra("Name");
+        this.toEmail = ""; //Delete
 
         // Initialize Firebase Auth
         mFirebaseAuth = FirebaseAuth.getInstance();

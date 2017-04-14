@@ -115,6 +115,7 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
             }
 
             public boolean fulfillsSearchRequirements(Product product) {
+              // @JOSH add condition to check blocked users to product uploader id
                 //check if it fulfills the search category and search query first
                 if (!product.getCategory().equals(searchCategory) && !product.getName().contains(searchQuery)) {
                     return false;
@@ -224,43 +225,6 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
             mLinearLayout.addView(view);
         }
     }
-
-
-    /*
-    protected List<Product> getExampleProductSearch() {
-        List<Product> products = new LinkedList<>();
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
-        String currentUserID = fbUser.getUid();
-
-        Product product1 = new Product("Air Force Ones", "sick shoes", "$50", "Philadelphia", "123-456-7890",
-                "Clothes", currentUserID, "JP");
-
-        Product product2 = new Product("Jordan VIIs", "sicker shoes", "$10", "Philadelphia", "123-456-4560",
-                "Clothes", currentUserID, "JP");
-
-        Product product3 = new Product("Leather Couch", "good condition", "$50", "Philadelphia", "123-456-7890",
-                "Furniture", currentUserID, "JP");
-
-        Product product4 = new Product("Nike Crewneck", "Black", "$40", "Philadelphia", "123-456-7890",
-                "Clothes", currentUserID, "JP");
-
-        Product product5 = new Product("Blue Nike Elites", "sick socks", "$15", "Philadelphia", "123-456-7890",
-                "Clothes", currentUserID, "JP");
-
-        Product product6 = new Product("Nike Joggers", "Grey", "$75", "Philadelphia", "123-456-7890",
-                "Clothes", currentUserID, "JP");
-
-        products.add(product1);
-        products.add(product2);
-        products.add(product3);
-        products.add(product4);
-        products.add(product5);
-        products.add(product6);
-        return products;
-    }
-    */
-
 
 
     @Override

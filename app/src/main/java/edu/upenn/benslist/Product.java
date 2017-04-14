@@ -51,8 +51,9 @@ public class Product implements Serializable, Comparable {
         this.locationCategory = -1;
     }
 
+
     public Product(String name, String description, double priceAsDouble, String location,
-                   String phoneNumber, String category, String uploaderID, String uploaderName,
+                   String phoneNumber, String category, String uploaderID, String uploaderName, String productId,
                    double distance) {
         this.name = name;
         this.description = description;
@@ -63,7 +64,7 @@ public class Product implements Serializable, Comparable {
         this.uploaderName = uploaderName;
         this.reviews = new LinkedList<>();
         numProducts++;
-        this.productID = numProducts + "";
+        this.productID = productId;
 
         //TODO - new stuff April 13th (JP)
         this.priceAsDouble = priceAsDouble;
@@ -103,13 +104,13 @@ public class Product implements Serializable, Comparable {
     //this functino works fine
     public static Product writeNewProductToDatabase(String name, String description,
                                                     double priceAsDouble, String location, String phoneNumber,
-                                                    String category, String currentUserName,
+                                                    String category, String currentUserName, String productId, 
                                                     double distance) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
         String currentUserID = fbUser.getUid();
         Product newProduct = new Product(name, description, priceAsDouble, location, phoneNumber,
-                category, currentUserID, currentUserName, distance);
+                category, currentUserID, currentUserName, productId, distance);
         //mDatabase.child("products").child(newProduct.getProductID()).setValue(newProduct);
         return newProduct;
     }

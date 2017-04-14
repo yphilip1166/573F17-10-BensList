@@ -28,6 +28,7 @@ public class User implements Serializable {
     private String email;
     private String address;
     private String interests;
+    private String userId;
 
     public User() {
         this.name = "";
@@ -36,11 +37,28 @@ public class User implements Serializable {
         this.numRatings = 0;
         this.rating = 0.0;
 
-        this.favoriteUsersIveBoughtFrom = new LinkedList<>();
-        this.productsIveUploaded = new LinkedList<>();
-        this.productsIveBought = new LinkedList<>();
+        this.favoriteUsersIveBoughtFrom = new LinkedList<String>();
+        this.productsIveUploaded = new LinkedList<Product>();
+        this.productsIveBought = new LinkedList<Product>();
         this.interests = "";
         this.address = "";
+        this.userId = "";
+
+    }
+
+    public User(String name, String email, String address, String interests, List<Product> productsIveUploaded,
+                List<Product> productsIveBought, List<String> favoriteUsersIveBoughtFrom) {
+        this.name = name;
+        this.age = 0;
+        this.sumRatings = 0;
+        this.numRatings = 0;
+        this.rating = 0.0;
+
+        this.favoriteUsersIveBoughtFrom = new LinkedList<String>();
+        this.productsIveUploaded = new LinkedList<Product>();
+        this.productsIveBought = new LinkedList<Product>();
+        this.interests = interests;
+        this.address = address;
     }
 
     public void setProductsIveBought(List<Product> productsIveBought) {
