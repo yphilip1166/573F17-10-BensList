@@ -98,7 +98,7 @@ public class InboxMessageActivity extends AppCompatActivity
          */
         mEmail = mFirebaseUser.getEmail();
         //mUsername = mFirebaseUser.getUid();
-        mUsername = "Josh Ross";
+        mUsername = "Max Doppelt";
 
         String user1;
         String user2;

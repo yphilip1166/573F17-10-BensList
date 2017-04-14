@@ -46,6 +46,7 @@
         <activity android:name=".MyProductsActivity" />
         <activity android:name=".ViewUsersProfileActivity" />
         <activity android:name=".ViewUploadedProductsActivity" />
+        <activity android:name=".PublicForumActivity" />
         <activity android:name=".InboxMessageActivity"></activity>
     </application>
 
