@@ -22,13 +22,12 @@ import com.sendbird.android.SendBird;
 This page simply displays a list of a user's favorite users that they've bought from.
  */
 
-    //TODO - TYLER - this file is for you to edit how you wish (including user_profile.xml)
-public class UserProfileActivity extends AppCompatActivity implements View.OnClickListener {
+public class favoriteUsersActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_profile);
+        setContentView(R.layout.favorite_users);
 
         User user = (User) getIntent().getSerializableExtra("User");
 

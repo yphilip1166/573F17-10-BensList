@@ -70,6 +70,11 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             case (R.id.searchUsers) :
                 Intent searchIntent = new Intent(this, SearchUsers.class);
                 startActivity(searchIntent);
+                break;
+            case (R.id.mapButton) :
+                System.out.println("clicked map button");
+                Intent mapIntent = new Intent(this, MapsActivity.class);
+                startActivity(mapIntent);
             default :
                 break;
         }

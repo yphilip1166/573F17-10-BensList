@@ -246,4 +246,10 @@ public class Product implements Serializable, Comparable {
         }
     }
 
+    @Override
+    public String toString() {
+        String ans = name + "\n" + description;
+        return ans;
+    }
+
 }
