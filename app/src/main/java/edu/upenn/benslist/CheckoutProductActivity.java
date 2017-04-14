@@ -13,8 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.sendbird.android.SendBird;
-
 /**
  * Created by johnquinn on 3/14/17.
  */
@@ -85,6 +83,7 @@ public class CheckoutProductActivity extends AppCompatActivity implements View.O
 
                 Intent i = new Intent(this, ProductPurchaseConfirmationActivity.class);
                 i.putExtra("UploaderID", product.getUploaderID());
+                i.putExtra("ProductID", product.getProductID());
                 startActivity(i);
                 break;
 

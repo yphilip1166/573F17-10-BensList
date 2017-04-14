@@ -31,6 +31,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by tylerdouglas on 3/26/17.
@@ -70,9 +72,38 @@ public class UserProfile extends AppCompatActivity {
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.child(currentUserID).getValue(User.class);
-                if (user != null) {
-                    setUserValues(user);
+                //User user = dataSnapshot.child(currentUserID).getValue(User.class);
+                String name = dataSnapshot.child(currentUserID).child("name").getValue(String.class);
+                String userAddress = dataSnapshot.child(currentUserID).child("address").getValue(String.class);
+                String interests = dataSnapshot.child(currentUserID).child("interests").getValue(String.class);
+                String userRating = dataSnapshot.child(currentUserID).child("name").getValue(String.class);
+                List<Product> productsIveUploaded = new LinkedList<>();
+                for (DataSnapshot productSnapshot : dataSnapshot.child(currentUserID).child(
+                        "productsIveUploaded").getChildren()) {
+                    Product product = productSnapshot.getValue(Product.class);
+                    productsIveUploaded.add(product);
+
+                    System.out.println(product.getName());
+                }
+                List<Product> productsIveBought = new LinkedList<>();
+                for (DataSnapshot productSnapshot : dataSnapshot.child(currentUserID).child(
+                        "productsIveBought").getChildren()) {
+                    Product product = productSnapshot.getValue(Product.class);
+                    productsIveBought.add(product);
+
+                    System.out.println(product.getName());
+                }
+                /*List<Product> favoriteUsersIveBoughtFrom = new LinkedList<>();
+                for (DataSnapshot productSnapshot : dataSnapshot.child(currentUserID).child(
+                        "favoriteUsersIveBoughtFrom").getChildren()) {
+                    User user = productSnapshot.getValue(Product.class);
+                    favoriteUsersIveBoughtFrom.add(product);
+
+                    System.out.println(product.getName());
+                }*/
+                User user = new User();
+                if (name != null) {
+                    setUserValues(name, userAddress, interests, "1", "5");
                 }
                 createButtons(user);
             }
@@ -85,23 +116,27 @@ public class UserProfile extends AppCompatActivity {
 
     }
 
-    protected void setUserValues(User user) {
+    protected void setUserValues(String name, String userAddress, String uInterests, String userRating,
+                                 String age) {
         EditText nameField = (EditText) findViewById(R.id.name);
-        nameField.setText(user.getName());
+        nameField.setText(name);
 
         EditText emailField = (EditText) findViewById(R.id.emailAddress);
         emailField.setText(fbuser.getEmail());
 
         EditText address = (EditText) findViewById(R.id.address);
-        String homeAddress = (user.getAddress().equals("")) ? "Enter Home Address" : user.getAddress() ;
+        String homeAddress = (userAddress.equals("")) ? "Enter Home Address" : userAddress ;
         address.setText(homeAddress);
 
         EditText interests = (EditText) findViewById(R.id.interests);
-        String userInterests = (user.getInterests().equals("")) ? "Enter Interests" : user.getInterests();
+        String userInterests = (uInterests.equals("")) ? "Enter Interests" : uInterests;
         interests.setText(userInterests);
 
+        EditText ageText = (EditText) findViewById(R.id.age);
+        ageText.setText(age);
+
         RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
-        int rating = Double.valueOf(user.getRating()/2.0).intValue(); //divide by 2 because rating is out of 5
+        int rating = Double.valueOf(userRating).intValue(); //divide by 2 because rating is out of 5
         ratingBar.setNumStars(rating);
 
     }
@@ -254,10 +289,12 @@ public class UserProfile extends AppCompatActivity {
                     EditText address = (EditText) findViewById(R.id.address);
                     EditText interests = (EditText) findViewById(R.id.interests);
                     EditText emailAddress = (EditText) findViewById(R.id.emailAddress);
+                    EditText ageText = (EditText) findViewById(R.id.emailAddress);
                     mDatabase.child(currentUserID).child("email").setValue(String.valueOf(emailAddress.getText()));
                     mDatabase.child(currentUserID).child("name").setValue(String.valueOf(nameField.getText()));
                     mDatabase.child(currentUserID).child("address").setValue(String.valueOf(address.getText()));
                     mDatabase.child(currentUserID).child("interests").setValue(String.valueOf(interests.getText()));
+                    mDatabase.child(currentUserID).child("age").setValue(String.valueOf(ageText.getText()));
 
                     editButton.setTitle("Edit");
 

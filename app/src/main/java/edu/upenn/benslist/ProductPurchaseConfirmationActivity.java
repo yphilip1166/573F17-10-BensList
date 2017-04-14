@@ -14,8 +14,6 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.sendbird.android.SendBird;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -32,6 +30,7 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
         AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     private String uploaderID;
+    private String productID;
     private User uploader;
     private String rating;
     private DatabaseReference mDatabase;
@@ -45,6 +44,7 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
         setContentView(R.layout.product_purchase_confirmation_layout);
 
         this.uploaderID = getIntent().getStringExtra("UploaderID");
+        this.productID = getIntent().getStringExtra("ProductID");
 
         Spinner spinner = (Spinner) findViewById(R.id.userRatingSpinner);
         spinner.setOnItemSelectedListener(this);
@@ -53,7 +53,7 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         this.rating = "1"; //default rating
-        favorite = true;
+        favorite = false;
 
         Button addUserButton = (Button) findViewById(R.id.addUserToFavsButton);
         Button doneButton = (Button) findViewById(R.id.doneRatingButton);
@@ -92,19 +92,22 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
 
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
-                        User uploader = snapshot.child("users").child(uploaderID).getValue(User.class);
+                        //User uploader = snapshot.child("users").child(uploaderID).getValue(User.class);
 
                         if (favorite) {
-                            User currentUser = snapshot.child("users").child(
-                                    currentUserID).getValue(User.class);
-                            String currentUserName = currentUser.getName();
-                            DatabaseReference ref = mDatabase.child("users").child(uploaderID).child(
-                                    "favorites").push();
-                            ref.setValue(currentUserName);
+                            String uploaderUserName = snapshot.child("users").child(
+                                    uploaderID).child("name").getValue(String.class);
+                            DatabaseReference ref = mDatabase.child("users").child(currentUserID).child(
+                                    "favoriteUsersIveBoughtFrom").push();
+                            ref.setValue(uploaderUserName);
                         }
+                        Product product = snapshot.child("products").child(productID).getValue(Product.class);
+                        DatabaseReference ref = mDatabase.child("users").child(currentUserID).child(
+                                "productsIveBought").push();
+                        ref.setValue(product);
 
-                        double newRating = uploader.addRating(Integer.parseInt(rating));
-                        mDatabase.child("users").child(uploaderID).child("rating").setValue(newRating);
+                        //double newRating = uploader.addRating(Integer.parseInt(rating));
+                        //mDatabase.child("users").child(uploaderID).child("rating").setValue(newRating);
                         //DatabaseReference ref = productSnapshot.getRef();
                         //System.out.println(ref.getKey());
 

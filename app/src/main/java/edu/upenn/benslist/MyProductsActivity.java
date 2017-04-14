@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.sendbird.android.SendBird;
 
 /**
  * Created by tylerdouglas on 3/27/17.

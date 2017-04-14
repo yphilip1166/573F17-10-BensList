@@ -64,10 +64,13 @@ public class SearchUsers extends AppCompatActivity implements View.OnClickListen
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                            User user = userSnapshot.getValue(User.class);
-                            if (user.getName().equals(searchQuery)) {
+                            //User user = userSnapshot.getValue(User.class);
+                            String key = userSnapshot.getKey().toString();
+                            System.out.println("The key is: " + key);
+                            System.out.println(userSnapshot.child("name").getValue(String.class));
+                            if (userSnapshot.child("name").getValue(String.class).equals(searchQuery)) {
                                 Intent i = new Intent(thisContext, ViewUsersProfileActivity.class);
-                                i.putExtra("User", user);
+                                i.putExtra("UserId", userSnapshot.getKey());
                                 startActivity(i);
                             }
                         }

@@ -42,7 +42,7 @@ public class Product implements Serializable, Comparable {
     }
 
     public Product(String name, String description, String price, String location,
-                   String phoneNumber, String category, String uploaderID, String uploaderName) {
+                   String phoneNumber, String category, String uploaderID, String uploaderName, String productId) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -53,18 +53,18 @@ public class Product implements Serializable, Comparable {
         this.uploaderName = uploaderName;
         this.reviews = new LinkedList<>();
         numProducts++;
-        this.productID = numProducts + "";
+        this.productID = productId;
     }
 
     //this functino works fine
     public static Product writeNewProductToDatabase(String name, String description,
                                                     String price, String location, String phoneNumber,
-                                                    String category, String currentUserName) {
+                                                    String category, String currentUserName, String productId) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
         String currentUserID = fbUser.getUid();
         Product newProduct = new Product(name, description, price, location, phoneNumber,
-                category, currentUserID, currentUserName);
+                category, currentUserID, currentUserName, productId);
         //mDatabase.child("products").child(newProduct.getProductID()).setValue(newProduct);
         return newProduct;
     }
