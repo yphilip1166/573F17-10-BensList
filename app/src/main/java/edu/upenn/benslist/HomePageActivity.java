@@ -137,8 +137,8 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                 /*
                 Todo get the user email and pass it into the InboxMessageActivity. Fix line below
                  */
-                intent.putExtra("Email", "mdop1102@gmail.com");
-                intent.putExtra("Name", "Max Doppelt");
+                intent.putExtra("Email", "josh@gmail.com");
+                intent.putExtra("Name", "Josh Ross");
                 startActivity(intent);
                 return true;
 
