@@ -72,40 +72,100 @@ View.OnClickListener {
                 break;
 
             case (R.id.doneButton) :
-                //TODO - ADD THE NEW PRODUCT TO THE DATABASE
                 /*
-                DONE - now test!!!
+                TODO - changes made april 13th by JP here
                  */
+
+
                 Intent returnIntent = new Intent(this, HomePageActivity.class);
 
                 EditText productName = (EditText) findViewById(R.id.editProductName);
                 EditText productDescription = (EditText) findViewById(R.id.editProductDescription);
-                EditText productPrice = (EditText) findViewById(R.id.editPrice);
                 EditText productLocation = (EditText) findViewById(R.id.editLocation);
                 EditText productPhoneNumber = (EditText) findViewById(R.id.editPhoneNumber);
 
-                final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-                FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
-                final String currentUserID = fbUser.getUid();
+                EditText priceText = (EditText) findViewById(R.id.editPrice);
+                EditText distanceText = (EditText) findViewById(R.id.editDistance);
 
-                DatabaseReference ref = mDatabase.child("products").push();
-                Product product = Product.writeNewProductToDatabase(productName.getText().toString(),
-                        productDescription.getText().toString(), productPrice.getText().toString(),
-                        productLocation.getText().toString(), productPhoneNumber.getText().toString(),
-                        itemCategory, currentUserName, ref.getKey());
+                String price = priceText.getText().toString();
+                double distance = Double.parseDouble(distanceText.getText().toString());
+                try {
+                    int decimalPoint = price.indexOf('.');
+                    double priceAsDouble = 0.0;
+                    if (decimalPoint == -1) {
+                        priceAsDouble = Double.parseDouble(price);
+                    }
+                    else if (price.length() - decimalPoint - 1 == 2) {
+                        priceAsDouble = Double.parseDouble(price);
+                    }
+                    else if (price.length() - decimalPoint - 1 == 1) {
+                        priceAsDouble = Double.parseDouble(price);
+                    }
+                    else if (price.length() - decimalPoint == 1) {
+                        //45.
+                        priceAsDouble = Double.parseDouble(price.substring(0, price.length() - 1));
+                    }
+                    else {
+                        priceAsDouble = Double.parseDouble(price.substring(0, decimalPoint + 3));
+                    }
 
+                    final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+                    FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
+                    final String currentUserID = fbUser.getUid();
+
+                  DatabaseReference ref = mDatabase.child("products").push();
+                    Product product = Product.writeNewProductToDatabase(productName.getText().toString(),
+                            productDescription.getText().toString(), priceAsDouble,
+                            productLocation.getText().toString(), productPhoneNumber.getText().toString(),
+                            itemCategory, currentUserName, ref.getKey(), distance);
+
+                    ref.setValue(product);
+
+                    ref = mDatabase.child("users").child(currentUserID).child("productsIveUploaded").push();
                 ref.setValue(product);
 
-                ref = mDatabase.child("users").child(currentUserID).child("productsIveUploaded").push();
-                ref.setValue(product);
-
-                setResult(RESULT_OK, returnIntent);
-                finish();
+                    setResult(RESULT_OK, returnIntent);
+                    finish();
+                }
+                catch (NumberFormatException e) {
+                    Toast.makeText(this, "Input valid price", Toast.LENGTH_LONG);
+                }
                 break;
 
             default :
                 break;
         }
+    }
+
+    private int getPriceLevel(double price) {
+        if (price < 0) {
+            return -1;
+        }
+        if (price <= 99.99) {
+            return 1;
+        }
+        else if (price <= 199.99) {
+            return 2;
+        }
+        else {
+            return 3;
+        }
+    }
+
+    private int getLocationLevel(double distance) {
+        if (distance < 0) {
+            return -1;
+        }
+        if (distance <= 9.99) {
+            return 1;
+        }
+        else if (distance <= 19.99) {
+            return 2;
+        }
+        else {
+            return 3;
+        }
+
     }
 
     @Override

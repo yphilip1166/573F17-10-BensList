@@ -32,7 +32,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".AboutActivity" />
-
         <activity android:name=".TermsActivity"></activity>
         <activity android:name=".SearchPageActivity"/>
         <activity android:name=".FilterSearchResultsActivity"/>
@@ -52,7 +51,7 @@
         <activity android:name=".favoriteUsersActivity"/>
         <activity android:name=".MapsActivity"/>
       <activity android:name=".InboxMessageActivity"></activity>
-      
+     
     </application>
 
 </manifest>

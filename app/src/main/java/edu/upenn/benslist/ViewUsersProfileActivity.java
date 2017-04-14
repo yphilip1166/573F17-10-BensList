@@ -113,7 +113,6 @@ public class ViewUsersProfileActivity extends AppCompatActivity implements View.
                 break;
 
             case (R.id.viewFavoriteUsersButton) :
-
                 Intent intent = new Intent(this, favoriteUsersActivity.class);
                 intent.putExtra("UserId", userId);
                 startActivityForResult(intent, RESULT_VIEW_FAVORITE_USERS);
@@ -121,6 +120,9 @@ public class ViewUsersProfileActivity extends AppCompatActivity implements View.
 
             case (R.id.reportUserButton) :
                 //all reporting does is decrease their rating
+                /*
+                TODO - Josh
+                 */
                 user.addRating(-10);
                 break;
 

@@ -27,6 +27,12 @@ public class Product implements Serializable, Comparable {
     public String productID;
     public static int numProducts = 0;
 
+    //TODO - new fields as of april 13th at 7:30pm:
+    public double priceAsDouble;
+    public double distance;
+    public int priceCategory; //1, 2, or 3
+    public int locationCategory; //1, 2, or 3
+
     public Product() {
         this.name = "";
         this.description = "";
@@ -39,13 +45,18 @@ public class Product implements Serializable, Comparable {
         this.reviews = new LinkedList<>();
         numProducts++;
         this.productID = numProducts + "";
+        this.priceAsDouble = 0.0;
+        this.distance = 0.0;
+        this.priceCategory = -1;
+        this.locationCategory = -1;
     }
 
-    public Product(String name, String description, String price, String location,
-                   String phoneNumber, String category, String uploaderID, String uploaderName, String productId) {
+
+    public Product(String name, String description, double priceAsDouble, String location,
+                   String phoneNumber, String category, String uploaderID, String uploaderName, String productId,
+                   double distance) {
         this.name = name;
         this.description = description;
-        this.price = price;
         this.location = location;
         this.phoneNumber = phoneNumber;
         this.category = category;
@@ -54,21 +65,87 @@ public class Product implements Serializable, Comparable {
         this.reviews = new LinkedList<>();
         numProducts++;
         this.productID = productId;
+
+        //TODO - new stuff April 13th (JP)
+        this.priceAsDouble = priceAsDouble;
+        this.price = "$" + priceAsDouble;
+        int decimalIndex = price.indexOf('.');
+        if (price.length() - decimalIndex == 2) {
+            price += "0";
+        }
+
+        if (priceAsDouble < 0) {
+            this.priceCategory = -1;
+        }
+        if (priceAsDouble <= 99.99) {
+            this.priceCategory = 1;
+        }
+        else if (priceAsDouble <= 199.99) {
+            this.priceCategory = 2;
+        }
+        else {
+            this.priceCategory = 3;
+        }
+
+        if (distance < 0) {
+            this.locationCategory = -1;
+        }
+        if (distance <= 9.99) {
+            this.locationCategory = 1;
+        }
+        else if (distance <= 19.99) {
+            this.locationCategory = 2;
+        }
+        else {
+            this.locationCategory = 3;
+        }
     }
 
     //this functino works fine
     public static Product writeNewProductToDatabase(String name, String description,
-                                                    String price, String location, String phoneNumber,
-                                                    String category, String currentUserName, String productId) {
+                                                    double priceAsDouble, String location, String phoneNumber,
+                                                    String category, String currentUserName, String productId, 
+                                                    double distance) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
         String currentUserID = fbUser.getUid();
-        Product newProduct = new Product(name, description, price, location, phoneNumber,
-                category, currentUserID, currentUserName, productId);
+        Product newProduct = new Product(name, description, priceAsDouble, location, phoneNumber,
+                category, currentUserID, currentUserName, productId, distance);
         //mDatabase.child("products").child(newProduct.getProductID()).setValue(newProduct);
         return newProduct;
     }
 
+    public void setPriceAsDouble(double priceAsDouble) {
+        this.priceAsDouble = priceAsDouble;
+    }
+
+    public double getPriceAsDouble() {
+        return priceAsDouble;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setPriceCategory(int priceCategory) {
+        this.priceCategory = priceCategory;
+    }
+
+    public int getPriceCategory() {
+        return priceCategory;
+    }
+
+    public void setLocationCategory(int locationCategory) {
+        this.locationCategory = locationCategory;
+    }
+
+    public int getLocationCategory() {
+        return locationCategory;
+    }
 
     public String getProductID() {
         return productID;
