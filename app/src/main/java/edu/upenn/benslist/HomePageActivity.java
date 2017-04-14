@@ -45,9 +45,6 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
         String currentUserID = fbUser.getUid();
-        User newUser = new User("JP", 21);
-        mDatabase.child("users").child(currentUserID).setValue(newUser);
-        this.currentUserName = "JP"; //CHANGE THIS TO WHOEVER IS ACTUALLY LOGGED IN
     }
 
     @Override

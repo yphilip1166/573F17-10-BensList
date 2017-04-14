@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.io.Serializable;
+
 
 /**
  * Created by johnquinn on 4/5/17.
@@ -32,6 +34,7 @@ public class ViewUsersProfileActivity extends AppCompatActivity implements View.
         Button viewFavoriteUsersButton = (Button) findViewById(R.id.viewFavoriteUsersButton);
         Button previousPurchasesButton = (Button) findViewById(R.id.viewPreviousPurchasesButton);
         Button reportUserButton = (Button) findViewById(R.id.reportUserButton);
+
         Button messageUserButton = (Button) findViewById(R.id.messageUserButton);
 
         TextView usersNameText = (TextView) findViewById(R.id.usersNameTextField);
@@ -46,6 +49,7 @@ public class ViewUsersProfileActivity extends AppCompatActivity implements View.
         viewFavoriteUsersButton.setOnClickListener(this);
         previousPurchasesButton.setOnClickListener(this);
         reportUserButton.setOnClickListener(this);
+
         messageUserButton.setOnClickListener(this);
     }
 
@@ -55,26 +59,29 @@ public class ViewUsersProfileActivity extends AppCompatActivity implements View.
         switch (v.getId()) {
             case (R.id.viewUploadedProductsButton) :
                 Intent newIntent = new Intent(this, ViewUploadedProductsActivity.class);
-                newIntent.putExtra("User", user);
+                newIntent.putExtra("User", (Serializable) user);
                 newIntent.putExtra("Type", "uploads");
                 startActivityForResult(newIntent, RESULT_VIEW_UPLOADED_PRODUCTS);
                 break;
 
             case (R.id.viewPreviousPurchasesButton) :
                 Intent i = new Intent(this, ViewUploadedProductsActivity.class);
-                i.putExtra("User", user);
+                i.putExtra("User", (Serializable) user);
                 i.putExtra("Type", "previousPurchases");
                 startActivityForResult(i, RESULT_VIEW_PREVIOUS_PURCHASES);
                 break;
 
             case (R.id.viewFavoriteUsersButton) :
                 Intent intent = new Intent(this, favoriteUsersActivity.class);
-                intent.putExtra("User", user);
+                intent.putExtra("User", (Serializable) user);
                 startActivityForResult(intent, RESULT_VIEW_FAVORITE_USERS);
                 break;
 
             case (R.id.reportUserButton) :
                 //all reporting does is decrease their rating
+                /*
+                TODO - Josh
+                 */
                 user.addRating(-10);
                 break;
 
@@ -83,7 +90,7 @@ public class ViewUsersProfileActivity extends AppCompatActivity implements View.
                 /*
                 Todo get the user email and pass it into the InboxMessageActivity. Fix line below
                  */
-                mIntent.putExtra("Email", user.getName());
+                mIntent.putExtra("Email", user.getEmail());
                 mIntent.putExtra("Name", user.getName());
                 startActivity(mIntent);
                 break;

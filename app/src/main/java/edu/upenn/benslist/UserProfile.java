@@ -28,7 +28,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.sendbird.android.SendBird;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -72,7 +71,9 @@ public class UserProfile extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.child(currentUserID).getValue(User.class);
-                setUserValues(user);
+                if (user != null) {
+                    setUserValues(user);
+                }
                 createButtons(user);
             }
 
@@ -92,11 +93,11 @@ public class UserProfile extends AppCompatActivity {
         emailField.setText(fbuser.getEmail());
 
         EditText address = (EditText) findViewById(R.id.address);
-        String homeAddress = (user.getHomeAddress().equals("")) ? "Enter Home Address" : user.getHomeAddress() ;
+        String homeAddress = (user.getAddress().equals("")) ? "Enter Home Address" : user.getAddress() ;
         address.setText(homeAddress);
 
         EditText interests = (EditText) findViewById(R.id.interests);
-        String userInterests = (user.getInterets().equals("")) ? "Enter Interests" : user.getInterets();
+        String userInterests = (user.getInterests().equals("")) ? "Enter Interests" : user.getInterests();
         interests.setText(userInterests);
 
         RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);

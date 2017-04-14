@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
+
         <Button
             android:id="@+id/uploadPictureButton"
             android:layout_width="match_parent"
@@ -72,7 +73,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Enter Product Price: "
+            android:text="Enter Product Price: $"
             android:layout_below="@+id/editProductDescription"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
@@ -83,7 +84,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/editProductDescription"
             android:layout_toRightOf="@+id/priceText"
-            android:layout_toEndOf="@+id/priceText"/>
+            android:layout_toEndOf="@+id/priceText"
+            android:inputType="numberDecimal"/>
 
         <TextView
             android:id="@+id/locationText"
@@ -104,12 +106,32 @@
             android:layout_toEndOf="@+id/locationText"/>
 
         <TextView
+            android:id="@+id/distanceText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/editLocation"
+            android:text="Enter Distance (in miles) from Towne: "
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/editDistance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editLocation"
+            android:layout_toRightOf="@+id/distanceText"
+            android:layout_toEndOf="@+id/distanceText"
+            android:inputType="number"/>
+
+        <TextView
             android:id="@+id/phoneNumberText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Enter Phone Number: "
-            android:layout_below="@+id/editLocation"
+            android:layout_below="@+id/editDistance"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
@@ -117,9 +139,10 @@
             android:id="@+id/editPhoneNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/editLocation"
+            android:layout_below="@+id/editDistance"
             android:layout_toRightOf="@+id/phoneNumberText"
-            android:layout_toEndOf="@+id/phoneNumberText"/>
+            android:layout_toEndOf="@+id/phoneNumberText"
+            android:inputType="phone"/>
 
         <Spinner
             android:id="@+id/productCategorySpinner"
