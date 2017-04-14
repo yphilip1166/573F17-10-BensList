@@ -67,13 +67,11 @@ public class ViewUsersProfileActivity extends AppCompatActivity implements View.
             case (R.id.viewPreviousPurchasesButton) :
                 Intent i = new Intent(this, ViewUploadedProductsActivity.class);
                 i.putExtra("User", (Serializable) user);
-
                 i.putExtra("Type", "previousPurchases");
                 startActivityForResult(i, RESULT_VIEW_PREVIOUS_PURCHASES);
                 break;
 
             case (R.id.viewFavoriteUsersButton) :
-
                 Intent intent = new Intent(this, favoriteUsersActivity.class);
                 intent.putExtra("User", (Serializable) user);
                 startActivityForResult(intent, RESULT_VIEW_FAVORITE_USERS);
@@ -81,6 +79,9 @@ public class ViewUsersProfileActivity extends AppCompatActivity implements View.
 
             case (R.id.reportUserButton) :
                 //all reporting does is decrease their rating
+                /*
+                TODO - Josh
+                 */
                 user.addRating(-10);
                 break;
 
