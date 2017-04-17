@@ -128,9 +128,6 @@ public class ViewUsersProfileActivity extends AppCompatActivity implements View.
 
             case (R.id.messageUserButton) :
                 Intent mIntent = new Intent(this, InboxMessageActivity.class);
-                /*
-                Todo get the user email and pass it into the InboxMessageActivity. Fix line below
-                 */
                 mIntent.putExtra("UserId", userId);
                 mIntent.putExtra("Name", name);
                 startActivity(mIntent);

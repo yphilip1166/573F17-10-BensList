@@ -28,8 +28,11 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class InboxMessageActivity extends AppCompatActivity
         implements GoogleApiClient.OnConnectionFailedListener{
@@ -61,10 +64,9 @@ public class InboxMessageActivity extends AppCompatActivity
     private ImageView mAddMessageImageView;
 
     //Messenger information
-    private String userId;
-    private String toEmail;
+    private String toUserId;
     private String toName;
-    private String mEmail;
+    private String mUserId;
     private String mUsername;
     private String channelID;
 
@@ -72,6 +74,7 @@ public class InboxMessageActivity extends AppCompatActivity
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
     private DatabaseReference mFirebaseDatabaseReference;
+    private DatabaseReference mUserReference;
     private FirebaseRecyclerAdapter<Message, PublicForumActivity.MessageViewHolder> mFirebaseAdapter;
 
     @Override
@@ -82,37 +85,45 @@ public class InboxMessageActivity extends AppCompatActivity
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         //get the information from the previous activity of the user we are trying to message
-        /*
-        Todo fix the ViewUsersProfileActivity so that the real email of the other user is passed in
-         */
-        this.userId = (String) getIntent().getStringExtra("UserId");
+        this.toUserId = (String) getIntent().getStringExtra("UserId");
         this.toName = (String) getIntent().getStringExtra("Name");
-        this.toEmail = ""; //Delete
 
         // Initialize Firebase Auth
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
         //NEED TO GET THIS WORKING!!!
-        /**
-         * Fix mUsername
-         * TODO make sure that mUsername is not an empty string, need to use getDisplayName()
-         */
-        mEmail = mFirebaseUser.getEmail();
-        //mUsername = mFirebaseUser.getUid();
-        mUsername = "Max Doppelt";
+
+        //Get the current users information
+        mUserId = mFirebaseUser.getUid();
+        mUserReference = FirebaseDatabase.getInstance().getReference().child("users").child(mUserId);
+        ValueEventListener productListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mUsername = dataSnapshot.child("name").getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(InboxMessageActivity.this, "Failed to load user's name.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        mUserReference.addValueEventListener(productListener);
+
 
         String user1;
         String user2;
-        if (mEmail.compareTo(toEmail) > 0) {
-            channelID = mEmail.substring(0, mEmail.indexOf('@')) + toEmail.substring(0, toEmail.indexOf('@'));
+        if (mUserId.compareTo(toUserId) > 0) {
+            channelID = mUserId + toUserId;
         }
         else {
-            channelID = toEmail.substring(0, toEmail.indexOf('@')) + mEmail.substring(0, mEmail.indexOf('@'));
+            channelID = toUserId + mUserId;
         }
 
         //Populate the database with fake data
-        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
-        mFirebaseDatabaseReference.child(MESSAGES_CHILD).child(channelID);
+//        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
+//        mFirebaseDatabaseReference.child(MESSAGES_CHILD).child(channelID);
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
@@ -236,10 +247,6 @@ public class InboxMessageActivity extends AppCompatActivity
         return true;
     }
 
-    /**
-     * Handle the button presses
-     * TODO add code that will log the user out when they click logout
-     */
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
         switch (item.getItemId()) {

@@ -28,9 +28,12 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.ValueEventListener;
 import com.sendbird.android.SendBird;
 
 /**
@@ -62,6 +65,7 @@ implements GoogleApiClient.OnConnectionFailedListener {
         public static final String ANONYMOUS = "anonymous";
         private static final String MESSAGE_SENT_EVENT = "message_sent";
         private String mUsername;
+        private String mUserId;
         private String mPhotoUrl;
         private SharedPreferences mSharedPreferences;
         private GoogleApiClient mGoogleApiClient;
@@ -78,6 +82,7 @@ implements GoogleApiClient.OnConnectionFailedListener {
         private FirebaseAuth mFirebaseAuth;
         private FirebaseUser mFirebaseUser;
         private DatabaseReference mFirebaseDatabaseReference;
+        private DatabaseReference mUserReference;
         private FirebaseRecyclerAdapter<Message, MessageViewHolder> mFirebaseAdapter;
 
         @Override
@@ -89,12 +94,23 @@ implements GoogleApiClient.OnConnectionFailedListener {
             // Initialize Firebase Auth
             mFirebaseAuth = FirebaseAuth.getInstance();
             mFirebaseUser = mFirebaseAuth.getCurrentUser();
-            //NEED TO GET THIS WORKING!!!
-            /**
-             * Fix mUsername
-             * TODO make sure that mUsername is not an empty string, need to use getDisplayName()
-             */
-            mUsername = mFirebaseUser.getUid();
+            //Get the current users information
+            mUserId = mFirebaseUser.getUid();
+            mUserReference = FirebaseDatabase.getInstance().getReference().child("users").child(mUserId);
+            ValueEventListener productListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    mUsername = dataSnapshot.child("name").getValue(String.class);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Toast.makeText(PublicForumActivity.this, "Failed to load user's name.",
+                            Toast.LENGTH_SHORT).show();
+                }
+            };
+
+            mUserReference.addValueEventListener(productListener);
 
             //Populate the database with fake data
             mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();

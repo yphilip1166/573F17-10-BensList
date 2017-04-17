@@ -93,11 +93,6 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         return true;
     }
 
-    /**
-     * Handle the button presses
-     * TODO link the home button to the home page
-     * TODO add code that will log the user out when they click logout
-     */
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
         switch (item.getItemId()) {
@@ -129,16 +124,6 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             case R.id.action_forum:
                 //Go to forum page
                 intent = new Intent(this, PublicForumActivity.class);
-                startActivity(intent);
-                return true;
-
-            case (R.id.action_message) :
-                intent = new Intent(this, InboxMessageActivity.class);
-                /*
-                Todo get the user email and pass it into the InboxMessageActivity. Fix line below
-                 */
-                intent.putExtra("Email", "josh@gmail.com");
-                intent.putExtra("Name", "Josh Ross");
                 startActivity(intent);
                 return true;
 
