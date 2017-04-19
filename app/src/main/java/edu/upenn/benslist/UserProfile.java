@@ -92,7 +92,7 @@ public class UserProfile extends AppCompatActivity {
         emailField.setText(fbuser.getEmail());
 
         EditText address = (EditText) findViewById(R.id.address);
-        String homeAddress = (user.getHomeAddress().equals("")) ? "Enter Home Address" : user.getHomeAddress() ;
+        String homeAddress = (user.getHomeAddress().equals("")) ? "Enter Home Address" : user.getHomeAddress();
         address.setText(homeAddress);
 
         EditText interests = (EditText) findViewById(R.id.interests);
@@ -101,7 +101,8 @@ public class UserProfile extends AppCompatActivity {
 
         RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         int rating = Double.valueOf(user.getRating()/2.0).intValue(); //divide by 2 because rating is out of 5
-        ratingBar.setNumStars(rating);
+        System.out.println(rating);
+        ratingBar.setRating(rating);
 
     }
 
@@ -261,7 +262,7 @@ public class UserProfile extends AppCompatActivity {
                     EditText emailAddress = (EditText) findViewById(R.id.emailAddress);
                     mDatabase.child(currentUserID).child("email").setValue(String.valueOf(emailAddress.getText()));
                     mDatabase.child(currentUserID).child("name").setValue(String.valueOf(nameField.getText()));
-                    mDatabase.child(currentUserID).child("address").setValue(String.valueOf(address.getText()));
+                    mDatabase.child(currentUserID).child("homeAddress").setValue(String.valueOf(address.getText()));
                     mDatabase.child(currentUserID).child("interests").setValue(String.valueOf(interests.getText()));
 
                     editButton.setTitle("Edit");

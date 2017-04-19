@@ -34,7 +34,7 @@
         android:textStyle="bold" />
 
     <Button
-        android:id="@+id/mapButton"
+        android:id="@+id/openMap"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="View Listings Nearby"
