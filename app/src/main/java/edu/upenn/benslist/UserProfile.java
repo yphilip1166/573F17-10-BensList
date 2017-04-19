@@ -31,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -248,10 +249,7 @@ public class UserProfile extends AppCompatActivity {
         return true;
     }
 
-    /**
-     * Handle the button presses
-     * TODO add code that will log the user out when they click logout
-     */
+
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
         switch (item.getItemId()) {
@@ -295,6 +293,7 @@ public class UserProfile extends AppCompatActivity {
                     mDatabase.child(currentUserID).child("address").setValue(String.valueOf(address.getText()));
                     mDatabase.child(currentUserID).child("interests").setValue(String.valueOf(interests.getText()));
                     mDatabase.child(currentUserID).child("age").setValue(String.valueOf(ageText.getText()));
+                    mDatabase.child(currentUserID).child("blockedUsers").setValue(new HashSet<String>());
 
                     editButton.setTitle("Edit");
 
