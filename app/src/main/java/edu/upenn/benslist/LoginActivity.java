@@ -100,7 +100,6 @@ public class LoginActivity extends AppCompatActivity {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
-                // ...
             }
         };
 
@@ -159,7 +158,6 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             System.out.println("After else statement");
 
-                            // ...
                         }
                     });
         }

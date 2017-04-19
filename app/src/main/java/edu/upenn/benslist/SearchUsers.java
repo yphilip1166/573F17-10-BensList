@@ -105,6 +105,7 @@ public class SearchUsers extends AppCompatActivity implements View.OnClickListen
                                     }
                                 }
                                 if (!isBlocked) {
+                                    isBlocked = true;
                                     Intent i = new Intent(thisContext, ViewUsersProfileActivity.class);
                                     i.putExtra("UserId", userSnapshot.getKey());
                                     startActivity(i);

@@ -64,7 +64,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         mUserReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                currentUserName = dataSnapshot.child("name").getValue().toString();
+                currentUserName = dataSnapshot.child("name").getValue(String.class);
             }
 
             @Override
@@ -72,12 +72,6 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
             }
         });
-
-
-        mUserReference = FirebaseDatabase.getInstance().getReference()
-                .child("users");
-        fbUser = FirebaseAuth.getInstance().getCurrentUser();
-        currentUserName = fbUser.getUid();
 
     }
 
@@ -106,7 +100,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                 break;
             case (R.id.edit_listings):
                 Intent editUploadedProduct = new Intent(this, EditListingActivity.class);
-                editUploadedProduct.putExtra("UserId", currentUserName);
+                editUploadedProduct.putExtra("UserId", currentUserID);
                 startActivity(editUploadedProduct);
                 break;
             default :

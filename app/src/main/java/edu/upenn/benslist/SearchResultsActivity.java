@@ -117,7 +117,7 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
             public boolean fulfillsSearchRequirements(Product product) {
               // @JOSH add condition to check blocked users to product uploader id
                 //check if it fulfills the search category and search query first
-                if (!product.getCategory().equals(searchCategory) && !product.getName().contains(searchQuery)) {
+                if (!product.getCategory().equals(searchCategory) || !product.getName().contains(searchQuery)) {
                     return false;
                 }
 
