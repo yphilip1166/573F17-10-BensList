@@ -1,10 +1,5 @@
 package edu.upenn.benslist;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
@@ -117,23 +112,28 @@ public class User implements Serializable {
         return favoriteUsersIveBoughtFrom;
     }
 
-    protected double addRating(int rating) {
-        sumRatings += rating;
-        numRatings++;
-        setRating((((double) sumRatings) / numRatings));
-
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
-        String currentUserID = fbUser.getUid();
-        return ((double) sumRatings) / numRatings;
-    }
-
     public void setRating(double rating) {
         this.rating = rating;
     }
 
     public double getRating() {
         return rating;
+    }
+
+    public void addNumRatings() {
+        this.numRatings = numRatings++;
+    }
+
+    public double getNumRatings() {
+        return numRatings;
+    }
+
+    public void setSumRatings(int sumRatings) {
+        this.sumRatings = sumRatings;
+    }
+
+    public double getSumRatings() {
+        return sumRatings;
     }
 
 

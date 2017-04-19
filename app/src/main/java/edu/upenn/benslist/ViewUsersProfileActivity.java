@@ -76,7 +76,7 @@ public class ViewUsersProfileActivity extends AppCompatActivity implements View.
 
                 usersNameText.setText("User's Name: " + name);
                 usersAgeText.setText("User's Age: " + dataSnapshot.child("age").getValue(String.class));
-                usersRatingText.setText("User's Rating: " + dataSnapshot.child("rating").getValue(String.class));
+                usersRatingText.setText("User's Rating: " + dataSnapshot.child("rating").getValue().toString());
             }
 
             @Override
@@ -120,10 +120,8 @@ public class ViewUsersProfileActivity extends AppCompatActivity implements View.
 
             case (R.id.reportUserButton) :
                 //all reporting does is decrease their rating
-                /*
-                TODO - Josh
-                 */
-                user.addRating(-10);
+
+                //user.addRating(-10);
                 break;
 
             case (R.id.messageUserButton) :

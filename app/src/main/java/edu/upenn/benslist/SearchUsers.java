@@ -73,6 +73,10 @@ public class SearchUsers extends AppCompatActivity implements View.OnClickListen
                                 i.putExtra("UserId", userSnapshot.getKey());
                                 startActivity(i);
                             }
+                            else {
+                                Toast.makeText(SearchUsers.this, "Failed to find user.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
 

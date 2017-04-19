@@ -177,15 +177,9 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
 
     protected void addProductsFromSearch(List<Product> products) {
 
-        Collections.sort(products);
-
-        /*
-        TODO - use searchCategory, searchQuery, and searchFilters to access the database
-         */
-
-        /*
-        TODO - create function that returns set of Products that fit the search criteria above
-         */
+        if (sortByPrice) {
+            Collections.sort(products);
+        }
 
         final Context thisContext = this;
 

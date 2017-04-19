@@ -91,6 +91,7 @@ public class CheckoutProductActivity extends AppCompatActivity implements View.O
                 EditText editText = (EditText) findViewById(R.id.detailedListingEditReviewText);
                 String review = editText.getText().toString();
                 product.addReview(review);
+                //TODO - Add Comment in activity as well
                 Intent intent = getIntent();
                 intent.putExtra("ProductID", product.getProductID());
                 finish();

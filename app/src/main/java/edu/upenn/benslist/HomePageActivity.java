@@ -1,5 +1,6 @@
 package edu.upenn.benslist;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,9 +13,11 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.sendbird.android.SendBird;
+import com.google.firebase.database.ValueEventListener;
 
 
 /**
@@ -25,6 +28,8 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
     private static final int RESULT_UPLOAD_PRODUCT = 2;
     private String currentUserName;
+    private String currentUserID;
+    DatabaseReference mUserReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +47,34 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         userProfilePage.setOnClickListener(this);
         searchUsers.setOnClickListener(this);
 
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
-        String currentUserID = fbUser.getUid();
+        currentUserID = fbUser.getUid();
+        mUserReference = FirebaseDatabase.getInstance().getReference()
+                .child("users").child(currentUserID);
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        final Context thisContext = this;
+
+        mUserReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                currentUserName = dataSnapshot.child("name").getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+    }
+
 
     @Override
     public void onClick(View v) {

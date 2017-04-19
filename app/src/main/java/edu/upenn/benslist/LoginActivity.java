@@ -22,10 +22,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.sendbird.android.SendBird;
-import com.sendbird.android.SendBirdException;
-
-import static android.provider.UserDictionary.Words.APP_ID;
 
 /**
  * A login screen that offers login via email/password.
@@ -174,7 +170,6 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
-                        System.out.println(task.getResult());
 
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
@@ -185,6 +180,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         else {
                             Intent intent = new Intent(LoginActivity.this, UserProfile.class);
+                            intent.putExtra("SignUp", true);
                             startActivity(intent);
                         }
 
