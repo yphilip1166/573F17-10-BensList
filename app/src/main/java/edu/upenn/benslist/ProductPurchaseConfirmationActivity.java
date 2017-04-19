@@ -1,5 +1,6 @@
 package edu.upenn.benslist;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +14,13 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.sendbird.android.SendBird;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by johnquinn on 3/14/17.
@@ -23,7 +30,13 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
         AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     private String uploaderID;
-    private int rating;
+    private String productID;
+    private User uploader;
+    private String rating;
+    private DatabaseReference mDatabase;
+    FirebaseUser fbUser;
+    String currentUserID;
+    private boolean favorite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +44,7 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
         setContentView(R.layout.product_purchase_confirmation_layout);
 
         this.uploaderID = getIntent().getStringExtra("UploaderID");
+        this.productID = getIntent().getStringExtra("ProductID");
 
         Spinner spinner = (Spinner) findViewById(R.id.userRatingSpinner);
         spinner.setOnItemSelectedListener(this);
@@ -38,17 +52,22 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
                 R.array.user_rating_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        this.rating = 1; //default rating
+        this.rating = "1"; //default rating
+        favorite = false;
 
         Button addUserButton = (Button) findViewById(R.id.addUserToFavsButton);
         Button doneButton = (Button) findViewById(R.id.doneRatingButton);
         addUserButton.setOnClickListener(this);
         doneButton.setOnClickListener(this);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        fbUser = FirebaseAuth.getInstance().getCurrentUser();
+        currentUserID = fbUser.getUid();
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        rating = (int) parent.getItemAtPosition(position);
+        System.out.println(parent.getItemAtPosition(position));
+        rating = (String) parent.getItemAtPosition(position);
     }
 
     public void onNothingSelected(AdapterView<?> arg0) {
@@ -60,16 +79,52 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
         switch (v.getId()) {
             case (R.id.addUserToFavsButton) :
                 //TODO - ADD THIS PERSON TO YOUR FAVORITES - where "user" is the person you want to add
-
+                favorite = true;
                 //DONE - check line below
-                User.addFavoriteUserToDatabase(uploaderID);
                 break;
 
             case (R.id.doneRatingButton) :
-                User user = User.getUserFromDatabase(uploaderID);
-                user.addRating(rating);
-                Intent i = new Intent(this, HomePageActivity.class);
+
+                final String name = fbUser.getDisplayName();
+                final Context thisContext = this;
+                final String currentUserID = fbUser.getUid();
+                mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        //User uploader = snapshot.child("users").child(uploaderID).getValue(User.class);
+
+                        if (favorite) {
+                            String uploaderUserName = snapshot.child("users").child(
+                                    uploaderID).child("name").getValue(String.class);
+                            DatabaseReference ref = mDatabase.child("users").child(currentUserID).child(
+                                    "favoriteUsersIveBoughtFrom").push();
+                            ref.setValue(uploaderUserName);
+                        }
+                        Product product = snapshot.child("products").child(productID).getValue(Product.class);
+                        DatabaseReference ref = mDatabase.child("users").child(currentUserID).child(
+                                "productsIveBought").push();
+                        ref.setValue(product);
+
+                        //double newRating = uploader.addRating(Integer.parseInt(rating));
+                        //mDatabase.child("users").child(uploaderID).child("rating").setValue(newRating);
+                        //DatabaseReference ref = productSnapshot.getRef();
+                        //System.out.println(ref.getKey());
+
+                        //mUserReference.child(currentUserID).child("productsIveUploaded").child(
+                                //ref.getKey()).setValue(product.getName());
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+                Intent i = new Intent(thisContext, HomePageActivity.class);
                 startActivity(i);
+
+
                 break;
             default :
                 break;
@@ -108,12 +163,6 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
             case R.id.action_logout:
                 //Logs out the current user and brings user to the logout page
                 //Need to add code for actually logging out a user
-                SendBird.disconnect(new SendBird.DisconnectHandler() {
-                    @Override
-                    public void onDisconnected() {
-                        // You are disconnected from SendBird.
-                    }
-                });
                 intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 return true;

@@ -52,8 +52,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        SendBird.init("16445C8B-8470-4296-8408-882BA37AFC8E", getApplicationContext());
-
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -125,19 +123,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    private void connectToSendBird(String email) {
-        SendBird.connect(email, "d394b41e2e9fef451fda8e0e3e90611d40d46e32", new SendBird.ConnectHandler() {
-            @Override
-            public void onConnected(com.sendbird.android.User user, SendBirdException e) {
-                if (e != null) {
-                    // Error.
-                    return;
-                }
-            }
-        });
-    }
-
-
     /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
@@ -167,7 +152,6 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                         }
                         else {
-                            connectToSendBird(email);
                             Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
                             startActivity(intent);
                         }
@@ -200,7 +184,8 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                         }
                         else {
-                            connectToSendBird(email);
+                            Intent intent = new Intent(LoginActivity.this, UserProfile.class);
+                            startActivity(intent);
                         }
 
                         // ...

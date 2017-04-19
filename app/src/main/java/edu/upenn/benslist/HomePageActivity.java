@@ -45,9 +45,6 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
         String currentUserID = fbUser.getUid();
-        User newUser = new User("JP", 21);
-        mDatabase.child("users").child(currentUserID).setValue(newUser);
-        this.currentUserName = "JP"; //CHANGE THIS TO WHOEVER IS ACTUALLY LOGGED IN
     }
 
     @Override
@@ -98,11 +95,6 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         return true;
     }
 
-    /**
-     * Handle the button presses
-     * TODO link the home button to the home page
-     * TODO add code that will log the user out when they click logout
-     */
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
         switch (item.getItemId()) {
@@ -121,12 +113,6 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             case R.id.action_logout:
                 //Logs out the current user and brings user to the logout page
                 //Need to add code for actually logging out a user
-                SendBird.disconnect(new SendBird.DisconnectHandler() {
-                    @Override
-                    public void onDisconnected() {
-                        // You are disconnected from SendBird.
-                    }
-                });
                 intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 return true;

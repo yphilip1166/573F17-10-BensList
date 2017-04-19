@@ -10,7 +10,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -26,14 +33,19 @@ that a user has bought in the past.
 public class ViewUploadedProductsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private User user;
+    private String userId;
+    private String type;
     private ViewGroup mLinearLayout;
+    private DatabaseReference mUserReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_uploaded_products_layout);
-        this.user = (User) getIntent().getSerializableExtra("User");
-        String type = (String) getIntent().getStringExtra("Type");
+        this.userId = getIntent().getStringExtra("UserId");
+        this.type = (String) getIntent().getStringExtra("Type");
+        mUserReference = FirebaseDatabase.getInstance().getReference()
+                .child("users").child(userId);
 
         Button doneButton = (Button) findViewById(R.id.doneViewingProductsButton);
 
@@ -41,15 +53,50 @@ public class ViewUploadedProductsActivity extends AppCompatActivity implements V
 
         mLinearLayout = (ViewGroup) findViewById(R.id.uploadedProductsLinearLayout);
 
-        if (type.equals("uploads")) {
-            addProductsToView(user.getProductsIveUploaded());
-        }
-        else if (type.equals("previousPurchases")) {
-            addProductsToView(user.getProductsIveBought());
-        }
-        else {
-            System.out.println("ERROR");
-        }
+
+    }
+
+    protected void onStart() {
+        super.onStart();
+
+        mUserReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (type.equals("uploads")) {
+                    List<Product> productsIveUploaded = new LinkedList<>();
+                    for (DataSnapshot productSnapshot : dataSnapshot.child(
+                            "productsIveUploaded").getChildren()) {
+                        Product product = productSnapshot.getValue(Product.class);
+                        productsIveUploaded.add(product);
+
+                        System.out.println(product.getName());
+                    }
+                    addProductsToView(productsIveUploaded);
+                }
+                else if (type.equals("previousPurchases")) {
+                    List<Product> productsIveBought = new LinkedList<>();
+                    for (DataSnapshot productSnapshot : dataSnapshot.child(
+                            "productsIveBought").getChildren()) {
+                        Product product = productSnapshot.getValue(Product.class);
+                        productsIveBought.add(product);
+
+                        System.out.println(product.getName());
+                    }
+                    addProductsToView(productsIveBought);
+                }
+                else {
+                    System.out.println("ERROR");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
     }
 
     private void addProductsToView(List<Product> products) {
@@ -107,6 +154,5 @@ public class ViewUploadedProductsActivity extends AppCompatActivity implements V
 
         }
     }
-
 
 }

@@ -29,7 +29,7 @@ import java.util.List;
  * Created by maxdoppelt on 4/1/17.
  */
 
-public class SearchUserResultsActivity extends AppCompatActivity implements View.OnClickListener {
+public class SearchUserResultsActivity extends AppCompatActivity implements View.OnClickListener, Serializable {
 
     private static final int RESULT_GO_TO_FILTER_SEARCH_RESULTS = 4;
     private String searchQuery;
@@ -147,10 +147,6 @@ public class SearchUserResultsActivity extends AppCompatActivity implements View
         return true;
     }
 
-    /**
-     * Handle the button presses
-     * TODO add code that will log the user out when they click logout
-     */
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
         switch (item.getItemId()) {
@@ -169,12 +165,6 @@ public class SearchUserResultsActivity extends AppCompatActivity implements View
             case R.id.action_logout:
                 //Logs out the current user and brings user to the logout page
                 //Need to add code for actually logging out a user
-                SendBird.disconnect(new SendBird.DisconnectHandler() {
-                    @Override
-                    public void onDisconnected() {
-                        // You are disconnected from SendBird.
-                    }
-                });
                 intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 return true;

@@ -48,6 +48,21 @@
             android:text="Name" />
 
         <EditText
+            android:id="@+id/age"
+            android:layout_width="match_parent"
+            android:layout_height="@android:dimen/notification_large_icon_height"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_toEndOf="@+id/imageButton"
+            android:layout_toRightOf="@+id/imageButton"
+            android:ems="10"
+            android:enabled="false"
+            android:inputType="number"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="Age" />
+
+        <EditText
             android:id="@+id/emailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -13,8 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.sendbird.android.SendBird;
-
 /**
  * Created by johnquinn on 3/14/17.
  */
@@ -82,9 +80,10 @@ public class CheckoutProductActivity extends AppCompatActivity implements View.O
         switch (v.getId()) {
             case (R.id.detailedListingConfirmPurchase) :
                 //TODO - notify the uploader that someone bought their product - next iteration??
-                //add this to the current users list of products that they've bought
+
                 Intent i = new Intent(this, ProductPurchaseConfirmationActivity.class);
                 i.putExtra("UploaderID", product.getUploaderID());
+                i.putExtra("ProductID", product.getProductID());
                 startActivity(i);
                 break;
 
@@ -141,12 +140,6 @@ public class CheckoutProductActivity extends AppCompatActivity implements View.O
             case R.id.action_logout:
                 //Logs out the current user and brings user to the logout page
                 //Need to add code for actually logging out a user
-                SendBird.disconnect(new SendBird.DisconnectHandler() {
-                    @Override
-                    public void onDisconnected() {
-                        // You are disconnected from SendBird.
-                    }
-                });
                 intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 return true;
