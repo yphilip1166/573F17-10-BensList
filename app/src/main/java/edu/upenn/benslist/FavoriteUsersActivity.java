@@ -109,10 +109,6 @@ public class FavoriteUsersActivity extends AppCompatActivity implements View.OnC
         return true;
     }
 
-    /**
-     * Handle the button presses
-     * TODO add code that will log the user out when they click logout
-     */
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
         switch (item.getItemId()) {
@@ -130,7 +126,6 @@ public class FavoriteUsersActivity extends AppCompatActivity implements View.OnC
 
             case R.id.action_logout:
                 //Logs out the current user and brings user to the logout page
-                //Need to add code for actually logging out a user
                 intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 return true;

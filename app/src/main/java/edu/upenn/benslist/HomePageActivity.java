@@ -147,7 +147,6 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
             case R.id.action_logout:
                 //Logs out the current user and brings user to the logout page
-                //Need to add code for actually logging out a user
                 intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 return true;

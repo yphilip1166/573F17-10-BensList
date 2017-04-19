@@ -280,10 +280,6 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
         return true;
     }
 
-    /**
-     * Handle the button presses
-     * TODO add code that will log the user out when they click logout
-     */
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
         switch (item.getItemId()) {
