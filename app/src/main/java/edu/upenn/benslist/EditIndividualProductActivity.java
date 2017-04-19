@@ -113,6 +113,7 @@ public class EditIndividualProductActivity extends AppCompatActivity implements 
                 EditText distanceText = (EditText) findViewById(R.id.editDistance);
 
                 String price = String.valueOf(priceText.getText());
+                //TODO: Need to fix reading in distance bug
                 double distance = Double.parseDouble(String.valueOf(String.valueOf(distanceText.getText())));
 
                 DatabaseReference productRef = FirebaseDatabase.getInstance().getReference()
