@@ -33,7 +33,7 @@ import java.util.List;
  * Created by tylerdouglas on 3/26/17.
  */
 
-public class UserProfile extends AppCompatActivity {
+public class UserProfileActivity extends AppCompatActivity {
 
     private FirebaseUser fbuser;
     private Boolean submitMode;
