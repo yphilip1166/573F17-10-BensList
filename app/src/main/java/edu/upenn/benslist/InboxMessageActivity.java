@@ -91,7 +91,6 @@ public class InboxMessageActivity extends AppCompatActivity
         // Initialize Firebase Auth
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
-        //NEED TO GET THIS WORKING!!!
 
         //Get the current users information
         mUserId = mFirebaseUser.getUid();
@@ -210,13 +209,6 @@ public class InboxMessageActivity extends AppCompatActivity
             }
         });
 
-//            mAddMessageImageView = (ImageView) findViewById(R.id.addMessageImageView);
-//            mAddMessageImageView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    //Todo include capability to send images if we want to
-//                }
-//            });
 
     }
 
