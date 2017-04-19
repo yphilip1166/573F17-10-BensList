@@ -19,13 +19,13 @@ import com.facebook.CallbackManager;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
-import com.sendbird.android.SendBird;
-import com.sendbird.android.SendBirdException;
-
-import static android.provider.UserDictionary.Words.APP_ID;
 
 /**
  * A login screen that offers login via email/password.
@@ -134,32 +134,35 @@ public class LoginActivity extends AppCompatActivity {
         final String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
-        System.out.println(email + password);
+        if (email.equals("") || password.equals("")) {
+            Toast.makeText(LoginActivity.this, "Please fill in both email and password before signing in",
+                    Toast.LENGTH_SHORT).show();
+        } else {
 
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
 
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        System.out.println("Before if statement");
-                        if (!task.isSuccessful()) {
-                            Log.w(TAG, "signInWithEmail", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            // If sign in fails, display a message to the user. If sign in succeeds
+                            // the auth state listener will be notified and logic to handle the
+                            // signed in user can be handled in the listener.
+                            System.out.println("Before if statement");
+                            if (!task.isSuccessful()) {
+                                Log.w(TAG, "signInWithEmail", task.getException());
+                                Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
+                                startActivity(intent);
+                            }
+                            System.out.println("After else statement");
+
+                            // ...
                         }
-                        else {
-                            Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
-                            startActivity(intent);
-                        }
-                        System.out.println("After else statement");
-
-                        // ...
-                    }
-                });
+                    });
+        }
     }
 
     private void createAccount() {
@@ -168,29 +171,41 @@ public class LoginActivity extends AppCompatActivity {
         final String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
-        System.out.println(email + password);
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
-                        System.out.println(task.getResult());
+        if (email.equals("") || password.equals("")) {
+            Toast.makeText(LoginActivity.this, "Please fill in both email and password before registering",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
+                                System.out.println(task.getResult());
+                                Intent intent = new Intent(LoginActivity.this, UserProfileActivity.class);
+                                startActivity(intent);
+                            } else {
+                                StringBuilder error = new StringBuilder("Authentication Failed: ");
+                                try {
+                                    throw task.getException();
+                                } catch(FirebaseAuthWeakPasswordException e) {
+                                    error.append("Weak Password");
+                                } catch(FirebaseAuthInvalidCredentialsException e) {
+                                    error.append("Invalid Credentials");
+                                } catch(FirebaseAuthUserCollisionException e) {
+                                    error.append("User already exists");
+                                } catch(FirebaseException e) {
+                                    error.append("Weak Password");
+                                }catch(Exception e) {
+                                    error.append("Failed");
+                                }
+                                Toast.makeText(LoginActivity.this, error.toString(),
+                                        Toast.LENGTH_SHORT).show();
+                            }
 
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
                         }
-                        else {
-                            Intent intent = new Intent(LoginActivity.this, UserProfile.class);
-                            startActivity(intent);
-                        }
-
-                        // ...
-                    }
-                });
+                    });
+        }
     }
 }
 

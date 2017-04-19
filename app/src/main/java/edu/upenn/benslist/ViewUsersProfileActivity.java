@@ -107,13 +107,12 @@ public class ViewUsersProfileActivity extends AppCompatActivity implements View.
             case (R.id.viewPreviousPurchasesButton) :
                 Intent i = new Intent(this, ViewUploadedProductsActivity.class);
                 i.putExtra("UserId", userId);
-
                 i.putExtra("Type", "previousPurchases");
                 startActivityForResult(i, RESULT_VIEW_PREVIOUS_PURCHASES);
                 break;
 
             case (R.id.viewFavoriteUsersButton) :
-                Intent intent = new Intent(this, favoriteUsersActivity.class);
+                Intent intent = new Intent(this, FavoriteUsersActivity.class);
                 intent.putExtra("UserId", userId);
                 startActivityForResult(intent, RESULT_VIEW_FAVORITE_USERS);
                 break;

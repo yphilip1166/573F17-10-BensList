@@ -19,7 +19,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.sendbird.android.SendBird;
 
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -109,7 +108,7 @@ public class SearchUserResultsActivity extends AppCompatActivity implements View
             checkOutButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(thisContext, UserProfile.class);
+                    Intent i = new Intent(thisContext, UserProfileActivity.class);
                     i.putExtra("User", (Serializable) user);
                     startActivity(i);
                 }

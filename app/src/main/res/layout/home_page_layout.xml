@@ -34,10 +34,10 @@
         android:textStyle="bold" />
 
     <Button
-        android:id="@+id/openMap"
+        android:id="@+id/edit_listings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="View Listings Nearby"
+        android:text="Edit My Listings"
         android:textStyle="bold" />
 
 </LinearLayout>

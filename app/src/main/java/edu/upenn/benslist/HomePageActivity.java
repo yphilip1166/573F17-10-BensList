@@ -1,5 +1,6 @@
 package edu.upenn.benslist;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,7 +15,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.sendbird.android.SendBird;
 
 
 /**
@@ -24,6 +24,8 @@ import com.sendbird.android.SendBird;
 public class HomePageActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int RESULT_UPLOAD_PRODUCT = 2;
+    DatabaseReference mUserReference;
+    FirebaseUser fbUser;
     private String currentUserName;
 
     @Override
@@ -35,44 +37,48 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         Button searchProductsButton = (Button) findViewById(R.id.beginSearchingProductsButton);
         Button userProfilePage = (Button) findViewById(R.id.profilePage);
         Button searchUsers = (Button) findViewById(R.id.searchUsers);
+        Button editListings = (Button) findViewById(R.id.edit_listings);
 
         uploadProductButton.setOnClickListener(this);
         searchProductsButton.setOnClickListener(this);
-
         userProfilePage.setOnClickListener(this);
         searchUsers.setOnClickListener(this);
+        editListings.setOnClickListener(this);
 
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
-        String currentUserID = fbUser.getUid();
+        mUserReference = FirebaseDatabase.getInstance().getReference()
+                .child("users");
+        fbUser = FirebaseAuth.getInstance().getCurrentUser();
+        currentUserName = fbUser.getUid();
+
     }
 
     @Override
     public void onClick(View v) {
+        final Context thisContext = this;
+
         switch (v.getId()) {
-            case (R.id.beginUploadingProductButton) :
+            case (R.id.beginUploadingProductButton):
                 Intent i = new Intent(this, UploadProductActivity.class);
                 i.putExtra("Logged In User Name", currentUserName);
                 startActivityForResult(i, RESULT_UPLOAD_PRODUCT);
                 break;
 
-            case (R.id.beginSearchingProductsButton) :
+            case (R.id.beginSearchingProductsButton):
                 Intent intent = new Intent(this, SearchPageActivity.class);
                 startActivity(intent);
                 break;
-            case (R.id.profilePage) :
-                Intent profileIntent = new Intent(this, UserProfile.class);
+            case (R.id.profilePage):
+                Intent profileIntent = new Intent(this, UserProfileActivity.class);
                 startActivity(profileIntent);
                 break;
-            case (R.id.searchUsers) :
-                System.out.println("search user clicked");
+            case (R.id.searchUsers):
                 Intent searchIntent = new Intent(this, SearchUsers.class);
                 startActivity(searchIntent);
                 break;
-            case (R.id.openMap) :
-                System.out.println("clicked map button");
-                Intent mapIntent = new Intent(this, MapsActivity.class);
-                startActivity(mapIntent);
+            case (R.id.edit_listings):
+                Intent editUploadedProduct = new Intent(this, EditListingActivity.class);
+                editUploadedProduct.putExtra("UserId", currentUserName);
+                startActivity(editUploadedProduct);
                 break;
             default :
                 break;

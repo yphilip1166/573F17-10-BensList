@@ -38,7 +38,7 @@ import java.util.List;
  * Created by tylerdouglas on 3/26/17.
  */
 
-public class UserProfile extends AppCompatActivity {
+public class UserProfileActivity extends AppCompatActivity {
 
     private FirebaseUser fbuser;
     private Boolean submitMode;
@@ -74,7 +74,7 @@ public class UserProfile extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //User user = dataSnapshot.child(currentUserID).getValue(User.class);
                 String name = dataSnapshot.child(currentUserID).child("name").getValue(String.class);
-                String userAddress = dataSnapshot.child(currentUserID).child("address").getValue(String.class);
+                String userAddress = dataSnapshot.child(currentUserID).child("homeAddress").getValue(String.class);
                 String interests = dataSnapshot.child(currentUserID).child("interests").getValue(String.class);
                 String userRating = dataSnapshot.child(currentUserID).child("name").getValue(String.class);
                 List<Product> productsIveUploaded = new LinkedList<>();
@@ -183,8 +183,8 @@ public class UserProfile extends AppCompatActivity {
         favoriteUsers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), favoriteUsersActivity.class);
-                i.putExtra("User", user);
+                Intent i = new Intent(v.getContext(), FavoriteUsersActivity.class);
+                i.putExtra("UserId", fbuser.getUid());
                 startActivity(i);
             }
         });
@@ -212,7 +212,7 @@ public class UserProfile extends AppCompatActivity {
     }
 
     /**
-     * Checks if UserProfile is in submitMode.
+     * Checks if UserProfileActivity is in submitMode.
      * If SubmitMode = true then it changes all EditText Fields to editable
      * If SubmitMode = false then it changes all EditText fields to non-editable
      */
