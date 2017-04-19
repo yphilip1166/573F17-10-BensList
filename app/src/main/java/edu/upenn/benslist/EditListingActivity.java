@@ -99,7 +99,7 @@ public class EditListingActivity extends AppCompatActivity implements View.OnCli
             View view = LayoutInflater.from(this).inflate(R.layout.edit_products_listing_layout, mLinearLayout, false);
 
             TextView productName = (TextView) view.findViewById(R.id.productListingProductName);
-            productName.setText("Name: " + name);
+            productName.setText("Name: " + product.getName());
 
             TextView productDescription = (TextView) view.findViewById(R.id.productListingProductDescription);
             productDescription.setText("Description: " + product.getDescription());
@@ -114,7 +114,7 @@ public class EditListingActivity extends AppCompatActivity implements View.OnCli
             uploaderPhoneNumber.setText("Phone Number: " + product.getPhoneNumber());
 
             TextView uploaderName = (TextView) view.findViewById(R.id.productListingUploaderName);
-            uploaderName.setText("Uploader Name: " + product.getUploaderName());
+            uploaderName.setText("Uploader Name: " + name);
 
             Button checkOutButton = (Button) view.findViewById(R.id.editProductListing);
             checkOutButton.setOnClickListener(new View.OnClickListener() {
@@ -123,12 +123,23 @@ public class EditListingActivity extends AppCompatActivity implements View.OnCli
                     Intent editProduct = new Intent(thisContext, EditIndividualProductActivity.class);
                     editProduct.putExtra("Username", userId);
                     editProduct.putExtra("Product", (Serializable) product);
-                    startActivity(editProduct);
+                    startActivityForResult(editProduct, 15);
                 }
             });
 
             mLinearLayout.addView(view);
         }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 15 && resultCode == RESULT_OK) {
+            mLinearLayout.removeAllViews();
+            mLinearLayout.invalidate();
+        }
+
     }
 
 

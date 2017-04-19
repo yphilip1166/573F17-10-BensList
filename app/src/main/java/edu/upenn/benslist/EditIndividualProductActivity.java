@@ -20,6 +20,9 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * Created by tylerdouglas on 4/19/17.
  */
@@ -53,6 +56,9 @@ public class EditIndividualProductActivity extends AppCompatActivity implements 
 
 
         Spinner spinner = (Spinner) findViewById(R.id.productCategorySpinner);
+        itemCategory = product.getCategory();
+        ArrayList<String> categoryOptions = new ArrayList<String>
+                (Arrays.asList(getResources().getStringArray(R.array.product_categories_array)));
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -70,7 +76,8 @@ public class EditIndividualProductActivity extends AppCompatActivity implements 
                 R.array.product_categories_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        itemCategory = product.getCategory();
+        spinner.setSelection(categoryOptions.indexOf(itemCategory));
+
 
         EditText editProductName = (EditText) findViewById(R.id.editProductName);
         editProductName.setText(product.getName());
@@ -79,7 +86,7 @@ public class EditIndividualProductActivity extends AppCompatActivity implements 
         editProductDescription.setText(product.getDescription());
 
         EditText editPrice = (EditText) findViewById(R.id.editPrice);
-        editPrice.setText(product.getPrice());
+        editPrice.setText(Double.toString(product.getPriceAsDouble()));
 
         EditText editLocation = (EditText) findViewById(R.id.editLocation);
         editLocation.setText(product.getLocation());
@@ -112,23 +119,51 @@ public class EditIndividualProductActivity extends AppCompatActivity implements 
                 EditText priceText = (EditText) findViewById(R.id.editPrice);
                 EditText distanceText = (EditText) findViewById(R.id.editDistance);
 
-                String price = String.valueOf(priceText.getText());
-                //TODO: Need to fix reading in distance bug
+
+                String price = priceText.getText().toString();
                 double distance = Double.parseDouble(String.valueOf(String.valueOf(distanceText.getText())));
+                int decimalPoint = price.indexOf('.');
+
+                double priceAsDouble = 0.0;
+                if (decimalPoint == -1) {
+                    priceAsDouble = Double.parseDouble(price);
+                }
+                else if (price.length() - decimalPoint - 1 == 2) {
+                    priceAsDouble = Double.parseDouble(price);
+                }
+                else if (price.length() - decimalPoint - 1 == 1) {
+                    priceAsDouble = Double.parseDouble(price);
+                }
+                else if (price.length() - decimalPoint == 1) {
+                    //45.
+                    priceAsDouble = Double.parseDouble(price.substring(0, price.length() - 1));
+                }
+                else {
+                    priceAsDouble = Double.parseDouble(price.substring(0, decimalPoint + 3));
+                }
 
                 DatabaseReference productRef = FirebaseDatabase.getInstance().getReference()
                         .child("users").child(product.getUploaderID()).child("productsIveUploaded")
                         .child(product.getProductID());
-                System.out.println(product.getProductID());
-                System.out.println("product name is "+ String.valueOf(productName.getText()));
 
                 productRef.child("category").setValue(String.valueOf(itemCategory));
                 productRef.child("description").setValue(String.valueOf(productDescription.getText()));
-                productRef.child("distance").setValue(25.0);
+                productRef.child("distance").setValue(distance);
                 productRef.child("location").setValue(String.valueOf(productLocation.getText()));
                 productRef.child("name").setValue(String.valueOf(productName.getText()));
                 productRef.child("phoneNumber").setValue(String.valueOf(productPhoneNumber.getText()));
+
+
+                price = "$" + priceAsDouble;
+                int decimalIndex = price.indexOf('.');
+                if (price.length() - decimalIndex == 2) {
+                    price += "0";
+                }
+
                 productRef.child("price").setValue(price);
+                productRef.child("priceAsDouble").setValue(priceAsDouble);
+                productRef.child("priceCategory").setValue(getPriceLevel(priceAsDouble));
+                productRef.child("locationCategory").setValue((getLocationLevel(distance)));
 
                 setResult(RESULT_OK, returnIntent);
                 finish();
