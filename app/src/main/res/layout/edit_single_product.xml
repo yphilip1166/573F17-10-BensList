@@ -121,9 +121,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/editLocation"
-            android:layout_toEndOf="@+id/distanceText"
             android:layout_toRightOf="@+id/distanceText"
-            android:inputType="number|numberDecimal" />
+            android:layout_toEndOf="@+id/distanceText"
+            android:inputType="number"/>
 
         <TextView
             android:id="@+id/phoneNumberText"
@@ -170,9 +170,6 @@
             android:layout_below="@+id/productCategorySpinner"
             android:textAlignment="center"
             android:textStyle="normal|bold" />
-
-
-
 
     </RelativeLayout>
 

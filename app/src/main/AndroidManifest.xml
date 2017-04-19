@@ -39,18 +39,18 @@
         <activity android:name=".HomePageActivity"/>
         <activity android:name=".UploadProductActivity"/>
         <activity android:name=".CheckoutProductActivity"/>
-        <activity android:name=".UserProfile"/>
+        <activity android:name=".UserProfileActivity"/>
         <activity android:name=".SearchUsers"/>
         <activity android:name=".PreviousPurchasedItems"/>
         <activity android:name=".ProductPurchaseConfirmationActivity"/>
-        <activity android:name=".UserProfileActivity"/>
         <activity android:name=".MyProductsActivity"/>
         <activity android:name=".ViewUploadedProductsActivity"/>
         <activity android:name=".ViewUsersProfileActivity"/>
-      <activity android:name=".PublicForumActivity"></activity>
-        <activity android:name=".favoriteUsersActivity"/>
-        <activity android:name=".MapsActivity"/>
-      <activity android:name=".InboxMessageActivity"></activity>
+        <activity android:name=".PublicForumActivity"/>
+        <activity android:name=".FavoriteUsersActivity"/>
+        <activity android:name=".InboxMessageActivity"/>
+        <activity android:name=".EditListingActivity" />
+        <activity android:name=".EditIndividualProductActivity" />
      
     </application>
 

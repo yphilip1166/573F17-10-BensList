@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
+
 /**
  * Created by johnquinn on 2/23/17.
  */
@@ -73,6 +74,10 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         });
 
 
+        mUserReference = FirebaseDatabase.getInstance().getReference()
+                .child("users");
+        fbUser = FirebaseAuth.getInstance().getCurrentUser();
+        currentUserName = fbUser.getUid();
 
     }
 

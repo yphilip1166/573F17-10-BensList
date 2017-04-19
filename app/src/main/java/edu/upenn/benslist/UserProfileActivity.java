@@ -25,7 +25,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -96,19 +98,8 @@ public class UserProfileActivity extends AppCompatActivity {
 
                         System.out.println(product.getName());
                     }
-                /*List<Product> favoriteUsersIveBoughtFrom = new LinkedList<>();
-                for (DataSnapshot productSnapshot : dataSnapshot.child(currentUserID).child(
-                        "favoriteUsersIveBoughtFrom").getChildren()) {
-                    User user = productSnapshot.getValue(Product.class);
-                    favoriteUsersIveBoughtFrom.add(product);
-
-                    System.out.println(product.getName());
-                }*/
-                    if (name != null) {
-                        setUserValues(name, userAddress, interests, userRating, "5");
-                    }
-                    createButtons(currentUserID);
                 }
+
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
@@ -196,7 +187,7 @@ public class UserProfileActivity extends AppCompatActivity {
         favoriteUsers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), favoriteUsersActivity.class);
+                Intent i = new Intent(v.getContext(), FavoriteUsersActivity.class);
                 i.putExtra("UserId", currentUserID);
                 startActivity(i);
             }
@@ -226,7 +217,7 @@ public class UserProfileActivity extends AppCompatActivity {
     }
 
     /**
-     * Checks if UserProfile is in submitMode.
+     * Checks if UserProfileActivity is in submitMode.
      * If SubmitMode = true then it changes all EditText Fields to editable
      * If SubmitMode = false then it changes all EditText fields to non-editable
      */
@@ -262,10 +253,7 @@ public class UserProfileActivity extends AppCompatActivity {
         return true;
     }
 
-    /**
-     * Handle the button presses
-     * TODO add code that will log the user out when they click logout
-     */
+
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
         switch (item.getItemId()) {
@@ -306,9 +294,10 @@ public class UserProfileActivity extends AppCompatActivity {
                     EditText ageText = (EditText) findViewById(R.id.emailAddress);
                     mDatabase.child(currentUserID).child("email").setValue(String.valueOf(emailAddress.getText()));
                     mDatabase.child(currentUserID).child("name").setValue(String.valueOf(nameField.getText()));
-                    mDatabase.child(currentUserID).child("address").setValue(String.valueOf(address.getText()));
+                    mDatabase.child(currentUserID).child("homeAddress").setValue(String.valueOf(address.getText()));
                     mDatabase.child(currentUserID).child("interests").setValue(String.valueOf(interests.getText()));
                     mDatabase.child(currentUserID).child("age").setValue(String.valueOf(ageText.getText()));
+                    mDatabase.child(currentUserID).child("blockedUsers").setValue(new HashSet<String>());
 
                     editButton.setTitle("Edit");
 

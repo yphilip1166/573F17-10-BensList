@@ -31,7 +31,7 @@ import java.util.List;
 This page simply displays a list of a user's favorite users that they've bought from.
  */
 
-public class favoriteUsersActivity extends AppCompatActivity implements View.OnClickListener {
+public class FavoriteUsersActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String userId;
     ListView listView;

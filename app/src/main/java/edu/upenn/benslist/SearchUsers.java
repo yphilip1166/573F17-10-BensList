@@ -116,6 +116,10 @@ public class SearchUsers extends AppCompatActivity implements View.OnClickListen
                             Toast.makeText(SearchUsers.this, "Cannot find user.",
                                     Toast.LENGTH_SHORT).show();
                         }
+                        if (!isBlocked) {
+                            Toast.makeText(SearchUsers.this, "Cannot find user.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override
