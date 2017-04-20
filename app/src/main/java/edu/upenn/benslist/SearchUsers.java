@@ -102,19 +102,12 @@ public class SearchUsers extends AppCompatActivity implements View.OnClickListen
                                     }
                                 }
                                 if (!isBlocked) {
+                                    isBlocked = true;
                                     Intent i = new Intent(thisContext, ViewUsersProfileActivity.class);
                                     i.putExtra("UserId", userSnapshot.getKey());
                                     startActivity(i);
                                 }
                             }
-                            else {
-                                Toast.makeText(SearchUsers.this, "Failed to find user.",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        if (!isBlocked) {
-                            Toast.makeText(SearchUsers.this, "Cannot find user.",
-                                    Toast.LENGTH_SHORT).show();
                         }
                         if (!isBlocked) {
                             Toast.makeText(SearchUsers.this, "Cannot find user.",

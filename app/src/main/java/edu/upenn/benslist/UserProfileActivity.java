@@ -25,11 +25,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Created by tylerdouglas on 3/26/17.
@@ -51,20 +46,6 @@ public class UserProfileActivity extends AppCompatActivity {
         boolean signUp = getIntent().getBooleanExtra("SignUp", false);
         submitMode = signUp;
 
-        /*
-        ImageButton imageButton = (ImageButton) findViewById(R.id.imageButton);
-        imageButton.setOnClickListener(new ImageButton.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"),REQUEST_CODE);
-            }
-
-        });*/
-
-
         mDatabase = FirebaseDatabase.getInstance().getReference().child("users");
         fbuser = FirebaseAuth.getInstance().getCurrentUser();
         currentUserID = fbuser.getUid();
@@ -82,22 +63,8 @@ public class UserProfileActivity extends AppCompatActivity {
                     }
 
                     String age = dataSnapshot.child(currentUserID).child("age").getValue(String.class);
-                    List<Product> productsIveUploaded = new LinkedList<>();
-                    for (DataSnapshot productSnapshot : dataSnapshot.child(currentUserID).child(
-                            "productsIveUploaded").getChildren()) {
-                        Product product = productSnapshot.getValue(Product.class);
-                        productsIveUploaded.add(product);
-
-                        System.out.println(product.getName());
-                    }
-                    List<Product> productsIveBought = new LinkedList<>();
-                    for (DataSnapshot productSnapshot : dataSnapshot.child(currentUserID).child(
-                            "productsIveBought").getChildren()) {
-                        Product product = productSnapshot.getValue(Product.class);
-                        productsIveBought.add(product);
-
-                        System.out.println(product.getName());
-                    }
+                    setUserValues(name, userAddress, interests, userRating, age);
+                    createButtons(currentUserID);
                 }
 
 
@@ -110,9 +77,6 @@ public class UserProfileActivity extends AppCompatActivity {
         else {
             createButtons(currentUserID);
             submitMode();
-            MenuItem editButton = menu.findItem(R.id.Edit);
-            editButton.setTitle("Submit");
-
         }
 
     }
@@ -226,17 +190,20 @@ public class UserProfileActivity extends AppCompatActivity {
         EditText address = (EditText) findViewById(R.id.address);
         EditText interests = (EditText) findViewById(R.id.interests);
         EditText emailAddress = (EditText) findViewById(R.id.emailAddress);
+        EditText ageText = (EditText) findViewById(R.id.age);
 
         if (submitMode) {
             nameField.setEnabled(true);
             address.setEnabled(true);
             interests.setEnabled(true);
             emailAddress.setEnabled(true);
+            ageText.setEnabled(true);
         } else {
             nameField.setEnabled(false);
             address.setEnabled(false);
             interests.setEnabled(false);
             emailAddress.setEnabled(false);
+            ageText.setEnabled(false);
         }
     }
 
@@ -291,13 +258,13 @@ public class UserProfileActivity extends AppCompatActivity {
                     EditText address = (EditText) findViewById(R.id.address);
                     EditText interests = (EditText) findViewById(R.id.interests);
                     EditText emailAddress = (EditText) findViewById(R.id.emailAddress);
-                    EditText ageText = (EditText) findViewById(R.id.emailAddress);
+                    EditText ageText = (EditText) findViewById(R.id.age);
                     mDatabase.child(currentUserID).child("email").setValue(String.valueOf(emailAddress.getText()));
                     mDatabase.child(currentUserID).child("name").setValue(String.valueOf(nameField.getText()));
                     mDatabase.child(currentUserID).child("homeAddress").setValue(String.valueOf(address.getText()));
                     mDatabase.child(currentUserID).child("interests").setValue(String.valueOf(interests.getText()));
                     mDatabase.child(currentUserID).child("age").setValue(String.valueOf(ageText.getText()));
-                    mDatabase.child(currentUserID).child("blockedUsers").setValue(new HashSet<String>());
+                    //mDatabase.child(currentUserID).child("blockedUsers").setValue(new HashSet<String>());
 
                     editButton.setTitle("Edit");
 

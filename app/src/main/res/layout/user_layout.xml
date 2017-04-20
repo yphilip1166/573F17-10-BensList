@@ -4,36 +4,81 @@
     android:layout_height="match_parent">
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-    <RatingBar
+        <EditText
+            android:id="@+id/ratingText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Rating:" />
+
+        <RatingBar
             android:id="@+id/ratingBar"
             style="@android:style/Widget.DeviceDefault.Light.RatingBar.Indicator"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:numStars="5"
             android:layout_marginEnd="79dp"
             android:layout_marginRight="79dp"
+            android:layout_weight="1"
+            android:numStars="5"
             android:paddingBottom="10dp"
             android:paddingTop="10dp" />
+    </LinearLayout>
 
 
-    <EditText
-        android:id="@+id/name"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@android:dimen/notification_large_icon_height"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/ratingBar"
-        android:layout_toRightOf="@+id/NameTextView"
-        android:ems="10"
-        android:enabled="false"
-        android:inputType="textPersonName"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
-        android:text="Name" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name:" />
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="@android:dimen/notification_large_icon_height"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/ratingBar"
+            android:layout_toRightOf="@+id/NameTextView"
+            android:layout_weight="1"
+            android:ems="10"
+            android:enabled="false"
+            android:inputType="textPersonName"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="Name" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/ageText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Age:" />
 
         <EditText
             android:id="@+id/age"
@@ -41,12 +86,28 @@
             android:layout_height="@android:dimen/notification_large_icon_height"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
+            android:layout_weight="1"
             android:ems="10"
             android:enabled="false"
             android:inputType="number"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
             android:text="Age" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/emailText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Email:" />
 
         <EditText
             android:id="@+id/emailAddress"
@@ -54,11 +115,27 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_weight="0.37"
+            android:layout_weight="1"
             android:ems="10"
             android:enabled="false"
             android:inputType="textEmailAddress"
             android:text="Email Address" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/addressText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Address:" />
 
         <EditText
             android:id="@+id/address"
@@ -71,6 +148,21 @@
             android:enabled="false"
             android:inputType="textPostalAddress"
             android:text="User Address" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/interestText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Interests:" />
 
         <EditText
             android:id="@+id/interests"
@@ -86,31 +178,33 @@
             android:inputType="textPersonName"
             android:text="Interests" />
 
-        <Button
-            android:id="@+id/prevousProducts"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/viewProductsButton"
-            android:layout_centerHorizontal="true"
-            android:layout_weight="1"
-            android:text="Previous Purchases" />
+    </LinearLayout>
 
-        <Button
-            android:id="@+id/favoriteUsers"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/prevousProducts"
-            android:layout_centerHorizontal="true"
-            android:layout_weight="1"
-            android:text="View Favorite Users" />
+    <Button
+        android:id="@+id/prevousProducts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/viewProductsButton"
+        android:layout_centerHorizontal="true"
+        android:layout_weight="1"
+        android:text="Previous Purchases" />
 
-        <Button
-            android:id="@+id/viewProductsButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/interests"
-            android:layout_centerHorizontal="true"
-            android:layout_weight="1"
-            android:text="View my Products" />
+    <Button
+        android:id="@+id/favoriteUsers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/prevousProducts"
+        android:layout_centerHorizontal="true"
+        android:layout_weight="1"
+        android:text="View Favorite Users" />
+
+    <Button
+        android:id="@+id/viewProductsButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/interests"
+        android:layout_centerHorizontal="true"
+        android:layout_weight="1"
+        android:text="View my Products" />
 
 </LinearLayout>
