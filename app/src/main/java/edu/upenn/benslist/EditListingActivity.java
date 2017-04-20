@@ -96,9 +96,12 @@ public class EditListingActivity extends AppCompatActivity implements View.OnCli
             View view = LayoutInflater.from(this).inflate(R.layout.edit_products_listing_layout, mLinearLayout, false);
 
             TextView productName = (TextView) view.findViewById(R.id.productListingProductName);
+            System.out.println("product name is: " + product.getName());
             productName.setText("Name: " + product.getName());
 
             TextView productDescription = (TextView) view.findViewById(R.id.productListingProductDescription);
+            System.out.println("product description is: " + product.getDescription());
+
             productDescription.setText("Description: " + product.getDescription());
 
             TextView productPrice = (TextView) view.findViewById(R.id.productListingProductPrice);
@@ -133,6 +136,7 @@ public class EditListingActivity extends AppCompatActivity implements View.OnCli
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 15 && resultCode == RESULT_OK) {
+            System.out.println("refreshing activity");
             Intent refresh = new Intent(this, EditListingActivity.class);
             FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
             String currentUserID = fbUser.getUid();
