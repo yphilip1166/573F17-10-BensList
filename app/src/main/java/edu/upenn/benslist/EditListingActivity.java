@@ -64,17 +64,16 @@ public class EditListingActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String name = dataSnapshot.child("name").getValue(String.class);
+
                 if (type.equals("uploads")) {
                     List<Product> productsIveUploaded = new LinkedList<>();
                     for (DataSnapshot productSnapshot : dataSnapshot.child(
                             "productsIveUploaded").getChildren()) {
                         Product product = productSnapshot.getValue(Product.class);
                         productsIveUploaded.add(product);
+
                     }
                     addProductsToView(productsIveUploaded, name);
-                }
-                else {
-                    System.out.println("ERROR");
                 }
             }
 

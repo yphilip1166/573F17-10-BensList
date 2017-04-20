@@ -116,7 +116,10 @@ public class EditIndividualProductActivity extends AppCompatActivity implements 
                 break;
 
             case (R.id.doneButton) :
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3e719f39ce3ea7fb94a839141de8c73fd32cc224
                 Intent returnIntent = new Intent(this, EditListingActivity.class);
 
                 FirebaseUser fbuser = FirebaseAuth.getInstance().getCurrentUser();

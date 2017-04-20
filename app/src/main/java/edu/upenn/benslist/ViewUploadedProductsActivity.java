@@ -73,8 +73,6 @@ public class ViewUploadedProductsActivity extends AppCompatActivity implements V
                             "productsIveUploaded").getChildren()) {
                         Product product = productSnapshot.getValue(Product.class);
                         productsIveUploaded.add(product);
-
-                        System.out.println(product.getName());
                     }
                     addProductsToView(productsIveUploaded, name);
                 }
@@ -84,13 +82,8 @@ public class ViewUploadedProductsActivity extends AppCompatActivity implements V
                             "productsIveBought").getChildren()) {
                         Product product = productSnapshot.getValue(Product.class);
                         productsIveBought.add(product);
-
-                        System.out.println(product.getName());
                     }
                     addProductsToView(productsIveBought, name);
-                }
-                else {
-                    System.out.println("ERROR");
                 }
             }
 
