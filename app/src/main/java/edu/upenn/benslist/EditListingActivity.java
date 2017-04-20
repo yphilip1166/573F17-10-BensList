@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -62,16 +64,12 @@ public class EditListingActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String name = dataSnapshot.child("name").getValue(String.class);
-                System.out.println("Uploaded name is " + name);
-                System.out.println("And userID is " + userId);
                 if (type.equals("uploads")) {
                     List<Product> productsIveUploaded = new LinkedList<>();
                     for (DataSnapshot productSnapshot : dataSnapshot.child(
                             "productsIveUploaded").getChildren()) {
                         Product product = productSnapshot.getValue(Product.class);
                         productsIveUploaded.add(product);
-
-                        System.out.println(product.getName());
                     }
                     addProductsToView(productsIveUploaded, name);
                 }
@@ -136,8 +134,12 @@ public class EditListingActivity extends AppCompatActivity implements View.OnCli
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 15 && resultCode == RESULT_OK) {
-            mLinearLayout.removeAllViews();
-            mLinearLayout.invalidate();
+            Intent refresh = new Intent(this, EditListingActivity.class);
+            FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
+            String currentUserID = fbUser.getUid();
+            refresh.putExtra("UserId", currentUserID);
+            startActivity(refresh);
+            this.finish();
         }
 
     }
@@ -165,8 +167,6 @@ public class EditListingActivity extends AppCompatActivity implements View.OnCli
         MenuInflater inflater = getMenuInflater();
         this.menu = menu;
         inflater.inflate(R.menu.tools, menu);
-        inflater.inflate(R.menu.submit, menu);
-
         return true;
     }
 
@@ -197,11 +197,6 @@ public class EditListingActivity extends AppCompatActivity implements View.OnCli
                 //Go to terms page
                 intent = new Intent(this, TermsActivity.class);
                 startActivity(intent);
-                return true;
-
-            case R.id.Edit:
-                //Enable Editting fields
-                MenuItem editButton = menu.findItem(R.id.Edit);
                 return true;
 
             case R.id.action_forum:

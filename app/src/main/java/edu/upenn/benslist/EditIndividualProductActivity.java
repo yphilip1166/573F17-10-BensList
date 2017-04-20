@@ -17,8 +17,13 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,6 +46,8 @@ public class EditIndividualProductActivity extends AppCompatActivity implements 
         setContentView(R.layout.activity_upload_product);
         this.currentUserName = getIntent().getStringExtra("Username");
         this.product = (Product) getIntent().getExtras().getSerializable("Product");
+
+
 
         populateProductFields();
 
@@ -109,61 +116,91 @@ public class EditIndividualProductActivity extends AppCompatActivity implements 
                 break;
 
             case (R.id.doneButton) :
-                System.out.println("in done button click");
+
                 Intent returnIntent = new Intent(this, EditListingActivity.class);
 
-                EditText productName = (EditText) findViewById(R.id.editProductName);
-                EditText productDescription = (EditText) findViewById(R.id.editProductDescription);
-                EditText productLocation = (EditText) findViewById(R.id.editLocation);
-                EditText productPhoneNumber = (EditText) findViewById(R.id.editPhoneNumber);
-                EditText priceText = (EditText) findViewById(R.id.editPrice);
-                EditText distanceText = (EditText) findViewById(R.id.editDistance);
+                FirebaseUser fbuser = FirebaseAuth.getInstance().getCurrentUser();
+                DatabaseReference mUserReference = FirebaseDatabase.getInstance().getReference()
+                        .child("users").child(fbuser.getUid());
+                mUserReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String productRefKey = "";
+                        for (DataSnapshot productSnapshot : dataSnapshot.child(
+                                "productsIveUploaded").getChildren()) {
+                            Product snapshotProduct = productSnapshot.getValue(Product.class);
+                            if (snapshotProduct.getProductID().equals(product.getProductID())) {
+                                productRefKey = productSnapshot.getKey();
+                            }
+                            System.out.println("This is the current product " + productRefKey);
+                        }
+
+                        EditText productName = (EditText) findViewById(R.id.editProductName);
+                        EditText productDescription = (EditText) findViewById(R.id.editProductDescription);
+                        EditText productLocation = (EditText) findViewById(R.id.editLocation);
+                        EditText productPhoneNumber = (EditText) findViewById(R.id.editPhoneNumber);
+                        EditText priceText = (EditText) findViewById(R.id.editPrice);
+                        EditText distanceText = (EditText) findViewById(R.id.editDistance);
 
 
-                String price = priceText.getText().toString();
-                double distance = Double.parseDouble(String.valueOf(String.valueOf(distanceText.getText())));
-                int decimalPoint = price.indexOf('.');
+                        String price = priceText.getText().toString();
+                        double distance = Double.parseDouble(String.valueOf(String.valueOf(distanceText.getText())));
+                        int decimalPoint = price.indexOf('.');
 
-                double priceAsDouble = 0.0;
-                if (decimalPoint == -1) {
-                    priceAsDouble = Double.parseDouble(price);
-                }
-                else if (price.length() - decimalPoint - 1 == 2) {
-                    priceAsDouble = Double.parseDouble(price);
-                }
-                else if (price.length() - decimalPoint - 1 == 1) {
-                    priceAsDouble = Double.parseDouble(price);
-                }
-                else if (price.length() - decimalPoint == 1) {
-                    //45.
-                    priceAsDouble = Double.parseDouble(price.substring(0, price.length() - 1));
-                }
-                else {
-                    priceAsDouble = Double.parseDouble(price.substring(0, decimalPoint + 3));
-                }
+                        double priceAsDouble = 0.0;
+                        if (decimalPoint == -1) {
+                            priceAsDouble = Double.parseDouble(price);
+                        }
+                        else if (price.length() - decimalPoint - 1 == 2) {
+                            priceAsDouble = Double.parseDouble(price);
+                        }
+                        else if (price.length() - decimalPoint - 1 == 1) {
+                            priceAsDouble = Double.parseDouble(price);
+                        }
+                        else if (price.length() - decimalPoint == 1) {
+                            //45.
+                            priceAsDouble = Double.parseDouble(price.substring(0, price.length() - 1));
+                        }
+                        else {
+                            priceAsDouble = Double.parseDouble(price.substring(0, decimalPoint + 3));
+                        }
 
-                DatabaseReference productRef = FirebaseDatabase.getInstance().getReference()
-                        .child("users").child(product.getUploaderID()).child("productsIveUploaded")
-                        .child(product.getProductID());
+                        DatabaseReference productRef = FirebaseDatabase.getInstance().getReference()
+                                .child("users").child(product.getUploaderID()).child("productsIveUploaded")
+                                .child(productRefKey);
 
-                productRef.child("category").setValue(String.valueOf(itemCategory));
-                productRef.child("description").setValue(String.valueOf(productDescription.getText()));
-                productRef.child("distance").setValue(distance);
-                productRef.child("location").setValue(String.valueOf(productLocation.getText()));
-                productRef.child("name").setValue(String.valueOf(productName.getText()));
-                productRef.child("phoneNumber").setValue(String.valueOf(productPhoneNumber.getText()));
+                        String description = String.valueOf(productDescription.getText());
+                        String location = String.valueOf(productLocation.getText());
+                        String name = String.valueOf(productName.getText());
+                        String phoneNumber = String.valueOf(productPhoneNumber.getText());
+                        int priceCategory = getPriceLevel(priceAsDouble);
+                        int locationCategory = getLocationLevel(distance);
+                        price = "$" + priceAsDouble;
+                        int decimalIndex = price.indexOf('.');
+                        if (price.length() - decimalIndex == 2) {
+                            price += "0";
+                        }
 
+                        productRef.child("category").setValue(itemCategory);
+                        productRef.child("description").setValue(description);
+                        productRef.child("distance").setValue(distance);
+                        productRef.child("location").setValue(location);
+                        productRef.child("name").setValue(name);
+                        productRef.child("phoneNumber").setValue(phoneNumber);
+                        productRef.child("price").setValue(price);
+                        productRef.child("priceAsDouble").setValue(priceAsDouble);
+                        productRef.child("priceCategory").setValue(priceCategory);
+                        productRef.child("locationCategory").setValue(locationCategory);
 
-                price = "$" + priceAsDouble;
-                int decimalIndex = price.indexOf('.');
-                if (price.length() - decimalIndex == 2) {
-                    price += "0";
-                }
+                        setGeneralProduct(product.getProductID(), description, distance, location, name,
+                                phoneNumber, price, priceAsDouble, priceCategory, locationCategory);
+                    }
 
-                productRef.child("price").setValue(price);
-                productRef.child("priceAsDouble").setValue(priceAsDouble);
-                productRef.child("priceCategory").setValue(getPriceLevel(priceAsDouble));
-                productRef.child("locationCategory").setValue((getLocationLevel(distance)));
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
                 setResult(RESULT_OK, returnIntent);
                 finish();
@@ -171,6 +208,26 @@ public class EditIndividualProductActivity extends AppCompatActivity implements 
             default :
                 break;
         }
+    }
+
+    private void setGeneralProduct(String productID, String description, double distance,
+                                   String location, String name, String phoneNumber, String price,
+                                   double priceAsDouble, int priceCategory, int locationCategory) {
+        System.out.println("Product ID is: " + productID);
+        DatabaseReference productRef = FirebaseDatabase.getInstance().getReference()
+                .child("products").child(productID);
+
+        productRef.child("category").setValue(itemCategory);
+        productRef.child("description").setValue(description);
+        productRef.child("distance").setValue(distance);
+        productRef.child("location").setValue(location);
+        productRef.child("name").setValue(name);
+        productRef.child("phoneNumber").setValue(phoneNumber);
+        productRef.child("price").setValue(price);
+        productRef.child("priceAsDouble").setValue(priceAsDouble);
+        productRef.child("priceCategory").setValue(priceCategory);
+        productRef.child("locationCategory").setValue(locationCategory);
+
     }
 
     private int getPriceLevel(double price) {
