@@ -18,17 +18,20 @@
             android:inputType="textPersonName"
             android:text="Rating:" />
 
-
         <RatingBar
-                android:id="@+id/ratingBar"
-                style="@android:style/Widget.DeviceDefault.Light.RatingBar.Indicator"
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:numStars="5" />
+            android:id="@+id/ratingBar"
+            style="@android:style/Widget.DeviceDefault.Light.RatingBar.Indicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="79dp"
+            android:layout_marginRight="79dp"
+            android:layout_weight="1"
+            android:numStars="5"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp" />
     </LinearLayout>
 
 
@@ -46,15 +49,21 @@
             android:inputType="textPersonName"
             android:text="Name:" />
 
-            <EditText
-                android:id="@+id/name"
-                android:layout_width="match_parent"
-                android:layout_height="@android:dimen/notification_large_icon_height"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/ratingBar"
-                android:layout_toRightOf="@+id/NameTextView"
-                android:text="Name" />
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="@android:dimen/notification_large_icon_height"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/ratingBar"
+            android:layout_toRightOf="@+id/NameTextView"
+            android:layout_weight="1"
+            android:ems="10"
+            android:enabled="false"
+            android:inputType="textPersonName"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="Name" />
     </LinearLayout>
 
     <LinearLayout
@@ -71,13 +80,19 @@
             android:inputType="textPersonName"
             android:text="Age:" />
 
-
         <EditText
             android:id="@+id/age"
             android:layout_width="match_parent"
             android:layout_height="@android:dimen/notification_large_icon_height"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true" />
+            android:layout_alignParentRight="true"
+            android:layout_weight="1"
+            android:ems="10"
+            android:enabled="false"
+            android:inputType="number"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="Age" />
     </LinearLayout>
 
     <LinearLayout
@@ -99,7 +114,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true" />
+            android:layout_alignParentRight="true"
+            android:layout_weight="1"
+            android:ems="10"
+            android:enabled="false"
+            android:inputType="textEmailAddress"
+            android:text="Email Address" />
+
     </LinearLayout>
 
     <LinearLayout
