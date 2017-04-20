@@ -92,7 +92,21 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
 
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
-                        //User uploader = snapshot.child("users").child(uploaderID).getValue(User.class);
+                        int numRatings = 0;
+                        int sumRatings = 0;
+                        if (snapshot.child("users").child(uploaderID).child(
+                                "numRatings").getValue() != null) {
+                            numRatings = snapshot.child("users").child(uploaderID).child(
+                                    "numRatings").getValue(Integer.class);
+                            sumRatings = snapshot.child("users").child(uploaderID).child(
+                                    "sumRatings").getValue(Integer.class);
+                        }
+                        numRatings++;
+                        sumRatings += (Integer.parseInt(rating));
+                        mDatabase.child("users").child(uploaderID).child("rating").setValue(sumRatings / numRatings);
+                        mDatabase.child("users").child(uploaderID).child("numRatings").setValue(numRatings);
+                        mDatabase.child("users").child(uploaderID).child("sumRatings").setValue(sumRatings);
+
 
                         if (favorite) {
                             String uploaderUserName = snapshot.child("users").child(
@@ -101,10 +115,13 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
                                     "favoriteUsersIveBoughtFrom").push();
                             ref.setValue(uploaderUserName);
                         }
+
                         Product product = snapshot.child("products").child(productID).getValue(Product.class);
                         DatabaseReference ref = mDatabase.child("users").child(currentUserID).child(
                                 "productsIveBought").push();
                         ref.setValue(product);
+
+
 
                         //double newRating = uploader.addRating(Integer.parseInt(rating));
                         //mDatabase.child("users").child(uploaderID).child("rating").setValue(newRating);
@@ -141,10 +158,6 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
         return true;
     }
 
-    /**
-     * Handle the button presses
-     * TODO add code that will log the user out when they click logout
-     */
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
         switch (item.getItemId()) {

@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,7 +14,6 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +25,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashSet;
@@ -52,8 +48,10 @@ public class UserProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_layout);
-        submitMode = false;
+        boolean signUp = getIntent().getBooleanExtra("SignUp", false);
+        submitMode = signUp;
 
+        /*
         ImageButton imageButton = (ImageButton) findViewById(R.id.imageButton);
         imageButton.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
@@ -64,56 +62,58 @@ public class UserProfileActivity extends AppCompatActivity {
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"),REQUEST_CODE);
             }
 
-        });
+        });*/
 
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("users");
         fbuser = FirebaseAuth.getInstance().getCurrentUser();
         currentUserID = fbuser.getUid();
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                //User user = dataSnapshot.child(currentUserID).getValue(User.class);
-                String name = dataSnapshot.child(currentUserID).child("name").getValue(String.class);
-                String userAddress = dataSnapshot.child(currentUserID).child("homeAddress").getValue(String.class);
-                String interests = dataSnapshot.child(currentUserID).child("interests").getValue(String.class);
-                String userRating = dataSnapshot.child(currentUserID).child("name").getValue(String.class);
-                List<Product> productsIveUploaded = new LinkedList<>();
-                for (DataSnapshot productSnapshot : dataSnapshot.child(currentUserID).child(
-                        "productsIveUploaded").getChildren()) {
-                    Product product = productSnapshot.getValue(Product.class);
-                    productsIveUploaded.add(product);
+        if (! signUp) {
+            mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    //User user = dataSnapshot.child(currentUserID).getValue(User.class);
+                    String name = dataSnapshot.child(currentUserID).child("name").getValue(String.class);
+                    String userAddress = dataSnapshot.child(currentUserID).child("address").getValue(String.class);
+                    String interests = dataSnapshot.child(currentUserID).child("interests").getValue(String.class);
+                    String userRating = "0";
+                    if (dataSnapshot.child(currentUserID).child("rating").getValue() != null) {
+                        userRating = dataSnapshot.child(currentUserID).child("rating").getValue().toString();
+                    }
 
-                    System.out.println(product.getName());
+                    String age = dataSnapshot.child(currentUserID).child("age").getValue(String.class);
+                    List<Product> productsIveUploaded = new LinkedList<>();
+                    for (DataSnapshot productSnapshot : dataSnapshot.child(currentUserID).child(
+                            "productsIveUploaded").getChildren()) {
+                        Product product = productSnapshot.getValue(Product.class);
+                        productsIveUploaded.add(product);
+
+                        System.out.println(product.getName());
+                    }
+                    List<Product> productsIveBought = new LinkedList<>();
+                    for (DataSnapshot productSnapshot : dataSnapshot.child(currentUserID).child(
+                            "productsIveBought").getChildren()) {
+                        Product product = productSnapshot.getValue(Product.class);
+                        productsIveBought.add(product);
+
+                        System.out.println(product.getName());
+                    }
                 }
-                List<Product> productsIveBought = new LinkedList<>();
-                for (DataSnapshot productSnapshot : dataSnapshot.child(currentUserID).child(
-                        "productsIveBought").getChildren()) {
-                    Product product = productSnapshot.getValue(Product.class);
-                    productsIveBought.add(product);
 
-                    System.out.println(product.getName());
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
                 }
-                /*List<Product> favoriteUsersIveBoughtFrom = new LinkedList<>();
-                for (DataSnapshot productSnapshot : dataSnapshot.child(currentUserID).child(
-                        "favoriteUsersIveBoughtFrom").getChildren()) {
-                    User user = productSnapshot.getValue(Product.class);
-                    favoriteUsersIveBoughtFrom.add(product);
+            });
+        }
+        else {
+            createButtons(currentUserID);
+            submitMode();
+            MenuItem editButton = menu.findItem(R.id.Edit);
+            editButton.setTitle("Submit");
 
-                    System.out.println(product.getName());
-                }*/
-                User user = new User();
-                if (name != null) {
-                    setUserValues(name, userAddress, interests, "1", "5");
-                }
-                createButtons(user);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        }
 
     }
 
@@ -137,12 +137,13 @@ public class UserProfileActivity extends AppCompatActivity {
         ageText.setText(age);
 
         RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
-        int rating = Double.valueOf(userRating).intValue(); //divide by 2 because rating is out of 5
-        ratingBar.setNumStars(rating);
+        int rating = Double.valueOf(userRating).intValue();
+        ratingBar.setNumStars(10);
+        ratingBar.setRating(rating);
 
     }
 
-    protected void createButtons(final User user) {
+    protected void createButtons(final String user) {
 
         EditText nameField = (EditText) findViewById(R.id.name);
         nameField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -162,8 +163,9 @@ public class UserProfileActivity extends AppCompatActivity {
         viewMyProducts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), MyProductsActivity.class);
-                i.putExtra("User", user);
+                Intent i = new Intent(v.getContext(), ViewUploadedProductsActivity.class);
+                i.putExtra("Type", "uploads");
+                i.putExtra("UserId", currentUserID);
                 startActivity(i);
 
             }
@@ -173,8 +175,9 @@ public class UserProfileActivity extends AppCompatActivity {
         previousPurchases.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), PreviousPurchasedItems.class);
-                i.putExtra("User", user);
+                Intent i = new Intent(v.getContext(), ViewUploadedProductsActivity.class);
+                i.putExtra("Type", "previousPurchases");
+                i.putExtra("UserId", currentUserID);
                 startActivity(i);
             }
         });
@@ -185,7 +188,7 @@ public class UserProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(v.getContext(), FavoriteUsersActivity.class);
-                i.putExtra("UserId", fbuser.getUid());
+                i.putExtra("UserId", currentUserID);
                 startActivity(i);
             }
         });
@@ -199,6 +202,7 @@ public class UserProfileActivity extends AppCompatActivity {
         if(requestCode==REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             Uri selectedImage = data.getData();
             Bitmap bitmap = null;
+            /*
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                 ImageButton imageButton = (ImageButton) findViewById(R.id.imageButton);
@@ -208,7 +212,7 @@ public class UserProfileActivity extends AppCompatActivity {
             } catch (IOException e) {
                 Log.d("debugging", "IOException exception for choosing profile picture");
 
-            }
+            }*/
         }
     }
 

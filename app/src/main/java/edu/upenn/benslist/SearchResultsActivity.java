@@ -117,7 +117,7 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
             public boolean fulfillsSearchRequirements(Product product) {
               // @JOSH add condition to check blocked users to product uploader id
                 //check if it fulfills the search category and search query first
-                if (!product.getCategory().equals(searchCategory) && !product.getName().contains(searchQuery)) {
+                if (!product.getCategory().equals(searchCategory) || !product.getName().contains(searchQuery)) {
                     return false;
                 }
 
@@ -177,15 +177,9 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
 
     protected void addProductsFromSearch(List<Product> products) {
 
-        Collections.sort(products);
-
-        /*
-        TODO - use searchCategory, searchQuery, and searchFilters to access the database
-         */
-
-        /*
-        TODO - create function that returns set of Products that fit the search criteria above
-         */
+        if (sortByPrice) {
+            Collections.sort(products);
+        }
 
         final Context thisContext = this;
 
@@ -286,10 +280,6 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
         return true;
     }
 
-    /**
-     * Handle the button presses
-     * TODO add code that will log the user out when they click logout
-     */
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
         switch (item.getItemId()) {

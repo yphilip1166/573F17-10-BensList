@@ -100,7 +100,6 @@ public class LoginActivity extends AppCompatActivity {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
-                // ...
             }
         };
 
@@ -159,7 +158,6 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             System.out.println("After else statement");
 
-                            // ...
                         }
                     });
         }
@@ -182,7 +180,9 @@ public class LoginActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
                                 System.out.println(task.getResult());
+
                                 Intent intent = new Intent(LoginActivity.this, UserProfileActivity.class);
+                                intent.putExtra("SignUp", true);
                                 startActivity(intent);
                             } else {
                                 StringBuilder error = new StringBuilder("Authentication Failed: ");

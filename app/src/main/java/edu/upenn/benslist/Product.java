@@ -99,6 +99,7 @@ public class Product implements Serializable, Comparable {
         else {
             this.locationCategory = 3;
         }
+        this.distance = distance;
     }
 
     //this functino works fine
@@ -303,23 +304,16 @@ public class Product implements Serializable, Comparable {
         }
 
         Product that = (Product) o;
-        int thisPrice = 0;
-        int thatPrice = 0;
+        double thisPrice = priceAsDouble;
+        double thatPrice = that.getPriceAsDouble();
 
-        try {
-            thisPrice = Integer.parseInt(this.getPrice());
-            thatPrice = Integer.parseInt(that.getPrice());
-            if (thisPrice > thatPrice) {
-                return 1;
-            }
-            else if (thisPrice < thatPrice) {
-                return -1;
-            }
-            else {
-                return 0;
-            }
+        if (thisPrice > thatPrice) {
+            return 1;
         }
-        catch (NumberFormatException e) {
+        else if (thisPrice < thatPrice) {
+            return -1;
+        }
+        else {
             return 0;
         }
     }

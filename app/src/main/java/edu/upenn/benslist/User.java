@@ -156,6 +156,22 @@ public class User implements Serializable {
         return rating;
     }
 
+    public void addNumRatings() {
+        this.numRatings = numRatings++;
+    }
+
+    public double getNumRatings() {
+        return numRatings;
+    }
+
+    public void setSumRatings(int sumRatings) {
+        this.sumRatings = sumRatings;
+    }
+
+    public double getSumRatings() {
+        return sumRatings;
+    }
+
 
     public List<Product> getProductsIveBought() {
         if (productsIveBought == null) {

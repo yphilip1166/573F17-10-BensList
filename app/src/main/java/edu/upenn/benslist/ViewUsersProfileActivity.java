@@ -95,7 +95,7 @@ public class ViewUsersProfileActivity extends AppCompatActivity implements View.
 
                 usersNameText.setText("User's Name: " + name);
                 usersAgeText.setText("User's Age: " + dataSnapshot.child("age").getValue(String.class));
-                usersRatingText.setText("User's Rating: " + dataSnapshot.child("rating").getValue(String.class));
+                usersRatingText.setText("User's Rating: " + dataSnapshot.child("rating").getValue().toString());
             }
 
             @Override
@@ -137,6 +137,7 @@ public class ViewUsersProfileActivity extends AppCompatActivity implements View.
                 break;
 
             case (R.id.reportUserButton) :
+
                 FirebaseUser mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                 //Get the current users information
                 mUserId = mFirebaseUser.getUid();
