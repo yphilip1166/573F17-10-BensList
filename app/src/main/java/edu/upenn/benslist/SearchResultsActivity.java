@@ -108,8 +108,6 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
                     if (fulfillsSearchRequirements(product)) {
                         products.add(product);
                     }
-
-                    System.out.println(product.getName());
                 }
                 addProductsFromSearch(products);
             }
@@ -259,7 +257,7 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
     }
 
 
-    //TODO - This isn't used as of April 13th
+    //This isn't used as of April 13th
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 

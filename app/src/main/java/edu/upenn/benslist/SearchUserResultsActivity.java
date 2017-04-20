@@ -71,8 +71,6 @@ public class SearchUserResultsActivity extends AppCompatActivity implements View
                     if (user.getName().contains(searchQuery)) {
                         users.add(user);
                     }
-
-                    System.out.println(user.getName());
                 }
                 addUsersFromSearch(users);
             }

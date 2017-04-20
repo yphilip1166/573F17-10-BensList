@@ -61,9 +61,7 @@ public class EditListingActivity extends AppCompatActivity implements View.OnCli
         mUserReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String name = dataSnapshot.child("name").getValue(String.class);
-                System.out.println("Uploaded name is " + name);
-                System.out.println("And userID is " + userId);
+                String name = dataSnapshot.child("name").getValue(String.class);;
                 if (type.equals("uploads")) {
                     List<Product> productsIveUploaded = new LinkedList<>();
                     for (DataSnapshot productSnapshot : dataSnapshot.child(
@@ -71,12 +69,8 @@ public class EditListingActivity extends AppCompatActivity implements View.OnCli
                         Product product = productSnapshot.getValue(Product.class);
                         productsIveUploaded.add(product);
 
-                        System.out.println(product.getName());
                     }
                     addProductsToView(productsIveUploaded, name);
-                }
-                else {
-                    System.out.println("ERROR");
                 }
             }
 

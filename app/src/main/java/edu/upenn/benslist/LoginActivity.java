@@ -147,7 +147,6 @@ public class LoginActivity extends AppCompatActivity {
                             // If sign in fails, display a message to the user. If sign in succeeds
                             // the auth state listener will be notified and logic to handle the
                             // signed in user can be handled in the listener.
-                            System.out.println("Before if statement");
                             if (!task.isSuccessful()) {
                                 Log.w(TAG, "signInWithEmail", task.getException());
                                 Toast.makeText(LoginActivity.this, "Authentication failed.",
@@ -156,7 +155,6 @@ public class LoginActivity extends AppCompatActivity {
                                 Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
                                 startActivity(intent);
                             }
-                            System.out.println("After else statement");
 
                         }
                     });
@@ -179,7 +177,6 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
-                                System.out.println(task.getResult());
 
                                 Intent intent = new Intent(LoginActivity.this, UserProfileActivity.class);
                                 intent.putExtra("SignUp", true);

@@ -109,7 +109,6 @@ public class EditIndividualProductActivity extends AppCompatActivity implements 
                 break;
 
             case (R.id.doneButton) :
-                System.out.println("in done button click");
                 Intent returnIntent = new Intent(this, EditListingActivity.class);
 
                 EditText productName = (EditText) findViewById(R.id.editProductName);
