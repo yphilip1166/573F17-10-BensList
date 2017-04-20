@@ -66,6 +66,7 @@ public class ViewUploadedProductsActivity extends AppCompatActivity implements V
         mUserReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                String name = dataSnapshot.child("name").getValue(String.class);
                 if (type.equals("uploads")) {
                     List<Product> productsIveUploaded = new LinkedList<>();
                     for (DataSnapshot productSnapshot : dataSnapshot.child(
@@ -75,7 +76,7 @@ public class ViewUploadedProductsActivity extends AppCompatActivity implements V
 
                         System.out.println(product.getName());
                     }
-                    addProductsToView(productsIveUploaded);
+                    addProductsToView(productsIveUploaded, name);
                 }
                 else if (type.equals("previousPurchases")) {
                     List<Product> productsIveBought = new LinkedList<>();
@@ -86,7 +87,7 @@ public class ViewUploadedProductsActivity extends AppCompatActivity implements V
 
                         System.out.println(product.getName());
                     }
-                    addProductsToView(productsIveBought);
+                    addProductsToView(productsIveBought, name);
                 }
                 else {
                     System.out.println("ERROR");
@@ -103,7 +104,7 @@ public class ViewUploadedProductsActivity extends AppCompatActivity implements V
 
     }
 
-    private void addProductsToView(List<Product> products) {
+    private void addProductsToView(List<Product> products, String name) {
         //add each product to the activity
         final Context thisContext = this;
 
@@ -127,7 +128,7 @@ public class ViewUploadedProductsActivity extends AppCompatActivity implements V
             uploaderPhoneNumber.setText("Phone Number: " + product.getPhoneNumber());
 
             TextView uploaderName = (TextView) view.findViewById(R.id.productListingUploaderName);
-            uploaderName.setText("Uploader Name: " + product.getUploaderName());
+            uploaderName.setText("Uploader Name: " + name);
 
             Button checkOutButton = (Button) view.findViewById(R.id.productListingCheckOutListingButton);
             checkOutButton.setOnClickListener(new View.OnClickListener() {

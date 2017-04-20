@@ -102,7 +102,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         int rating = Double.valueOf(userRating).intValue();
-        ratingBar.setNumStars(10);
+        ratingBar.setNumStars(5);
         ratingBar.setRating(rating);
 
     }
@@ -128,8 +128,8 @@ public class UserProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(v.getContext(), ViewUploadedProductsActivity.class);
-                i.putExtra("Type", "uploads");
                 i.putExtra("UserId", currentUserID);
+                i.putExtra("Type", "uploads");
                 startActivity(i);
 
             }
@@ -261,7 +261,7 @@ public class UserProfileActivity extends AppCompatActivity {
                     EditText ageText = (EditText) findViewById(R.id.age);
                     mDatabase.child(currentUserID).child("email").setValue(String.valueOf(emailAddress.getText()));
                     mDatabase.child(currentUserID).child("name").setValue(String.valueOf(nameField.getText()));
-                    mDatabase.child(currentUserID).child("homeAddress").setValue(String.valueOf(address.getText()));
+                    mDatabase.child(currentUserID).child("address").setValue(String.valueOf(address.getText()));
                     mDatabase.child(currentUserID).child("interests").setValue(String.valueOf(interests.getText()));
                     mDatabase.child(currentUserID).child("age").setValue(String.valueOf(ageText.getText()));
                     //mDatabase.child(currentUserID).child("blockedUsers").setValue(new HashSet<String>());
