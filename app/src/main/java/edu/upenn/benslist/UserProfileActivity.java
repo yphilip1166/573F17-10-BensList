@@ -85,7 +85,8 @@ public class UserProfileActivity extends AppCompatActivity {
     protected void setUserValues(String name, String userAddress, String uInterests, String userRating,
                                  String age) {
         EditText nameField = (EditText) findViewById(R.id.name);
-        nameField.setText(name);
+        String nameUpdate = (name.equals("")) ? "Unspecified User" : name ;
+        nameField.setText(nameUpdate);
 
         EditText emailField = (EditText) findViewById(R.id.emailAddress);
         emailField.setText(fbuser.getEmail());
@@ -99,7 +100,8 @@ public class UserProfileActivity extends AppCompatActivity {
         interests.setText(userInterests);
 
         EditText ageText = (EditText) findViewById(R.id.age);
-        ageText.setText(age);
+        String ageUpdate = (age.equals("")) ? "Undisclosed Age" : age ;
+        ageText.setText(ageUpdate);
 
         RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         int rating = Double.valueOf(userRating).intValue();
