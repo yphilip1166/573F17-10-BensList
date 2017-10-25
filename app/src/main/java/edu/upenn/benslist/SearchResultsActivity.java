@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -102,6 +103,7 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<Product> products = new LinkedList<>();
+                Log.v("YHG","searchCategory: " + searchCategory + " SearchQuery: " + searchQuery);
                 for (DataSnapshot productSnapshot : dataSnapshot.getChildren()) {
                     Product product = productSnapshot.getValue(Product.class);
 
@@ -115,10 +117,11 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
             public boolean fulfillsSearchRequirements(Product product) {
               // @JOSH add condition to check blocked users to product uploader id
                 //check if it fulfills the search category and search query first
-                if (!product.getCategory().equals(searchCategory) || !product.getName().contains(searchQuery)) {
+                Log.v("YHG","Before" + "Category: " + product.getCategory() + " Product Name: " + product.getName());
+                if ((!product.getCategory().equals(searchCategory)&&!searchCategory.equals("All Categories")) || !product.getName().contains(searchQuery)) {
                     return false;
                 }
-
+                Log.v("YHG","Category: " + product.getCategory() + " Product Name: " + product.getName());
                 //then checks to see if it fulfills the search filter criteria
                 boolean fulfillsPriceFilters = false;
                 boolean fulFillsLocationFilters = false;
