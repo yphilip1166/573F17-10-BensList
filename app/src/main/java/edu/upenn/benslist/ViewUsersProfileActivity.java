@@ -91,11 +91,12 @@ public class ViewUsersProfileActivity extends AppCompatActivity implements View.
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                name = dataSnapshot.child("name").getValue(String.class);
-
+                name = dataSnapshot.child("name").getValue(String.class)==null? "Unspecified User": dataSnapshot.child("name").getValue(String.class);
                 usersNameText.setText("User's Name: " + name);
-                usersAgeText.setText("User's Age: " + dataSnapshot.child("age").getValue(String.class));
-                usersRatingText.setText("User's Rating: " + dataSnapshot.child("rating").getValue().toString());
+                String age= dataSnapshot.child("age").getValue(String.class)==null? "Undisclosed Age": dataSnapshot.child("age").getValue(String.class);
+                usersAgeText.setText("User's Age: " + age);
+                String rating= dataSnapshot.child("rating").getValue()==null? "0" : dataSnapshot.child("rating").getValue().toString();
+                usersRatingText.setText("User's Rating: " + rating);
             }
 
             @Override
