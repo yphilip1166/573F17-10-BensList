@@ -34,6 +34,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private FirebaseUser fbuser;
     private Boolean submitMode;
+    private boolean signUp;
     private static final int REQUEST_CODE = 5;
     DatabaseReference mDatabase;
     String currentUserID;
@@ -43,7 +44,7 @@ public class UserProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_layout);
-        boolean signUp = getIntent().getBooleanExtra("SignUp", false);
+        signUp = getIntent().getBooleanExtra("SignUp", false);
         submitMode = signUp;
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("users");
@@ -216,7 +217,10 @@ public class UserProfileActivity extends AppCompatActivity {
         this.menu = menu;
         inflater.inflate(R.menu.tools, menu);
         inflater.inflate(R.menu.submit, menu);
-
+        if(signUp){
+            MenuItem editButton = menu.findItem(R.id.Edit);
+            editButton.setTitle("Submit");
+        }
         return true;
     }
 

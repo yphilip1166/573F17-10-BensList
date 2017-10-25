@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -54,10 +55,9 @@ public class SearchUsers extends AppCompatActivity implements View.OnClickListen
         final Context thisContext = this;
         FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
         final String mUserID = fbUser.getUid();
-
         switch (v.getId()) {
-            case (R.id.searchUserButton):
 
+            case (R.id.searchUserButton):
                 ValueEventListener userListener = new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -72,6 +72,7 @@ public class SearchUsers extends AppCompatActivity implements View.OnClickListen
                             String key = userSnapshot.getKey().toString();
 
                             //User user = userSnapshot.getValue(User.class);
+                            if (userSnapshot.child("name").getValue(String.class)== null) continue;
                             if (userSnapshot.child("name").getValue(String.class).equals(searchQuery)) {
                                 if (mBlockedUsers.contains(key)) {
                                     isBlocked = true;
@@ -111,9 +112,7 @@ public class SearchUsers extends AppCompatActivity implements View.OnClickListen
                         // [END_EXCLUDE]
                     }
                 };
-
                 mUserReference.addValueEventListener(userListener);
-
 
                 break;
 
@@ -130,8 +129,11 @@ public class SearchUsers extends AppCompatActivity implements View.OnClickListen
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        Log.v("debug", "o1");
         MenuInflater inflater = getMenuInflater();
+        Log.v("debug", "o2");
         inflater.inflate(R.menu.tools, menu);
+        Log.v("debug", "o3");
         return true;
     }
 
