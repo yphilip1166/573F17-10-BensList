@@ -89,6 +89,8 @@ public class EditListingActivity extends AppCompatActivity implements View.OnCli
 
     private void addProductsToView(List<Product> products, String name) {
         //add each product to the activity
+        //Also be sure to clear the layout before you rerun the search result
+        mLinearLayout.removeAllViewsInLayout();
         final Context thisContext = this;
 
         for (final Product product : products) {
