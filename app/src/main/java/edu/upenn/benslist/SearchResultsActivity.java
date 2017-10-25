@@ -117,11 +117,9 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
             public boolean fulfillsSearchRequirements(Product product) {
               // @JOSH add condition to check blocked users to product uploader id
                 //check if it fulfills the search category and search query first
-                Log.v("YHG","Before" + "Category: " + product.getCategory() + " Product Name: " + product.getName());
                 if ((!product.getCategory().equals(searchCategory)&&!searchCategory.equals("All Categories")) || !product.getName().contains(searchQuery)) {
                     return false;
                 }
-                Log.v("YHG","Category: " + product.getCategory() + " Product Name: " + product.getName());
                 //then checks to see if it fulfills the search filter criteria
                 boolean fulfillsPriceFilters = false;
                 boolean fulFillsLocationFilters = false;
@@ -177,6 +175,9 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
     }
 
     protected void addProductsFromSearch(List<Product> products) {
+
+        // Be sure to clear this Layout before you add a list of products result
+        mLinearLayout.removeAllViewsInLayout();
 
         if (sortByPrice) {
             Collections.sort(products);
