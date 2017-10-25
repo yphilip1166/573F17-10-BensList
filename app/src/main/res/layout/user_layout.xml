@@ -9,14 +9,17 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/ratingText"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Rating:" />
+            android:text="Rating:"
+            android:inputType="none"
+            android:focusableInTouchMode="false"
+            android:clickable="false"
+            />
 
         <RatingBar
             android:id="@+id/ratingBar"
@@ -40,14 +43,16 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/editText"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Name:" />
+            android:text="Name:"
+            android:focusableInTouchMode="false"
+            android:clickable="false"/>
 
         <EditText
             android:id="@+id/name"
@@ -71,14 +76,16 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/ageText"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Age:" />
+            android:text="Age:"
+            android:focusableInTouchMode="false"
+            android:clickable="false"/>
 
         <EditText
             android:id="@+id/age"
@@ -100,14 +107,16 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/emailText"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Email:" />
+            android:text="Email:"
+            android:focusableInTouchMode="false"
+            android:clickable="false"/>
 
         <EditText
             android:id="@+id/emailAddress"
@@ -128,14 +137,15 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/addressText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_width="111dp"
+            android:layout_height="match_parent"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Address:" />
+            android:text="Address:"
+            android:focusableInTouchMode="false"
+            android:clickable="false"/>
 
         <EditText
             android:id="@+id/address"
@@ -155,14 +165,16 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/interestText"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Interests:" />
+            android:text="Interests:"
+            android:focusableInTouchMode="false"
+            android:clickable="false"/>
 
         <EditText
             android:id="@+id/interests"
