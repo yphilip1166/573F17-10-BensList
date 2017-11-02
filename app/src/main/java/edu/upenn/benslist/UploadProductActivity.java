@@ -89,6 +89,9 @@ View.OnClickListener {
                 EditText distanceText = (EditText) findViewById(R.id.editDistance);
 
                 String price = priceText.getText().toString();
+                String phoneNumber = productPhoneNumber.getText().toString();
+                int phoneNumberlen = 0;
+                for (char c: phoneNumber.toCharArray()) if (Character.isDigit(c)) phoneNumberlen++;
 
                 if(productName.getText().toString().trim().equals("")||
                         productDescription.getText().toString().trim().equals("")||
@@ -100,6 +103,9 @@ View.OnClickListener {
                 {
                     Log.v("YHG", "Some field is missing");
                     Toast.makeText(v.getContext(), "Some required product information missing", Toast.LENGTH_LONG).show();
+                    break;
+                } else if (phoneNumberlen!=10) {
+                    Toast.makeText(v.getContext(), "Phone number is not valid", Toast.LENGTH_LONG).show();
                     break;
                 }
 
