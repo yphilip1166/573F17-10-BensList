@@ -31,13 +31,10 @@ import java.util.List;
 /**
  * Created by johnquinn on 2/16/17.
  */
-<<<<<<< HEAD
+
 
 public class SearchResultsActivity extends MyAppCompatActivity implements View.OnClickListener {
-=======
-//Testing commit username
-public class SearchResultsActivity extends AppCompatActivity implements View.OnClickListener {
->>>>>>> bd40cbc488a9430f2d606fa4ee2060eea878f169
+
 
     private static final int RESULT_GO_TO_FILTER_SEARCH_RESULTS = 4;
     private String searchCategory;
@@ -184,7 +181,7 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
     protected void addProductsFromSearch(List<Product> products) {
 
         // Be sure to clear this Layout before you add a list of products result
-        S
+        mLinearLayout.removeAllViewsInLayout();
 
         if (sortByPrice) {
             Collections.sort(products);
