@@ -53,7 +53,7 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
                 R.array.user_rating_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        this.rating = "1"; //default rating
+        this.rating = "0"; //default rating
         favorite = false;
 
         Button addUserButton = (Button) findViewById(R.id.addUserToFavsButton);
@@ -81,6 +81,7 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
                 //TODO - ADD THIS PERSON TO YOUR FAVORITES - where "user" is the person you want to add
                 favorite = true;
                 //DONE - check line below
+                Toast.makeText(this, "Added user to favorite", Toast.LENGTH_SHORT).show();
                 break;
 
             case (R.id.doneRatingButton) :
@@ -148,55 +149,6 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
         }
     }
 
-    /**
-     * Code Snippet for adding the menu bar 3 points to select Logout, About, Home, Terms
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.tools, menu);
-        return true;
-    }
 
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
-        switch (item.getItemId()) {
-            case R.id.action_about:
-                //Go to About page
-                intent = new Intent(this, AboutActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.action_home:
-                //Go to Home page
-                intent = new Intent(this, HomePageActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.action_logout:
-                //Logs out the current user and brings user to the logout page
-                //Need to add code for actually logging out a user
-                intent = new Intent(this, LoginActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.action_terms:
-                //Go to terms page
-                intent = new Intent(this, TermsActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.action_forum:
-                //Go to forum page
-                intent = new Intent(this, PublicForumActivity.class);
-                startActivity(intent);
-                return true;
-
-            default:
-                //Could not recognize a button press
-                Toast.makeText(this, "Could not recognize a button press", Toast.LENGTH_SHORT).show();
-                return false;
-        }
-    }
 
 }

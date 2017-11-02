@@ -32,7 +32,7 @@ import java.util.Arrays;
  * Created by tylerdouglas on 4/19/17.
  */
 
-public class EditIndividualProductActivity extends AppCompatActivity implements View.OnClickListener{
+public class EditIndividualProductActivity extends MyAppCompatActivity implements View.OnClickListener{
 
     private static final int RESULT_LOAD_IMAGE = 1;
     private ImageView imageToUpload;
@@ -267,58 +267,6 @@ public class EditIndividualProductActivity extends AppCompatActivity implements 
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
             Uri imageSelected = data.getData();
             imageToUpload.setImageURI(imageSelected);
-        }
-    }
-
-
-    /**
-     * Code Snippet for adding the menu bar 3 points to select Logout, About, Home, Terms
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.tools, menu);
-        return true;
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
-        switch (item.getItemId()) {
-            case R.id.action_about:
-                //Go to About page
-                intent = new Intent(this, AboutActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.action_home:
-                //Go to Home page
-                intent = new Intent(this, HomePageActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.action_logout:
-                //Logs out the current user and brings user to the logout page
-                //Need to add code for actually logging out a user
-                intent = new Intent(this, LoginActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.action_terms:
-                //Go to terms page
-                intent = new Intent(this, TermsActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.action_forum:
-                //Go to forum page
-                intent = new Intent(this, PublicForumActivity.class);
-                startActivity(intent);
-                return true;
-
-            default:
-                //Could not recognize a button press
-                Toast.makeText(this, "Could not recognize a button press", Toast.LENGTH_SHORT).show();
-                return false;
         }
     }
 

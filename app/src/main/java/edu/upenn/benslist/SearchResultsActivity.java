@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,7 +32,9 @@ import java.util.List;
  * Created by johnquinn on 2/16/17.
  */
 
-public class SearchResultsActivity extends AppCompatActivity implements View.OnClickListener {
+
+public class SearchResultsActivity extends MyAppCompatActivity implements View.OnClickListener {
+
 
     private static final int RESULT_GO_TO_FILTER_SEARCH_RESULTS = 4;
     private String searchCategory;
@@ -102,6 +105,7 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<Product> products = new LinkedList<>();
+                Log.v("YHG","searchCategory: " + searchCategory + " SearchQuery: " + searchQuery);
                 for (DataSnapshot productSnapshot : dataSnapshot.getChildren()) {
                     Product product = productSnapshot.getValue(Product.class);
 
@@ -115,7 +119,8 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
             public boolean fulfillsSearchRequirements(Product product) {
               // @JOSH add condition to check blocked users to product uploader id
                 //check if it fulfills the search category and search query first
-                if (!product.getCategory().equals(searchCategory) || !product.getName().contains(searchQuery)) {
+
+                if ((!product.getCategory().equals(searchCategory)&&!searchCategory.equals("All Categories")) || !product.getName().contains(searchQuery)) {
                     return false;
                 }
 
@@ -174,6 +179,9 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
     }
 
     protected void addProductsFromSearch(List<Product> products) {
+
+        // Be sure to clear this Layout before you add a list of products result
+        mLinearLayout.removeAllViewsInLayout();
 
         if (sortByPrice) {
             Collections.sort(products);
@@ -267,57 +275,5 @@ public class SearchResultsActivity extends AppCompatActivity implements View.OnC
 
         }
     }
-
-    /**
-     * Code Snippet for adding the menu bar 3 points to select Logout, About, Home, Terms
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.tools, menu);
-        return true;
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
-        switch (item.getItemId()) {
-            case R.id.action_about:
-                //Go to About page
-                intent = new Intent(this, AboutActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.action_home:
-                //Go to Home page
-                intent = new Intent(this, HomePageActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.action_logout:
-                //Logs out the current user and brings user to the logout page
-                //Need to add code for actually logging out a user
-                intent = new Intent(this, LoginActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.action_terms:
-                //Go to terms page
-                intent = new Intent(this, TermsActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.action_forum:
-                //Go to forum page
-                intent = new Intent(this, PublicForumActivity.class);
-                startActivity(intent);
-                return true;
-
-            default:
-                //Could not recognize a button press
-                Toast.makeText(this, "Could not recognize a button press", Toast.LENGTH_SHORT).show();
-                return false;
-        }
-    }
-
 
 }

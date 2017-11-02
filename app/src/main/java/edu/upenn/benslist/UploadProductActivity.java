@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,7 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class UploadProductActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,
+public class UploadProductActivity extends MyAppCompatActivity implements AdapterView.OnItemSelectedListener,
 View.OnClickListener {
 
     private static final int RESULT_LOAD_IMAGE = 1;
@@ -88,8 +89,37 @@ View.OnClickListener {
                 EditText distanceText = (EditText) findViewById(R.id.editDistance);
 
                 String price = priceText.getText().toString();
-                double distance = Double.parseDouble(distanceText.getText().toString());
+                String phoneNumber = productPhoneNumber.getText().toString();
+                int phoneNumberlen = 0;
+                for (char c: phoneNumber.toCharArray()) if (Character.isDigit(c)) phoneNumberlen++;
+
+                if(productName.getText().toString().trim().equals("")||
+                        productDescription.getText().toString().trim().equals("")||
+                        productLocation.getText().toString().trim().equals("")||
+                        productPhoneNumber.getText().toString().trim().equals("")||
+                        priceText.getText().toString().trim().equals("")||
+                        distanceText.getText().toString().trim().equals("")||
+                        price.toString().trim().equals(""))
+                {
+                    Log.v("YHG", "Some field is missing");
+                    Toast.makeText(v.getContext(), "Some required product information missing", Toast.LENGTH_LONG).show();
+                    break;
+                } else if (phoneNumberlen!=10) {
+                    Toast.makeText(v.getContext(), "Phone number is not valid", Toast.LENGTH_LONG).show();
+                    break;
+                }
+
+                Log.v("YHG", "Product Information:"+productName.getText().toString()  + "," +
+                        productDescription.getText().toString() + "," +
+                        productLocation.getText().toString() + "," +
+                        productPhoneNumber.getText().toString() + "," +
+                        priceText.getText().toString() + "," +
+                        distanceText.getText().toString() + "," +
+                        price.toString());
+
+                //double distance = Double.parseDouble(distanceText.getText().toString());
                 try {
+                    double distance = Double.parseDouble(distanceText.getText().toString());
                     int decimalPoint = price.indexOf('.');
                     double priceAsDouble = 0.0;
                     if (decimalPoint == -1) {
@@ -128,7 +158,7 @@ View.OnClickListener {
                     finish();
                 }
                 catch (NumberFormatException e) {
-                    Toast.makeText(this, "Input valid price", Toast.LENGTH_LONG);
+                    Toast.makeText(v.getContext(), "Not a number", Toast.LENGTH_LONG).show();
                 }
                 break;
 
@@ -174,58 +204,6 @@ View.OnClickListener {
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
             Uri imageSelected = data.getData();
             imageToUpload.setImageURI(imageSelected);
-        }
-    }
-
-
-    /**
-     * Code Snippet for adding the menu bar 3 points to select Logout, About, Home, Terms
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.tools, menu);
-        return true;
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
-        switch (item.getItemId()) {
-            case R.id.action_about:
-                //Go to About page
-                intent = new Intent(this, AboutActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.action_home:
-                //Go to Home page
-                intent = new Intent(this, HomePageActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.action_logout:
-                //Logs out the current user and brings user to the logout page
-                //Need to add code for actually logging out a user
-                intent = new Intent(this, LoginActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.action_terms:
-                //Go to terms page
-                intent = new Intent(this, TermsActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.action_forum:
-                //Go to forum page
-                intent = new Intent(this, PublicForumActivity.class);
-                startActivity(intent);
-                return true;
-
-            default:
-                //Could not recognize a button press
-                Toast.makeText(this, "Could not recognize a button press", Toast.LENGTH_SHORT).show();
-                return false;
         }
     }
 

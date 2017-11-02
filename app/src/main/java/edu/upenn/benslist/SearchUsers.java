@@ -28,7 +28,7 @@ import java.util.Set;
  * Created by johnquinn on 3/31/17.
  */
 
-public class SearchUsers extends AppCompatActivity implements View.OnClickListener {
+public class SearchUsers extends MyAppCompatActivity implements View.OnClickListener {
 
     DatabaseReference mUserReference;
     String searchQuery;
@@ -124,56 +124,4 @@ public class SearchUsers extends AppCompatActivity implements View.OnClickListen
 
     }
 
-    /**
-     * Code Snippet for adding the menu bar 3 points to select Logout, About, Home, Terms
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        Log.v("debug", "o1");
-        MenuInflater inflater = getMenuInflater();
-        Log.v("debug", "o2");
-        inflater.inflate(R.menu.tools, menu);
-        Log.v("debug", "o3");
-        return true;
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
-        switch (item.getItemId()) {
-            case R.id.action_about:
-                //Go to About page
-                intent = new Intent(this, AboutActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.action_home:
-                //Go to Home page
-                intent = new Intent(this, HomePageActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.action_logout:
-                //Logs out the current user and brings user to the logout page
-                intent = new Intent(this, LoginActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.action_terms:
-                //Go to terms page
-                intent = new Intent(this, TermsActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.action_forum:
-                //Go to forum page
-                intent = new Intent(this, PublicForumActivity.class);
-                startActivity(intent);
-                return true;
-
-            default:
-                //Could not recognize a button press
-                Toast.makeText(this, "Could not recognize a button press", Toast.LENGTH_SHORT).show();
-                return false;
-        }
-    }
 }
