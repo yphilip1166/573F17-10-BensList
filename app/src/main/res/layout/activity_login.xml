@@ -79,30 +79,6 @@
                 android:text="@string/action_register"
                 android:textStyle="bold" />
 
-            <TextView
-                android:text="@string/signin_textview_spacing"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|center_horizontal"
-                android:textSize="24sp"
-                android:textAlignment="center"
-                android:id="@+id/textView"
-                tools:text="Or"
-                android:padding="@dimen/activity_horizontal_margin" />
-
-            <com.google.android.gms.common.SignInButton
-                android:id="@+id/sign_in_button"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"/>
-
-            <com.facebook.login.widget.LoginButton
-                android:id="@+id/login_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="30dp" />
 
 
         </LinearLayout>
