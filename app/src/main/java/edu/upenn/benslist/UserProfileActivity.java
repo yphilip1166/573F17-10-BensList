@@ -59,8 +59,9 @@ public class UserProfileActivity extends AppCompatActivity {
                     String userAddress = dataSnapshot.child(currentUserID).child("address").getValue(String.class);
                     String interests = dataSnapshot.child(currentUserID).child("interests").getValue(String.class);
                     String userRating = "0";
-                    if (dataSnapshot.child(currentUserID).child("rating").getValue() != null) {
-                        userRating = dataSnapshot.child(currentUserID).child("rating").getValue().toString();
+                    Object rating = dataSnapshot.child(currentUserID).child("rating").getValue();
+                    if (rating != null) {
+                        userRating = rating.toString();
                     }
 
                     String age = dataSnapshot.child(currentUserID).child("age").getValue(String.class);
