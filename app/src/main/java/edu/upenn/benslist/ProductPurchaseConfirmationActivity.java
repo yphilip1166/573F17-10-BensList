@@ -52,7 +52,7 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
                 R.array.user_rating_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        this.rating = "1"; //default rating
+        this.rating = "0"; //default rating
         favorite = false;
 
         Button addUserButton = (Button) findViewById(R.id.addUserToFavsButton);
@@ -80,6 +80,7 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
                 //TODO - ADD THIS PERSON TO YOUR FAVORITES - where "user" is the person you want to add
                 favorite = true;
                 //DONE - check line below
+                Toast.makeText(this, "Added user to favorite", Toast.LENGTH_SHORT).show();
                 break;
 
             case (R.id.doneRatingButton) :
