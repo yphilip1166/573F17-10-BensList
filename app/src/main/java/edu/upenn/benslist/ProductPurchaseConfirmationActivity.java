@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.util.*;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -111,7 +112,7 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
                             String uploaderUserName = snapshot.child("users").child(
                                     uploaderID).child("name").getValue(String.class);
                             DatabaseReference ref = mDatabase.child("users").child(currentUserID).child(
-                                    "favoriteUsersIveBoughtFrom").push();
+                                    "favoriteUsersIveBoughtFrom").child(uploaderUserName);
                             ref.setValue(uploaderUserName);
                         }
 
