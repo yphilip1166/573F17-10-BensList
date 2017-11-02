@@ -103,6 +103,8 @@ public class ViewUploadedProductsActivity extends MyAppCompatActivity implements
 
     private void addProductsToView(List<Product> products, String name) {
         //add each product to the activity
+        //Also be sure to remove all previous added listing to avoid duplicates
+        mLinearLayout.removeAllViewsInLayout();
         final Context thisContext = this;
 
         for (final Product product : products) {
