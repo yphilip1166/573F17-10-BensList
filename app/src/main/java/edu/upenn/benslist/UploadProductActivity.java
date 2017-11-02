@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -88,8 +89,31 @@ View.OnClickListener {
                 EditText distanceText = (EditText) findViewById(R.id.editDistance);
 
                 String price = priceText.getText().toString();
-                double distance = Double.parseDouble(distanceText.getText().toString());
+
+                if(productName.getText().toString().trim().equals("")||
+                        productDescription.getText().toString().trim().equals("")||
+                        productLocation.getText().toString().trim().equals("")||
+                        productPhoneNumber.getText().toString().trim().equals("")||
+                        priceText.getText().toString().trim().equals("")||
+                        distanceText.getText().toString().trim().equals("")||
+                        price.toString().trim().equals(""))
+                {
+                    Log.v("YHG", "Some field is missing");
+                    Toast.makeText(v.getContext(), "Some required product information missing", Toast.LENGTH_LONG).show();
+                    break;
+                }
+
+                Log.v("YHG", "Product Information:"+productName.getText().toString()  + "," +
+                        productDescription.getText().toString() + "," +
+                        productLocation.getText().toString() + "," +
+                        productPhoneNumber.getText().toString() + "," +
+                        priceText.getText().toString() + "," +
+                        distanceText.getText().toString() + "," +
+                        price.toString());
+
+                //double distance = Double.parseDouble(distanceText.getText().toString());
                 try {
+                    double distance = Double.parseDouble(distanceText.getText().toString());
                     int decimalPoint = price.indexOf('.');
                     double priceAsDouble = 0.0;
                     if (decimalPoint == -1) {
@@ -128,7 +152,7 @@ View.OnClickListener {
                     finish();
                 }
                 catch (NumberFormatException e) {
-                    Toast.makeText(this, "Input valid price", Toast.LENGTH_LONG);
+                    Toast.makeText(v.getContext(), "Not a number", Toast.LENGTH_LONG).show();
                 }
                 break;
 
