@@ -160,6 +160,16 @@ public class UserProfileActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        Button wishList = (Button) findViewById(R.id.WishListButton);
+        wishList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(v.getContext(), WishListActivity.class);
+                i.putExtra("UserId", currentUserID);
+                startActivity(i);
+            }
+        });
     }
 
     @Override

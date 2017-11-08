@@ -68,6 +68,14 @@
             android:textAlignment="center"
             android:textStyle="normal|bold" />
 
+        <Button
+            android:id="@+id/AddToWishList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add to my wish list"
+            android:textAlignment="center"
+            android:textStyle="normal|bold" />
+
         <TextView
             android:id="@+id/detailedListingCurPrice"
             android:layout_width="match_parent"

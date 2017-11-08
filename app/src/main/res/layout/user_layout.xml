@@ -4,219 +4,259 @@
     android:layout_height="match_parent">
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
-        <AutoCompleteTextView
-            android:id="@+id/ratingText"
-            android:layout_width="107dp"
-            android:layout_height="match_parent"
-            android:ems="10"
-            android:text="Rating:"
-            android:inputType="none"
-            android:focusableInTouchMode="false"
-            android:clickable="false"
-            />
-
-        <RatingBar
-            android:id="@+id/ratingBar"
-            style="@android:style/Widget.DeviceDefault.RatingBar.Indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="95dp"
-            android:layout_marginRight="79dp"
-            android:numStars="5"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:stepSize="0.1"
-            android:visibility="visible" />
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <AutoCompleteTextView
-            android:id="@+id/editText"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name:"
-            android:focusableInTouchMode="false"
-            android:clickable="false"/>
-
-        <EditText
-            android:id="@+id/name"
-            android:layout_width="match_parent"
-            android:layout_height="@android:dimen/notification_large_icon_height"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/ratingBar"
-            android:layout_toRightOf="@+id/NameTextView"
-            android:layout_weight="1"
-            android:ems="10"
-            android:enabled="false"
-            android:inputType="textPersonName"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:text="Name" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <AutoCompleteTextView
-            android:id="@+id/ageText"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Age:"
-            android:focusableInTouchMode="false"
-            android:clickable="false"/>
-
-        <EditText
-            android:id="@+id/age"
-            android:layout_width="match_parent"
-            android:layout_height="@android:dimen/notification_large_icon_height"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_weight="1"
-            android:ems="10"
-            android:enabled="false"
-            android:inputType="number"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:text="Age" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <AutoCompleteTextView
-            android:id="@+id/emailText"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Email:"
-            android:focusableInTouchMode="false"
-            android:clickable="false"/>
-
-        <EditText
-            android:id="@+id/emailAddress"
+        <Button
+            android:id="@+id/viewProductsButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:layout_weight="1"
-            android:ems="10"
-            android:enabled="false"
-            android:inputType="textEmailAddress"
-            android:text="Email Address" />
+            android:text="View my Products"
+            android:layout_below="@+id/favoriteUsers"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <AutoCompleteTextView
-            android:id="@+id/addressText"
-            android:layout_width="111dp"
-            android:layout_height="match_parent"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Address:"
-            android:focusableInTouchMode="false"
-            android:clickable="false"/>
-
-        <EditText
-            android:id="@+id/address"
+        <Button
+            android:id="@+id/WishListButton"
             android:layout_width="match_parent"
-            android:layout_height="@android:dimen/notification_large_icon_width"
-            android:layout_below="@+id/emailAddress"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/viewProductsButton"
+            android:layout_weight="1"
+            android:text="View my wish list" />
+
+        <Button
+            android:id="@+id/favoriteUsers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/prevousProducts"
             android:layout_centerHorizontal="true"
             android:layout_weight="1"
-            android:ems="10"
-            android:enabled="false"
-            android:inputType="textPostalAddress"
-            android:text="User Address" />
-    </LinearLayout>
+            android:text="View Favorite Users" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <AutoCompleteTextView
-            android:id="@+id/interestText"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Interests:"
-            android:focusableInTouchMode="false"
-            android:clickable="false"/>
-
-        <EditText
-            android:id="@+id/interests"
+        <Button
+            android:id="@+id/prevousProducts"
             android:layout_width="match_parent"
-            android:layout_height="@android:dimen/notification_large_icon_width"
-            android:layout_alignEnd="@+id/address"
-            android:layout_alignRight="@+id/address"
-            android:layout_below="@+id/address"
-            android:layout_marginTop="11dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/linearLayout7"
             android:layout_weight="1"
-            android:ems="10"
-            android:enabled="false"
-            android:inputType="textPersonName"
-            android:text="Interests" />
+            android:text="Previous Purchases" />
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linearLayout6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/linearLayout5"
+            android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/prevousProducts"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/viewProductsButton"
-        android:layout_centerHorizontal="true"
-        android:layout_weight="1"
-        android:text="Previous Purchases" />
+            <AutoCompleteTextView
+                android:id="@+id/addressText"
+                android:layout_width="111dp"
+                android:layout_height="match_parent"
+                android:clickable="false"
+                android:ems="10"
+                android:focusableInTouchMode="false"
+                android:inputType="textPersonName"
+                android:text="Address:" />
 
-    <Button
-        android:id="@+id/favoriteUsers"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/prevousProducts"
-        android:layout_centerHorizontal="true"
-        android:layout_weight="1"
-        android:text="View Favorite Users" />
+            <EditText
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="@android:dimen/notification_large_icon_width"
+                android:layout_below="@+id/emailAddress"
+                android:layout_centerHorizontal="true"
+                android:layout_weight="1"
+                android:ems="10"
+                android:enabled="false"
+                android:inputType="textPostalAddress"
+                android:text="User Address" />
+        </LinearLayout>
 
-    <Button
-        android:id="@+id/viewProductsButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/interests"
-        android:layout_centerHorizontal="true"
-        android:layout_weight="1"
-        android:text="View my Products" />
+        <LinearLayout
+            android:id="@+id/linearLayout5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/linearLayout4"
+            android:orientation="horizontal">
+
+            <AutoCompleteTextView
+                android:id="@+id/emailText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:ems="10"
+                android:focusableInTouchMode="false"
+                android:inputType="textPersonName"
+                android:text="Email:" />
+
+            <EditText
+                android:id="@+id/emailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_weight="1"
+                android:ems="10"
+                android:enabled="false"
+                android:inputType="textEmailAddress"
+                android:text="Email Address" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/linearLayout3"
+            android:orientation="horizontal">
+
+            <AutoCompleteTextView
+                android:id="@+id/ageText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:ems="10"
+                android:focusableInTouchMode="false"
+                android:inputType="textPersonName"
+                android:text="Age:" />
+
+            <EditText
+                android:id="@+id/age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_weight="1"
+                android:ems="10"
+                android:enabled="false"
+                android:inputType="number"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="Age" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linearLayout2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="11dp"
+            android:orientation="horizontal">
+
+            <AutoCompleteTextView
+                android:id="@+id/editText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:ems="10"
+                android:focusableInTouchMode="false"
+                android:inputType="textPersonName"
+                android:text="Name:" />
+
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="@android:dimen/notification_large_icon_height"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/ratingBar"
+                android:layout_toRightOf="@+id/NameTextView"
+                android:layout_weight="1"
+                android:ems="10"
+                android:enabled="false"
+                android:inputType="textPersonName"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="Name" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:orientation="horizontal">
+
+            <AutoCompleteTextView
+                android:id="@+id/ratingText"
+                android:layout_width="107dp"
+                android:layout_height="match_parent"
+                android:clickable="false"
+                android:ems="10"
+                android:focusableInTouchMode="false"
+                android:inputType="none"
+                android:text="Rating:" />
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="@android:style/Widget.DeviceDefault.RatingBar.Indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="95dp"
+                android:layout_marginRight="79dp"
+                android:numStars="5"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:stepSize="0.1"
+                android:visibility="visible" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/linearLayout6"
+            android:orientation="horizontal">
+
+            <AutoCompleteTextView
+                android:id="@+id/interestText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:ems="10"
+                android:focusableInTouchMode="false"
+                android:inputType="textPersonName"
+                android:text="Interests:" />
+
+            <EditText
+                android:id="@+id/interests"
+                android:layout_width="match_parent"
+                android:layout_height="@android:dimen/notification_large_icon_width"
+                android:layout_alignEnd="@+id/address"
+                android:layout_alignRight="@+id/address"
+                android:layout_below="@+id/address"
+                android:layout_marginTop="11dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:enabled="false"
+                android:inputType="textPersonName"
+                android:text="Interests" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
 
 </LinearLayout>

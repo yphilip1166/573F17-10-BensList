@@ -13,6 +13,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * Created by johnquinn on 3/14/17.
@@ -34,6 +38,9 @@ public class CheckoutProductActivity extends MyAppCompatActivity implements View
 
         Button leaveReviewButton = (Button) findViewById(R.id.submitReviewButton);
         leaveReviewButton.setOnClickListener(this);
+
+        Button addToWishList = (Button) findViewById(R.id.AddToWishList);
+        addToWishList.setOnClickListener(this);
 
         Button checkOutUploadersProfileButton =
                 (Button) findViewById(R.id.detailedListingCheckUploadersPage);
@@ -110,6 +117,15 @@ public class CheckoutProductActivity extends MyAppCompatActivity implements View
                 startActivity(newIntent);
                 break;
 
+
+            case (R.id.AddToWishList) :
+                final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+                FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
+                final String currentUserID = fbUser.getUid();
+                DatabaseReference ref = mDatabase.child("users").child(currentUserID).child("productsInWishList").push();
+                ref.setValue(product);
+                break;
+
             // YHG20171107
             case (R.id.confirmBidButton) :
             {
@@ -130,6 +146,7 @@ public class CheckoutProductActivity extends MyAppCompatActivity implements View
                 }
                 break;
             }
+
 
 
             default :
