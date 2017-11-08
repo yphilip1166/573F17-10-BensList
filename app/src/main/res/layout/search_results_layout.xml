@@ -40,6 +40,13 @@
             android:textAlignment="center"
             android:textStyle="normal|bold" />
 
+        <LinearLayout
+            android:id="@+id/productResultsLinearLayout"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </LinearLayout>
+
     </LinearLayout>
 
 </ScrollView>

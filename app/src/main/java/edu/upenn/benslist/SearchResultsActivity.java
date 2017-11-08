@@ -40,6 +40,7 @@ public class SearchResultsActivity extends MyAppCompatActivity implements View.O
     private String searchCategory;
     private String searchQuery;
     private ViewGroup mLinearLayout;
+    private ViewGroup productsLinearLayout;
     private DatabaseReference mProductReference;
     private DatabaseReference mUserReference;
     private ValueEventListener mProductListener;
@@ -93,6 +94,7 @@ public class SearchResultsActivity extends MyAppCompatActivity implements View.O
         sortByPriceButton.setOnClickListener(this);
 
         mLinearLayout = (ViewGroup) findViewById(R.id.searchResultsLinearLayout);
+        productsLinearLayout = (ViewGroup) findViewById(R.id.productResultsLinearLayout);
     }
 
     @Override
@@ -181,7 +183,8 @@ public class SearchResultsActivity extends MyAppCompatActivity implements View.O
     protected void addProductsFromSearch(List<Product> products) {
 
         // Be sure to clear this Layout before you add a list of products result
-        mLinearLayout.removeAllViewsInLayout();
+        productsLinearLayout.removeAllViewsInLayout();
+        //mLinearLayout.removeAllViewsInLayout();
 
         if (sortByPrice) {
             Collections.sort(products);
@@ -192,7 +195,7 @@ public class SearchResultsActivity extends MyAppCompatActivity implements View.O
         //add each product to the activity
         for (final Product product : products) {
 
-            View view = LayoutInflater.from(this).inflate(R.layout.product_listing_layout, mLinearLayout, false);
+            View view = LayoutInflater.from(this).inflate(R.layout.product_listing_layout, productsLinearLayout, false);
 
             TextView productName = (TextView) view.findViewById(R.id.productListingProductName);
             productName.setText("Name: " + product.getName());
@@ -222,7 +225,8 @@ public class SearchResultsActivity extends MyAppCompatActivity implements View.O
                 }
             });
 
-            mLinearLayout.addView(view);
+            //mLinearLayout.addView(view);
+            productsLinearLayout.addView(view);
         }
     }
 
