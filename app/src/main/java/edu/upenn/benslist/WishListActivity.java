@@ -37,11 +37,11 @@ public class WishListActivity extends MyAppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.product_listing_layout);
+        setContentView(R.layout.wish_list_layout);
         this.userId = getIntent().getStringExtra("UserId");
         mUserReference = FirebaseDatabase.getInstance().getReference()
                 .child("users").child(userId);
-        mLinearLayout = (ViewGroup) findViewById(R.id.productListingLinearLayout);
+        mLinearLayout = (ViewGroup) findViewById(R.id.wishListingLinearLayout);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class WishListActivity extends MyAppCompatActivity{
         //add each product to the activity
         for (final Product product : products) {
 
-            View view = LayoutInflater.from(this).inflate(R.layout.product_listing_layout, mLinearLayout, false);
+            View view = LayoutInflater.from(this).inflate(R.layout.wish_list_layout, mLinearLayout, false);
 
             TextView productName = (TextView) view.findViewById(R.id.productListingProductName);
             productName.setText("Name: " + product.getName());
@@ -100,6 +100,16 @@ public class WishListActivity extends MyAppCompatActivity{
 
             Button checkOutButton = (Button) view.findViewById(R.id.productListingCheckOutListingButton);
             checkOutButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(thisContext, CheckoutProductActivity.class);
+                    i.putExtra("Product", (Serializable) product);
+                    startActivity(i);
+                }
+            });
+
+            Button removeButton = (Button) view.findViewById(R.id.removeWishListButton);
+            removeButton.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(thisContext, CheckoutProductActivity.class);
