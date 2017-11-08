@@ -51,6 +51,7 @@ public class RemoveWishListActivity extends MyAppCompatActivity implements View.
                 FirebaseUser fbuser = FirebaseAuth.getInstance().getCurrentUser();
                 DatabaseReference mUserReference = FirebaseDatabase.getInstance().getReference()
                         .child("users").child(fbuser.getUid());
+                final String currentUserID = fbuser.getUid();
                 mUserReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -61,7 +62,7 @@ public class RemoveWishListActivity extends MyAppCompatActivity implements View.
                             if (snapshotProduct.getProductID().equals(product.getProductID())) {
                                 productRefKey = productSnapshot.getKey();
                                 FirebaseDatabase.getInstance().getReference()
-                                        .child("users").child(product.getUploaderID()).child("productsInWishList")
+                                        .child("users").child(currentUserID).child("productsInWishList")
                                         .child(productRefKey).removeValue();
                             }
                         }
