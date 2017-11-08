@@ -91,8 +91,6 @@ public class EditListingActivity extends MyAppCompatActivity implements View.OnC
 
     private void addProductsToView(List<Product> products, String name) {
         //add each product to the activity
-        //Also be sure to clear the layout before you rerun the search result
-        mLinearLayout.removeAllViewsInLayout();
         final Context thisContext = this;
 
         for (final Product product : products) {
@@ -124,17 +122,10 @@ public class EditListingActivity extends MyAppCompatActivity implements View.OnC
             removeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    switch(v.getId()){
-                        case(R.id.removeItem):
-                            Intent removeProduct = new Intent(thisContext, RemoveProductActivity.class);
-                            removeProduct.putExtra("Username", userId);
-                            removeProduct.putExtra("Product", (Serializable) product);
-                            startActivityForResult(removeProduct, 16);
-
-                        default:
-                            break;
-                    }
-
+                    Intent removeProduct = new Intent(thisContext, RemoveProductActivity.class);
+                    removeProduct.putExtra("Username", userId);
+                    removeProduct.putExtra("Product", (Serializable) product);
+                    startActivityForResult(removeProduct, 16);
                 }
             });
 
@@ -142,17 +133,10 @@ public class EditListingActivity extends MyAppCompatActivity implements View.OnC
             checkOutButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    switch(v.getId()){
-                        case(R.id.editProductListing):
-                            Intent editProduct = new Intent(thisContext, EditIndividualProductActivity.class);
-                            editProduct.putExtra("Username", userId);
-                            editProduct.putExtra("Product", (Serializable) product);
-                            startActivityForResult(editProduct, 15);
-
-                        default:
-                            break;
-                    }
-
+                    Intent editProduct = new Intent(thisContext, EditIndividualProductActivity.class);
+                    editProduct.putExtra("Username", userId);
+                    editProduct.putExtra("Product", (Serializable) product);
+                    startActivityForResult(editProduct, 15);
                 }
             });
 

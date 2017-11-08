@@ -73,6 +73,30 @@ public class RemoveProductActivity extends MyAppCompatActivity implements View.O
                     }
                 });
 
+                DatabaseReference deleteProductFromProducts = FirebaseDatabase.getInstance().getReference();
+                deleteProductFromProducts.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String productRefKey = "";
+                        final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+                        for (DataSnapshot productSnapshot : dataSnapshot.child("products").getChildren()) {
+                            Product snapshotProduct = productSnapshot.getValue(Product.class);
+                            if (snapshotProduct.getProductID().equals(product.getProductID())) {
+                                productRefKey = productSnapshot.getKey();
+                                mDatabase.child("products").child(productRefKey).removeValue();
+                            }
+                            if(snapshotProduct.getName().equals("no")){
+                                productRefKey = productSnapshot.getKey();
+                                mDatabase.child("products").child(productRefKey).removeValue();
+                            }
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
                 setResult(RESULT_OK, returnIntent);
                 finish();
                 break;
