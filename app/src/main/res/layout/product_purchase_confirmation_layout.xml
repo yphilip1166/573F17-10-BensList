@@ -38,13 +38,22 @@
         android:layout_marginTop="56dp"
         android:id="@+id/addUserToFavsButton" />
 
+    <TextView
+        android:id="@+id/confirmedBidPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_below="@+id/addUserToFavsButton"
+        android:layout_centerHorizontal="true"/>
+
     <Button
         android:text="Done"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="108dp"
+        android:layout_marginTop="32dp"
         android:id="@+id/doneRatingButton"
-        android:layout_below="@+id/addUserToFavsButton"
+        android:layout_below="@+id/confirmedBidPrice"
         android:layout_centerHorizontal="true" />
 
 

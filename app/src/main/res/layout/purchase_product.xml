@@ -77,6 +77,43 @@
             android:textStyle="normal|bold" />
 
         <TextView
+            android:id="@+id/detailedListingCurPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            <TextView
+                android:id="@+id/detailedListingBidPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Enter Bid Price: "
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:id="@+id/editBidPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_toRightOf="@+id/detailedListingBidPrice"
+                android:layout_toEndOf="@+id/detailedListingBidPrice"
+                android:inputType="numberDecimal"/>
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/confirmBidButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Confirm Bid"
+            android:textAlignment="center"
+            android:textStyle="normal|bold" />
+
+        <TextView
             android:id="@+id/detailedListingProductReviews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

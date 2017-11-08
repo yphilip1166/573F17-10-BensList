@@ -40,6 +40,7 @@ public class SearchResultsActivity extends MyAppCompatActivity implements View.O
     private String searchCategory;
     private String searchQuery;
     private ViewGroup mLinearLayout;
+    private ViewGroup productsLinearLayout;
     private DatabaseReference mProductReference;
     private DatabaseReference mUserReference;
     private ValueEventListener mProductListener;
@@ -81,6 +82,7 @@ public class SearchResultsActivity extends MyAppCompatActivity implements View.O
         // Initialize Database
         mProductReference = FirebaseDatabase.getInstance().getReference()
                 .child("products");
+        Log.v("YHG","products ref: " + mProductReference.toString());
         mUserReference = FirebaseDatabase.getInstance().getReference()
                 .child("users");
 
@@ -93,6 +95,7 @@ public class SearchResultsActivity extends MyAppCompatActivity implements View.O
         sortByPriceButton.setOnClickListener(this);
 
         mLinearLayout = (ViewGroup) findViewById(R.id.searchResultsLinearLayout);
+        productsLinearLayout = (ViewGroup) findViewById(R.id.productResultsLinearLayout);
     }
 
     @Override
@@ -105,9 +108,11 @@ public class SearchResultsActivity extends MyAppCompatActivity implements View.O
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<Product> products = new LinkedList<>();
-                Log.v("YHG","searchCategory: " + searchCategory + " SearchQuery: " + searchQuery);
+                //Log.v("YHG","searchCategory: " + searchCategory + " SearchQuery: " + searchQuery);
                 for (DataSnapshot productSnapshot : dataSnapshot.getChildren()) {
                     Product product = productSnapshot.getValue(Product.class);
+
+                    //Log.v("YHG","dataSnapshot product name: " + product.name + "isAuction: " + product.isAuction);
 
                     if (fulfillsSearchRequirements(product)) {
                         products.add(product);
@@ -181,7 +186,8 @@ public class SearchResultsActivity extends MyAppCompatActivity implements View.O
     protected void addProductsFromSearch(List<Product> products) {
 
         // Be sure to clear this Layout before you add a list of products result
-        mLinearLayout.removeAllViewsInLayout();
+        productsLinearLayout.removeAllViewsInLayout();
+        //mLinearLayout.removeAllViewsInLayout();
 
         if (sortByPrice) {
             Collections.sort(products);
@@ -192,7 +198,7 @@ public class SearchResultsActivity extends MyAppCompatActivity implements View.O
         //add each product to the activity
         for (final Product product : products) {
 
-            View view = LayoutInflater.from(this).inflate(R.layout.product_listing_layout, mLinearLayout, false);
+            View view = LayoutInflater.from(this).inflate(R.layout.product_listing_layout, productsLinearLayout, false);
 
             TextView productName = (TextView) view.findViewById(R.id.productListingProductName);
             productName.setText("Name: " + product.getName());
@@ -212,6 +218,9 @@ public class SearchResultsActivity extends MyAppCompatActivity implements View.O
             TextView uploaderName = (TextView) view.findViewById(R.id.productListingUploaderName);
             uploaderName.setText("Uploader Name: " + product.getUploaderName());
 
+            TextView isProductAuction = (TextView) view.findViewById(R.id.isProductAuction);
+            isProductAuction.setText("Is Auction: " + product.getAuctionString());
+
             Button checkOutButton = (Button) view.findViewById(R.id.productListingCheckOutListingButton);
             checkOutButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -222,7 +231,8 @@ public class SearchResultsActivity extends MyAppCompatActivity implements View.O
                 }
             });
 
-            mLinearLayout.addView(view);
+            //mLinearLayout.addView(view);
+            productsLinearLayout.addView(view);
         }
     }
 

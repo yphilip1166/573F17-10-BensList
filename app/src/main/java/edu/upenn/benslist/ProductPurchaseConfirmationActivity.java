@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.util.*;
 
@@ -39,6 +41,10 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
     String currentUserID;
     private boolean favorite;
 
+    //YHG 20171107
+    private boolean isAuction;
+    private double bidPrice;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +52,9 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
 
         this.uploaderID = getIntent().getStringExtra("UploaderID");
         this.productID = getIntent().getStringExtra("ProductID");
+        this.isAuction = getIntent().getBooleanExtra("isAuction", false);
+        this.bidPrice = getIntent().getDoubleExtra("BidPrice", 0.0);
+
 
         Spinner spinner = (Spinner) findViewById(R.id.userRatingSpinner);
         spinner.setOnItemSelectedListener(this);
@@ -63,6 +72,11 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
         mDatabase = FirebaseDatabase.getInstance().getReference();
         fbUser = FirebaseAuth.getInstance().getCurrentUser();
         currentUserID = fbUser.getUid();
+
+        if(isAuction) {
+            TextView bidPriceText = (TextView) findViewById(R.id.confirmedBidPrice);
+            bidPriceText.setText("Confirmed Bid Price: " + this.bidPrice);
+        }
     }
 
     @Override
@@ -117,10 +131,19 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
                             ref.setValue(uploaderUserName);
                         }
 
-                        Product product = snapshot.child("products").child(productID).getValue(Product.class);
-                        DatabaseReference ref = mDatabase.child("users").child(currentUserID).child(
-                                "productsIveBought").push();
-                        ref.setValue(product);
+                        if(isAuction)
+                        {
+                            DatabaseReference productRef = FirebaseDatabase.getInstance().getReference()
+                                    .child("products").child(productID);
+                            productRef.child("curAuctionPrice").setValue(bidPrice);
+                        }
+                        else {
+
+                            Product product = snapshot.child("products").child(productID).getValue(Product.class);
+                            DatabaseReference ref = mDatabase.child("users").child(currentUserID).child(
+                                    "productsIveBought").push();
+                            ref.setValue(product);
+                        }
 
 
 
