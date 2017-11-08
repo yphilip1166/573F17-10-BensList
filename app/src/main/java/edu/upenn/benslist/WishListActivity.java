@@ -112,9 +112,10 @@ public class WishListActivity extends MyAppCompatActivity{
             removeButton.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(thisContext, CheckoutProductActivity.class);
-                    i.putExtra("Product", (Serializable) product);
-                    startActivity(i);
+                    Intent removeWishList = new Intent(thisContext, RemoveWishListActivity.class);
+                    removeWishList.putExtra("Username", userId);
+                    removeWishList.putExtra("Product", (Serializable) product);
+                    startActivityForResult(removeWishList, 16);
                 }
             });
 

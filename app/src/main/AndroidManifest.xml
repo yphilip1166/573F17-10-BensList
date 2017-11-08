@@ -53,6 +53,7 @@
         <activity android:name=".RemoveProductActivity" />
         <activity android:name=".EditIndividualProductActivity" />
         <activity android:name=".WishListActivity" />
+        <activity android:name=".RemoveWishListActivity" />
     </application>
 
 </manifest>
