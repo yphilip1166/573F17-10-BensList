@@ -51,7 +51,7 @@
         <activity android:name=".InboxMessageActivity"/>
         <activity android:name=".EditListingActivity" />
         <activity android:name=".EditIndividualProductActivity" />
-     
+        <activity android:name=".WishListActivity" />
     </application>
 
 </manifest>
