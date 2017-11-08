@@ -65,6 +65,11 @@
         <item>Other</item>
     </string-array>
 
+    <string-array name="is_auction_array">
+        <item>No</item>
+        <item>Yes</item>
+    </string-array>
+
     <string-array name="user_rating_array">
         <item>1</item>
         <item>2</item>

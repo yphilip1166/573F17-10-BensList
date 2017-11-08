@@ -33,6 +33,11 @@ public class Product implements Serializable, Comparable {
     public int priceCategory; //1, 2, or 3
     public int locationCategory; //1, 2, or 3
 
+    //YHG 20171107
+    public boolean isAuction;
+    public boolean isAuctionClosed;
+    public double curAuctionPrice;
+
     public Product() {
         this.name = "";
         this.description = "";
@@ -49,6 +54,10 @@ public class Product implements Serializable, Comparable {
         this.distance = 0.0;
         this.priceCategory = -1;
         this.locationCategory = -1;
+        this.isAuction = false;
+        this.isAuctionClosed = true;
+        this.curAuctionPrice = 0.0;
+
     }
 
 
@@ -65,6 +74,9 @@ public class Product implements Serializable, Comparable {
         this.reviews = new LinkedList<>();
         numProducts++;
         this.productID = productId;
+        this.isAuction = false;
+        this.isAuctionClosed = true;
+        this.curAuctionPrice = 0.0;
 
         //TODO - new stuff April 13th (JP)
         this.priceAsDouble = priceAsDouble;
@@ -102,11 +114,64 @@ public class Product implements Serializable, Comparable {
         this.distance = distance;
     }
 
+    public Product(String name, String description, double priceAsDouble, String location,
+                   String phoneNumber, String category, String uploaderID, String uploaderName, String productId,
+                   double distance, boolean isAuction) {
+        this.name = name;
+        this.description = description;
+        this.location = location;
+        this.phoneNumber = phoneNumber;
+        this.category = category;
+        this.uploaderID = uploaderID;
+        this.uploaderName = uploaderName;
+        this.reviews = new LinkedList<>();
+        numProducts++;
+        this.productID = productId;
+        this.isAuction = isAuction;
+        this.isAuctionClosed = false;
+        this.curAuctionPrice = priceAsDouble;
+
+
+        this.priceAsDouble = priceAsDouble;
+        this.price = "$" + priceAsDouble;
+        int decimalIndex = price.indexOf('.');
+        if (price.length() - decimalIndex == 2) {
+            price += "0";
+        }
+
+        if (priceAsDouble < 0) {
+            this.priceCategory = -1;
+        }
+        if (priceAsDouble <= 99.99) {
+            this.priceCategory = 1;
+        }
+        else if (priceAsDouble <= 199.99) {
+            this.priceCategory = 2;
+        }
+        else {
+            this.priceCategory = 3;
+        }
+
+        if (distance < 0) {
+            this.locationCategory = -1;
+        }
+        if (distance <= 9.99) {
+            this.locationCategory = 1;
+        }
+        else if (distance <= 19.99) {
+            this.locationCategory = 2;
+        }
+        else {
+            this.locationCategory = 3;
+        }
+        this.distance = distance;
+    }
+
     //this functino works fine
     public static Product writeNewProductToDatabase(String name, String description,
-                                                    double priceAsDouble, String location, String phoneNumber,
-                                                    String category, String currentUserName, String productId, 
-                                                    double distance) {
+                                                         double priceAsDouble, String location, String phoneNumber,
+                                                         String category, String currentUserName, String productId,
+                                                         double distance) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
         String currentUserID = fbUser.getUid();
@@ -115,6 +180,21 @@ public class Product implements Serializable, Comparable {
         //mDatabase.child("products").child(newProduct.getProductID()).setValue(newProduct);
         return newProduct;
     }
+
+    //this is for generating auction product
+    public static Product writeNewProductToDatabase(String name, String description,
+                                                    double priceAsDouble, String location, String phoneNumber,
+                                                    String category, String currentUserName, String productId,
+                                                    double distance, boolean isAuction) {
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
+        String currentUserID = fbUser.getUid();
+        Product newProduct = new Product(name, description, priceAsDouble, location, phoneNumber,
+                category, currentUserID, currentUserName, productId, distance, isAuction);
+        //mDatabase.child("products").child(newProduct.getProductID()).setValue(newProduct);
+        return newProduct;
+    }
+
 
     public void setPriceAsDouble(double priceAsDouble) {
         this.priceAsDouble = priceAsDouble;
@@ -203,6 +283,22 @@ public class Product implements Serializable, Comparable {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+    //YHG 20171107
+    public void setIsAuction(boolean isAuction){this.isAuction = isAuction;};
+    public boolean getIsAuction(){return this.isAuction;};
+
+    public void setIsAuctionClosed(boolean isAuction){this.isAuctionClosed = isAuction;};
+    public boolean getIsAuctionClosed(){return this.isAuctionClosed;};
+
+    public void setCurAuctionPrice(double price){this.curAuctionPrice = price;}
+    public double getCurAuctionPrice(){return curAuctionPrice;}
+
+    public String getAuctionString(){
+        if(isAuction)return "YES";
+        else return "NO";
+    }
+
 
 
     //haven't tested it out yet, but this function should work fine

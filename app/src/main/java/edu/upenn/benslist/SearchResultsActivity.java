@@ -82,6 +82,7 @@ public class SearchResultsActivity extends MyAppCompatActivity implements View.O
         // Initialize Database
         mProductReference = FirebaseDatabase.getInstance().getReference()
                 .child("products");
+        Log.v("YHG","products ref: " + mProductReference.toString());
         mUserReference = FirebaseDatabase.getInstance().getReference()
                 .child("users");
 
@@ -107,9 +108,11 @@ public class SearchResultsActivity extends MyAppCompatActivity implements View.O
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<Product> products = new LinkedList<>();
-                Log.v("YHG","searchCategory: " + searchCategory + " SearchQuery: " + searchQuery);
+                //Log.v("YHG","searchCategory: " + searchCategory + " SearchQuery: " + searchQuery);
                 for (DataSnapshot productSnapshot : dataSnapshot.getChildren()) {
                     Product product = productSnapshot.getValue(Product.class);
+
+                    //Log.v("YHG","dataSnapshot product name: " + product.name + "isAuction: " + product.isAuction);
 
                     if (fulfillsSearchRequirements(product)) {
                         products.add(product);
@@ -214,6 +217,9 @@ public class SearchResultsActivity extends MyAppCompatActivity implements View.O
 
             TextView uploaderName = (TextView) view.findViewById(R.id.productListingUploaderName);
             uploaderName.setText("Uploader Name: " + product.getUploaderName());
+
+            TextView isProductAuction = (TextView) view.findViewById(R.id.isProductAuction);
+            isProductAuction.setText("Is Auction: " + product.getAuctionString());
 
             Button checkOutButton = (Button) view.findViewById(R.id.productListingCheckOutListingButton);
             checkOutButton.setOnClickListener(new View.OnClickListener() {

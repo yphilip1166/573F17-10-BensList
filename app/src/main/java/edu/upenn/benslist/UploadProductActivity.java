@@ -29,7 +29,10 @@ View.OnClickListener {
     private static final int RESULT_LOAD_IMAGE = 1;
     private ImageView imageToUpload;
     private String itemCategory;
+    private boolean isAuction;
     private String currentUserName;
+    private Spinner spinner;
+    private Spinner spinner2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,18 +48,36 @@ View.OnClickListener {
         doneButton.setOnClickListener(this);
 
 
-        Spinner spinner = (Spinner) findViewById(R.id.productCategorySpinner);
+        spinner = (Spinner) findViewById(R.id.productCategorySpinner);
         spinner.setOnItemSelectedListener(this);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.product_categories_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
+        spinner2 = (Spinner) findViewById(R.id.isAuctionSpinner);
+        spinner2.setOnItemSelectedListener(this);
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this,
+                R.array.is_auction_array, android.R.layout.simple_spinner_item);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner2.setAdapter(adapter2);
+
+        isAuction = false;
         itemCategory = "Furniture";
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        itemCategory = parent.getItemAtPosition(position).toString();
+        if(parent.getId() == spinner.getId()) {
+            itemCategory = parent.getItemAtPosition(position).toString();
+            Log.v("YHG", "Category spinner selected: "+itemCategory);
+        }
+        else if(parent.getId() == spinner2.getId())
+        {
+            if(position == 1)isAuction = true;
+            else if(position == 0)isAuction = false;
+            Log.v("YHG", "isAuction spinner selected: "+isAuction);
+        }
     }
 
     public void onNothingSelected(AdapterView<?> arg0) {
@@ -144,10 +165,11 @@ View.OnClickListener {
                     final String currentUserID = fbUser.getUid();
 
                     DatabaseReference ref = mDatabase.child("products").push();
+
                     Product product = Product.writeNewProductToDatabase(productName.getText().toString(),
                             productDescription.getText().toString(), priceAsDouble,
                             productLocation.getText().toString(), productPhoneNumber.getText().toString(),
-                            itemCategory, currentUserName, ref.getKey(), distance);
+                            itemCategory, currentUserName, ref.getKey(), distance, isAuction);
 
                     ref.setValue(product);
 
