@@ -50,6 +50,7 @@
         <activity android:name=".FavoriteUsersActivity"/>
         <activity android:name=".InboxMessageActivity"/>
         <activity android:name=".EditListingActivity" />
+        <activity android:name=".RemoveProductActivity" />
         <activity android:name=".EditIndividualProductActivity" />
      
     </application>

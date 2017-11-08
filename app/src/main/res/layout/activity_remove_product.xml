@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_remove_product_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.08"
+        android:gravity="center"
+        android:text="Are you sure to remove this item from your list?"
+        android:textAlignment="center"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="normal|bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/removeItemRemove"
+            android:layout_width="203dp"
+            android:layout_height="wrap_content"
+            android:text="Remove"
+            android:textAlignment="center"
+            android:textStyle="normal|bold" />
+
+        <Button
+            android:id="@+id/removeItemBack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Back"
+            android:textStyle="normal|bold" />
+
+    </LinearLayout>
+
+</LinearLayout>

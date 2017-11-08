@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -71,6 +72,7 @@ public class EditListingActivity extends MyAppCompatActivity implements View.OnC
                             "productsIveUploaded").getChildren()) {
                         Product product = productSnapshot.getValue(Product.class);
                         productsIveUploaded.add(product);
+                        Log.v("string",productSnapshot.getKey());
 
                     }
                     addProductsToView(productsIveUploaded, name);
@@ -118,16 +120,42 @@ public class EditListingActivity extends MyAppCompatActivity implements View.OnC
             TextView uploaderName = (TextView) view.findViewById(R.id.productListingUploaderName);
             uploaderName.setText("Uploader Name: " + name);
 
+            Button removeButton = (Button) view.findViewById(R.id.removeItem);
+            removeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    switch(v.getId()){
+                        case(R.id.removeItem):
+                            Intent removeProduct = new Intent(thisContext, RemoveProductActivity.class);
+                            removeProduct.putExtra("Username", userId);
+                            removeProduct.putExtra("Product", (Serializable) product);
+                            startActivityForResult(removeProduct, 16);
+
+                        default:
+                            break;
+                    }
+
+                }
+            });
+
             Button checkOutButton = (Button) view.findViewById(R.id.editProductListing);
             checkOutButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent editProduct = new Intent(thisContext, EditIndividualProductActivity.class);
-                    editProduct.putExtra("Username", userId);
-                    editProduct.putExtra("Product", (Serializable) product);
-                    startActivityForResult(editProduct, 15);
+                    switch(v.getId()){
+                        case(R.id.editProductListing):
+                            Intent editProduct = new Intent(thisContext, EditIndividualProductActivity.class);
+                            editProduct.putExtra("Username", userId);
+                            editProduct.putExtra("Product", (Serializable) product);
+                            startActivityForResult(editProduct, 15);
+
+                        default:
+                            break;
+                    }
+
                 }
             });
+
 
             mLinearLayout.addView(view);
         }
@@ -137,8 +165,7 @@ public class EditListingActivity extends MyAppCompatActivity implements View.OnC
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 15 && resultCode == RESULT_OK) {
-            System.out.println("refreshing activity");
+        if((requestCode == 15 || requestCode == 16) && resultCode == RESULT_OK) {
             Intent refresh = new Intent(this, EditListingActivity.class);
             FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
             String currentUserID = fbUser.getUid();
