@@ -118,6 +118,9 @@ public class EditListingActivity extends MyAppCompatActivity implements View.OnC
             TextView uploaderName = (TextView) view.findViewById(R.id.productListingUploaderName);
             uploaderName.setText("Uploader Name: " + name);
 
+            TextView productQuantity = (TextView) view.findViewById(R.id.productListingProductQuantity);
+            productQuantity.setText("Number of Items Left: " + product.getQuantity());
+
             Button removeButton = (Button) view.findViewById(R.id.removeItem);
             removeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
