@@ -1,7 +1,10 @@
 package edu.upenn.benslist;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,6 +36,7 @@ public class WishListActivity extends MyAppCompatActivity{
     private ViewGroup mLinearLayout;
     private String userId;
     private DatabaseReference mUserReference;
+    private static final int REQUEST_CODE = 77;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,11 +119,24 @@ public class WishListActivity extends MyAppCompatActivity{
                     Intent removeWishList = new Intent(thisContext, RemoveWishListActivity.class);
                     removeWishList.putExtra("Username", userId);
                     removeWishList.putExtra("Product", (Serializable) product);
-                    startActivityForResult(removeWishList, 16);
+                    startActivityForResult(removeWishList, 77);
                 }
             });
 
             mLinearLayout.addView(view);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+
+        //Detects request codes
+        if(requestCode==REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            Intent refresh = new Intent(this, WishListActivity.class);
+            refresh.putExtra("UserId", userId);
+            startActivity(refresh);
+            this.finish();
         }
     }
 }

@@ -73,8 +73,6 @@ public class RemoveWishListActivity extends MyAppCompatActivity implements View.
                     }
                 });
 
-
-
                 setResult(RESULT_OK, returnIntent);
                 finish();
                 break;
