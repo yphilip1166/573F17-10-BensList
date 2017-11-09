@@ -60,7 +60,7 @@ public class Product implements Serializable, Comparable {
         this.isAuction = false;
         this.isAuctionClosed = true;
         this.curAuctionPrice = 0.0;
-        this.quantity = 0;
+        this.quantity = 1;
     }
 
 

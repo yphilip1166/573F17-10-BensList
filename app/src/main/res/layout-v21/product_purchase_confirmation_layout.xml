@@ -8,24 +8,20 @@
         android:id="@+id/rateProductText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/confirmedQuantity"
         android:layout_marginLeft="13dp"
         android:layout_marginStart="13dp"
-        android:layout_toEndOf="@+id/confirmedQuantity"
-        android:layout_toRightOf="@+id/confirmedQuantity"
+        android:layout_marginTop="32dp"
         android:text="Please Rate This Product: "
         android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
-    <Spinner
+    Z<Spinner
         android:id="@+id/userRatingSpinner"
+        style="?android:attr/spinnerItemStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="?android:attr/spinnerItemStyle"
-        android:layout_alignBottom="@+id/rateProductText"
-        android:layout_toRightOf="@+id/rateProductText"
-        android:layout_toEndOf="@+id/rateProductText"
-        android:layout_marginLeft="46dp"
-        android:layout_marginStart="46dp" />
+        android:layout_above="@+id/addUserToFavsButton"
+        android:layout_alignEnd="@+id/addUserToFavsButton"
+        android:layout_alignRight="@+id/addUserToFavsButton" />
 
     <Button
         android:text="Add This User To Your Favorites"
@@ -40,6 +36,9 @@
         android:id="@+id/confirmedQuantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/addUserToFavsButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
         android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
     <TextView
