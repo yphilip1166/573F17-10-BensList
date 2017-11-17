@@ -77,7 +77,7 @@ public class CheckoutProductActivity extends MyAppCompatActivity implements View
 
         TextView curQuantity = (TextView) findViewById(R.id.detailedListingCurQuantity);
         uploaderName.setText("Left:  " + product.getQuantity());
-        numItemsLeft = Integer.parseInt(product.getQuantity());
+        numItemsLeft = product.getQuantity();
 
         TextView curBidPrice = (TextView) findViewById(R.id.detailedListingCurPrice);
         curBidPrice.setText("Cur Bid Price: " + product.curAuctionPrice);

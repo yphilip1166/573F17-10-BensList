@@ -44,7 +44,6 @@ public class Product implements Serializable, Comparable {
     public Product() {
         this.name = "";
         this.description = "";
-        this.condition = "";
         this.price = "";
         this.location = "";
         this.phoneNumber = "";
@@ -65,61 +64,6 @@ public class Product implements Serializable, Comparable {
         this.quantity = 1;
     }
 
-
-    public Product(String name, String description, String condition, double priceAsDouble, String location,
-                   String phoneNumber, String category, String uploaderID, String uploaderName, String productId,
-                   double distance, int quantity) {
-        this.name = name;
-        this.description = description;
-        this.condition = condition;
-        this.location = location;
-        this.phoneNumber = phoneNumber;
-        this.category = category;
-        this.uploaderID = uploaderID;
-        this.uploaderName = uploaderName;
-        this.reviews = new LinkedList<>();
-        numProducts++;
-        this.productID = productId;
-        this.isAuction = false;
-        this.isAuctionClosed = true;
-        this.curAuctionPrice = 0.0;
-
-        //TODO - new stuff April 13th (JP)
-        this.priceAsDouble = priceAsDouble;
-        this.price = "$" + priceAsDouble;
-        int decimalIndex = price.indexOf('.');
-        if (price.length() - decimalIndex == 2) {
-            price += "0";
-        }
-
-        if (priceAsDouble < 0) {
-            this.priceCategory = -1;
-        }
-        if (priceAsDouble <= 99.99) {
-            this.priceCategory = 1;
-        }
-        else if (priceAsDouble <= 199.99) {
-            this.priceCategory = 2;
-        }
-        else {
-            this.priceCategory = 3;
-        }
-
-        if (distance < 0) {
-            this.locationCategory = -1;
-        }
-        if (distance <= 9.99) {
-            this.locationCategory = 1;
-        }
-        else if (distance <= 19.99) {
-            this.locationCategory = 2;
-        }
-        else {
-            this.locationCategory = 3;
-        }
-        this.distance = distance;
-        this.quantity = quantity;
-    }
 
     public Product(String name, String description, String condition, double priceAsDouble, String location,
                    String phoneNumber, String category, String uploaderID, String uploaderName, String productId,
@@ -175,6 +119,7 @@ public class Product implements Serializable, Comparable {
         this.distance = distance;
     }
 
+
     //this functino works fine
 
 //    public static Product writeNewProductToDatabase(String name, String description,
@@ -214,7 +159,9 @@ public class Product implements Serializable, Comparable {
         return priceAsDouble;
     }
 
-    public String getQuantity() { return Integer.toString(quantity); }
+    public int getQuantity() { return quantity; }
+
+    public void setQuantity(int quantity) { this.quantity = quantity; }
 
     public void setDistance(double distance) {
         this.distance = distance;

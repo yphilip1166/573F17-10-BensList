@@ -70,6 +70,7 @@ public class EditListingActivity extends MyAppCompatActivity implements View.OnC
                     for (DataSnapshot productSnapshot : dataSnapshot.child(
                             "productsIveUploaded").getChildren()) {
                         Product product = productSnapshot.getValue(Product.class);
+                        Log.v("debug","after");
                         productsIveUploaded.add(product);
 
                     }

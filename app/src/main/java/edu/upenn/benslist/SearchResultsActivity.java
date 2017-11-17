@@ -206,7 +206,7 @@ public class SearchResultsActivity extends MyAppCompatActivity implements View.O
             TextView productDescription = (TextView) view.findViewById(R.id.productListingProductDescription);
             productDescription.setText("Description: " + product.getDescription());
 
-            TextView productCondition = (TextView) view.findViewById(R.id.productCondition);
+            TextView productCondition = (TextView) view.findViewById(R.id.productListingProductCondition);
             productCondition.setText("Condition: " + product.getCondition());
 
             TextView productPrice = (TextView) view.findViewById(R.id.productListingProductPrice);
