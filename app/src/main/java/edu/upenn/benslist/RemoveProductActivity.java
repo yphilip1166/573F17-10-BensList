@@ -41,13 +41,14 @@ public class RemoveProductActivity extends MyAppCompatActivity implements View.O
         switch (v.getId()) {
             case (R.id.removeItemBack) :
                 Intent back = new Intent(this, EditListingActivity.class);
+                back.putExtra("removedProductKey","");
                 setResult(RESULT_OK, back);
                 finish();
                 break;
 
             case (R.id.removeItemRemove) :
 
-                Intent returnIntent = new Intent(this, EditListingActivity.class);
+                final Intent returnIntent = new Intent(this, EditListingActivity.class);
 
                 FirebaseUser fbuser = FirebaseAuth.getInstance().getCurrentUser();
                 DatabaseReference mUserReference = FirebaseDatabase.getInstance().getReference()
@@ -82,10 +83,6 @@ public class RemoveProductActivity extends MyAppCompatActivity implements View.O
                         for (DataSnapshot productSnapshot : dataSnapshot.child("products").getChildren()) {
                             Product snapshotProduct = productSnapshot.getValue(Product.class);
                             if (snapshotProduct.getProductID().equals(product.getProductID())) {
-                                productRefKey = productSnapshot.getKey();
-                                mDatabase.child("products").child(productRefKey).removeValue();
-                            }
-                            if(snapshotProduct.getName().equals("no")){
                                 productRefKey = productSnapshot.getKey();
                                 mDatabase.child("products").child(productRefKey).removeValue();
                             }

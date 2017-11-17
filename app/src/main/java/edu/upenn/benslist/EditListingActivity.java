@@ -65,14 +65,12 @@ public class EditListingActivity extends MyAppCompatActivity implements View.OnC
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String name = dataSnapshot.child("name").getValue(String.class);
-
                 if (type.equals("uploads")) {
                     List<Product> productsIveUploaded = new LinkedList<>();
                     for (DataSnapshot productSnapshot : dataSnapshot.child(
                             "productsIveUploaded").getChildren()) {
                         Product product = productSnapshot.getValue(Product.class);
                         productsIveUploaded.add(product);
-                        Log.v("string",productSnapshot.getKey());
 
                     }
                     addProductsToView(productsIveUploaded, name);
@@ -154,6 +152,7 @@ public class EditListingActivity extends MyAppCompatActivity implements View.OnC
             FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
             String currentUserID = fbUser.getUid();
             refresh.putExtra("UserId", currentUserID);
+            android.os.SystemClock.sleep(100);
             startActivity(refresh);
             this.finish();
         }
