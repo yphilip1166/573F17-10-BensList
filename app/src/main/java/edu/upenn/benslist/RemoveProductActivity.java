@@ -85,10 +85,6 @@ public class RemoveProductActivity extends MyAppCompatActivity implements View.O
                                 productRefKey = productSnapshot.getKey();
                                 mDatabase.child("products").child(productRefKey).removeValue();
                             }
-                            if(snapshotProduct.getName().equals("no")){
-                                productRefKey = productSnapshot.getKey();
-                                mDatabase.child("products").child(productRefKey).removeValue();
-                            }
                         }
                     }
                     @Override

@@ -154,6 +154,7 @@ public class EditListingActivity extends MyAppCompatActivity implements View.OnC
             FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
             String currentUserID = fbUser.getUid();
             refresh.putExtra("UserId", currentUserID);
+            android.os.SystemClock.sleep(300);
             startActivity(refresh);
             this.finish();
         }
