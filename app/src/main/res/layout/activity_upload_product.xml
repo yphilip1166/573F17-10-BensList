@@ -188,7 +188,7 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/isAuctionSpinner"
             android:text="Enter Product Quantity:"
-            android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
             android:id="@+id/editQuantity"

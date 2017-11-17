@@ -172,7 +172,7 @@
             android:layout_toLeftOf="@+id/editQuantity"
             android:layout_toStartOf="@+id/editQuantity"
             android:text="Enter Quantity"
-            android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
             android:id="@+id/editQuantity"
