@@ -57,6 +57,13 @@ public class MyAppCompatActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
 
+            case R.id.action_notification:
+                intent = new Intent(this, InboxMessageActivity.class);
+                intent.putExtra("UserId", "SYSTEM NOTIFICATION");
+                intent.putExtra("Name", "System Notification");
+                startActivity(intent);
+                return true;
+
             default:
                 //Could not recognize a button press
                 Toast.makeText(this, "Could not recognize a button press", Toast.LENGTH_SHORT).show();

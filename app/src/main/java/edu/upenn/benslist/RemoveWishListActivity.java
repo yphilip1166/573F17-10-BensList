@@ -55,6 +55,9 @@ public class RemoveWishListActivity extends MyAppCompatActivity implements View.
                 mUserReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+
+//                        product.removeWisher(currentUserID);
+
                         String productRefKey = "";
                         for (DataSnapshot productSnapshot : dataSnapshot.child(
                                 "productsInWishList").getChildren()) {
