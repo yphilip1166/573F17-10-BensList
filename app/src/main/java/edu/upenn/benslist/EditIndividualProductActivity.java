@@ -103,6 +103,9 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
 
         EditText editPhoneNumber = (EditText) findViewById(R.id.editPhoneNumber);
         editPhoneNumber.setText(product.getPhoneNumber());
+
+        EditText editQuantity = (EditText) findViewById(R.id.editQuantity);
+        editQuantity.setText(product.getQuantity());
     }
 
 
@@ -141,7 +144,7 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
                         EditText productPhoneNumber = (EditText) findViewById(R.id.editPhoneNumber);
                         EditText priceText = (EditText) findViewById(R.id.editPrice);
                         EditText distanceText = (EditText) findViewById(R.id.editDistance);
-
+                        EditText productQuantity = (EditText) findViewById(R.id.editQuantity);
 
                         String price = priceText.getText().toString();
                         double distance = Double.parseDouble(String.valueOf(String.valueOf(distanceText.getText())));
@@ -175,6 +178,7 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
                         String phoneNumber = String.valueOf(productPhoneNumber.getText());
                         int priceCategory = getPriceLevel(priceAsDouble);
                         int locationCategory = getLocationLevel(distance);
+                        int quantityAsInt = Integer.parseInt(productQuantity.getText().toString());
                         price = "$" + priceAsDouble;
                         int decimalIndex = price.indexOf('.');
                         if (price.length() - decimalIndex == 2) {
@@ -191,9 +195,11 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
                         productRef.child("priceAsDouble").setValue(priceAsDouble);
                         productRef.child("priceCategory").setValue(priceCategory);
                         productRef.child("locationCategory").setValue(locationCategory);
+                        productRef.child("quantity").setValue(quantityAsInt);
 
                         setGeneralProduct(product.getProductID(), description, distance, location, name,
-                                phoneNumber, price, priceAsDouble, priceCategory, locationCategory);
+                                phoneNumber, price, priceAsDouble, priceCategory, locationCategory,
+                                quantityAsInt);
                     }
 
                     @Override
@@ -212,7 +218,8 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
 
     private void setGeneralProduct(String productID, String description, double distance,
                                    String location, String name, String phoneNumber, String price,
-                                   double priceAsDouble, int priceCategory, int locationCategory) {
+                                   double priceAsDouble, int priceCategory, int locationCategory,
+                                   int quantity) {
         System.out.println("Product ID is: " + productID);
         DatabaseReference productRef = FirebaseDatabase.getInstance().getReference()
                 .child("products").child(productID);
@@ -227,6 +234,7 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
         productRef.child("priceAsDouble").setValue(priceAsDouble);
         productRef.child("priceCategory").setValue(priceCategory);
         productRef.child("locationCategory").setValue(locationCategory);
+        productRef.child("quantity").setValue(quantity);
 
     }
 

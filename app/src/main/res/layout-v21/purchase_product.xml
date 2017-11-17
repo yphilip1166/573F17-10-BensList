@@ -61,17 +61,37 @@
             android:textStyle="normal|bold" />
 
         <TextView
-            android:id="@+id/textView12"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/detailedListingCurQuantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/detailedListingQuantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="Enter Quantity: "
+                android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+
+            <EditText
+                android:id="@+id/editQuantity"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="120dp"
+                android:layout_marginStart="120dp"
+                android:ems="10"
+                android:inputType="number" />
+        </RelativeLayout>
 
         <Button
             android:id="@+id/detailedListingConfirmPurchase"
@@ -106,7 +126,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:text="Enter Bid Price: " />
+                android:text="Enter Bid Price: "
+                android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
             <EditText
                 android:id="@+id/editBidPrice"
@@ -116,6 +137,7 @@
                 android:layout_toRightOf="@+id/detailedListingBidPrice"
                 android:layout_toEndOf="@+id/detailedListingBidPrice"
                 android:inputType="numberDecimal"/>
+
         </RelativeLayout>
 
         <Button

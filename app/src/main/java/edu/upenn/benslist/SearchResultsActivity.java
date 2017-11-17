@@ -221,6 +221,9 @@ public class SearchResultsActivity extends MyAppCompatActivity implements View.O
             TextView isProductAuction = (TextView) view.findViewById(R.id.isProductAuction);
             isProductAuction.setText("Is Auction: " + product.getAuctionString());
 
+            TextView productQuantity = (TextView) view.findViewById(R.id.productListingProductQuantity);
+            productQuantity.setText("Number of Items Left " + product.getQuantity());
+
             Button checkOutButton = (Button) view.findViewById(R.id.productListingCheckOutListingButton);
             checkOutButton.setOnClickListener(new View.OnClickListener() {
                 @Override
