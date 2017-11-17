@@ -29,10 +29,12 @@ View.OnClickListener {
     private static final int RESULT_LOAD_IMAGE = 1;
     private ImageView imageToUpload;
     private String itemCategory;
+    private String condition;
     private boolean isAuction;
     private String currentUserName;
     private Spinner spinner;
     private Spinner spinner2;
+    private Spinner conditionSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,12 @@ View.OnClickListener {
         uploadImageButton.setOnClickListener(this);
         doneButton.setOnClickListener(this);
 
+        conditionSpinner = (Spinner) findViewById(R.id.conditionSpinner);
+        conditionSpinner.setOnItemSelectedListener(this);
+        ArrayAdapter<CharSequence> conditionSpinnerAdapter = ArrayAdapter.createFromResource(this,
+                R.array.condition_array, android.R.layout.simple_spinner_item);
+        conditionSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        conditionSpinner.setAdapter(conditionSpinnerAdapter);
 
         spinner = (Spinner) findViewById(R.id.productCategorySpinner);
         spinner.setOnItemSelectedListener(this);
@@ -62,6 +70,7 @@ View.OnClickListener {
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner2.setAdapter(adapter2);
 
+        condition = "Like New";
         isAuction = false;
         itemCategory = "Furniture";
     }
@@ -77,6 +86,10 @@ View.OnClickListener {
             if(position == 1)isAuction = true;
             else if(position == 0)isAuction = false;
             Log.v("YHG", "isAuction spinner selected: "+isAuction);
+        }
+        else if(parent.getId() == conditionSpinner.getId()){
+            condition = parent.getItemAtPosition(position).toString();
+            Log.v("SJ", "condition spinner selected: "+condition);
         }
     }
 
@@ -167,7 +180,7 @@ View.OnClickListener {
                     DatabaseReference ref = mDatabase.child("products").push();
 
                     Product product = Product.writeNewProductToDatabase(productName.getText().toString(),
-                            productDescription.getText().toString(), priceAsDouble,
+                            productDescription.getText().toString(), condition, priceAsDouble,
                             productLocation.getText().toString(), productPhoneNumber.getText().toString(),
                             itemCategory, currentUserName, ref.getKey(), distance, isAuction);
 

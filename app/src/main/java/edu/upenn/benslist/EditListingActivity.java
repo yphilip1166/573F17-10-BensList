@@ -103,8 +103,10 @@ public class EditListingActivity extends MyAppCompatActivity implements View.OnC
 
             TextView productDescription = (TextView) view.findViewById(R.id.productListingProductDescription);
             System.out.println("product description is: " + product.getDescription());
-
             productDescription.setText("Description: " + product.getDescription());
+
+            TextView productCondition = (TextView) view.findViewById(R.id.productListingProductCondition);
+            productCondition.setText("Condition: " + product.getCondition());
 
             TextView productPrice = (TextView) view.findViewById(R.id.productListingProductPrice);
             productPrice.setText("Price: " + product.getPrice());
@@ -149,7 +151,7 @@ public class EditListingActivity extends MyAppCompatActivity implements View.OnC
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if((requestCode == 15 || requestCode == 16) && resultCode == RESULT_OK) {
+        if((requestCode == 15 || requestCode == 16)) {
             Intent refresh = new Intent(this, EditListingActivity.class);
             FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
             String currentUserID = fbUser.getUid();

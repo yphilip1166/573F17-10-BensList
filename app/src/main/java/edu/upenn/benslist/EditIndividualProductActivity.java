@@ -37,6 +37,7 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
     private static final int RESULT_LOAD_IMAGE = 1;
     private ImageView imageToUpload;
     private String itemCategory;
+    private String condition;
     private String currentUserName;
     private Product product;
 
@@ -84,6 +85,30 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setSelection(categoryOptions.indexOf(itemCategory));
+
+
+        Spinner conditionSpinner = (Spinner) findViewById(R.id.conditionSpinner);
+        condition = product.getCondition();
+        ArrayList<String> conditionOptions = new ArrayList<String>
+                (Arrays.asList(getResources().getStringArray(R.array.condition_array)));
+        conditionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                condition = parentView.getItemAtPosition(position).toString();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+
+        });
+
+        ArrayAdapter<CharSequence> conditionAdapter = ArrayAdapter.createFromResource(this,
+                R.array.condition_array, android.R.layout.simple_spinner_item);
+        conditionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        conditionSpinner.setAdapter(conditionAdapter);
+        conditionSpinner.setSelection(conditionOptions.indexOf(condition));
 
 
         EditText editProductName = (EditText) findViewById(R.id.editProductName);
@@ -183,6 +208,7 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
 
                         productRef.child("category").setValue(itemCategory);
                         productRef.child("description").setValue(description);
+                        productRef.child("condition").setValue(condition);
                         productRef.child("distance").setValue(distance);
                         productRef.child("location").setValue(location);
                         productRef.child("name").setValue(name);
@@ -219,6 +245,7 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
 
         productRef.child("category").setValue(itemCategory);
         productRef.child("description").setValue(description);
+        productRef.child("condition").setValue(condition);
         productRef.child("distance").setValue(distance);
         productRef.child("location").setValue(location);
         productRef.child("name").setValue(name);

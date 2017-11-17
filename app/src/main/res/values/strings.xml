@@ -70,6 +70,14 @@
         <item>Yes</item>
     </string-array>
 
+    <string-array name="condition_array">
+        <item>New</item>
+        <item>Like New</item>
+        <item>Very Good</item>
+        <item>Good</item>
+        <item>Acceptable</item>
+    </string-array>
+
     <string-array name="user_rating_array">
         <item>1</item>
         <item>2</item>

@@ -20,7 +20,7 @@ import java.util.Set;
 
 public class Product implements Serializable, Comparable {
 
-    public String name, description, price, location, phoneNumber, category;
+    public String name, description, condition, price, location, phoneNumber, category;
     public String uploaderID;
     public String uploaderName;
     public List<String> reviews;
@@ -41,6 +41,7 @@ public class Product implements Serializable, Comparable {
     public Product() {
         this.name = "";
         this.description = "";
+        this.condition = "";
         this.price = "";
         this.location = "";
         this.phoneNumber = "";
@@ -57,15 +58,17 @@ public class Product implements Serializable, Comparable {
         this.isAuction = false;
         this.isAuctionClosed = true;
         this.curAuctionPrice = 0.0;
+        this.condition = "Not Available";
 
     }
 
 
-    public Product(String name, String description, double priceAsDouble, String location,
+    public Product(String name, String description, String condition, double priceAsDouble, String location,
                    String phoneNumber, String category, String uploaderID, String uploaderName, String productId,
                    double distance) {
         this.name = name;
         this.description = description;
+        this.condition = condition;
         this.location = location;
         this.phoneNumber = phoneNumber;
         this.category = category;
@@ -114,11 +117,12 @@ public class Product implements Serializable, Comparable {
         this.distance = distance;
     }
 
-    public Product(String name, String description, double priceAsDouble, String location,
+    public Product(String name, String description, String condition, double priceAsDouble, String location,
                    String phoneNumber, String category, String uploaderID, String uploaderName, String productId,
                    double distance, boolean isAuction) {
         this.name = name;
         this.description = description;
+        this.condition = condition;
         this.location = location;
         this.phoneNumber = phoneNumber;
         this.category = category;
@@ -168,28 +172,28 @@ public class Product implements Serializable, Comparable {
     }
 
     //this functino works fine
-    public static Product writeNewProductToDatabase(String name, String description,
-                                                         double priceAsDouble, String location, String phoneNumber,
-                                                         String category, String currentUserName, String productId,
-                                                         double distance) {
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
-        String currentUserID = fbUser.getUid();
-        Product newProduct = new Product(name, description, priceAsDouble, location, phoneNumber,
-                category, currentUserID, currentUserName, productId, distance);
-        //mDatabase.child("products").child(newProduct.getProductID()).setValue(newProduct);
-        return newProduct;
-    }
+//    public static Product writeNewProductToDatabase(String name, String description,
+//                                                         double priceAsDouble, String location, String phoneNumber,
+//                                                         String category, String currentUserName, String productId,
+//                                                         double distance) {
+//        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+//        FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
+//        String currentUserID = fbUser.getUid();
+//        Product newProduct = new Product(name, description, priceAsDouble, location, phoneNumber,
+//                category, currentUserID, currentUserName, productId, distance);
+//        //mDatabase.child("products").child(newProduct.getProductID()).setValue(newProduct);
+//        return newProduct;
+//    }
 
     //this is for generating auction product
-    public static Product writeNewProductToDatabase(String name, String description,
+    public static Product writeNewProductToDatabase(String name, String description, String condition,
                                                     double priceAsDouble, String location, String phoneNumber,
                                                     String category, String currentUserName, String productId,
                                                     double distance, boolean isAuction) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
         String currentUserID = fbUser.getUid();
-        Product newProduct = new Product(name, description, priceAsDouble, location, phoneNumber,
+        Product newProduct = new Product(name, description,condition, priceAsDouble, location, phoneNumber,
                 category, currentUserID, currentUserName, productId, distance, isAuction);
         //mDatabase.child("products").child(newProduct.getProductID()).setValue(newProduct);
         return newProduct;
@@ -259,6 +263,11 @@ public class Product implements Serializable, Comparable {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    //SJ 20171116
+    public void setCondition(String condition) {this.condition = condition; }
+
+    public String getCondition() { return condition; }
 
     public String getPrice() {
         return price;

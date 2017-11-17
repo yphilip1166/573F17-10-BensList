@@ -17,6 +17,12 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
+        android:id="@+id/productListingProductCondition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
         android:id="@+id/productListingProductPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -127,28 +127,28 @@ public class UserProfileActivity extends AppCompatActivity {
             }
         });
 
-        Button viewMyProducts = (Button) findViewById(R.id.viewProductsButton);
-        viewMyProducts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), ViewUploadedProductsActivity.class);
-                i.putExtra("UserId", currentUserID);
-                i.putExtra("Type", "uploads");
-                startActivity(i);
+//        Button viewMyProducts = (Button) findViewById(R.id.viewProductsButton);
+//        viewMyProducts.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent(v.getContext(), ViewUploadedProductsActivity.class);
+//                i.putExtra("UserId", currentUserID);
+//                i.putExtra("Type", "uploads");
+//                startActivity(i);
+//
+//            }
+//        });
 
-            }
-        });
-
-        Button previousPurchases = (Button) findViewById(R.id.prevousProducts);
-        previousPurchases.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), ViewUploadedProductsActivity.class);
-                i.putExtra("Type", "previousPurchases");
-                i.putExtra("UserId", currentUserID);
-                startActivity(i);
-            }
-        });
+//        Button previousPurchases = (Button) findViewById(R.id.prevousProducts);
+//        previousPurchases.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent(v.getContext(), ViewUploadedProductsActivity.class);
+//                i.putExtra("Type", "previousPurchases");
+//                i.putExtra("UserId", currentUserID);
+//                startActivity(i);
+//            }
+//        });
 
 
         Button favoriteUsers = (Button) findViewById(R.id.favoriteUsers);

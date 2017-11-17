@@ -60,6 +60,27 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
+        <TextView
+            android:id="@+id/conditionSpinnerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Condition: "
+            android:layout_below="@+id/editProductDescription"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <Spinner
+            android:id="@+id/conditionSpinner"
+            style="?android:attr/spinnerItemStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/editProductDescription"
+            android:layout_toRightOf="@+id/conditionSpinnerText"
+            android:layout_alignBottom="@+id/conditionSpinnerText" />
+
         <EditText
             android:id="@+id/editProductDescription"
             android:layout_width="match_parent"
@@ -74,7 +95,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Enter Product Price: $"
-            android:layout_below="@+id/editProductDescription"
+            android:layout_alignTop="@+id/editPrice"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
@@ -82,10 +103,12 @@
             android:id="@+id/editPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/editProductDescription"
+            android:inputType="numberDecimal"
+            android:layout_below="@+id/conditionSpinner"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_toRightOf="@+id/priceText"
-            android:layout_toEndOf="@+id/priceText"
-            android:inputType="numberDecimal"/>
+            android:layout_toEndOf="@+id/priceText" />
 
         <TextView
             android:id="@+id/locationText"
@@ -101,29 +124,29 @@
             android:id="@+id/editLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/editPrice"
+            android:layout_alignTop="@+id/locationText"
             android:layout_toRightOf="@+id/locationText"
-            android:layout_toEndOf="@+id/locationText"/>
+            android:layout_toEndOf="@+id/locationText" />
 
         <TextView
             android:id="@+id/distanceText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/editLocation"
             android:text="Enter Distance (in miles) from Towne: "
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:layout_below="@+id/editLocation"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
         <EditText
             android:id="@+id/editDistance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/editLocation"
-            android:layout_toEndOf="@+id/distanceText"
+            android:inputType="number|numberDecimal"
+            android:layout_alignTop="@+id/distanceText"
             android:layout_toRightOf="@+id/distanceText"
-            android:inputType="number|numberDecimal" />
+            android:layout_toEndOf="@+id/distanceText" />
 
         <TextView
             android:id="@+id/phoneNumberText"
@@ -139,10 +162,10 @@
             android:id="@+id/editPhoneNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/editDistance"
+            android:inputType="phone"
+            android:layout_alignTop="@+id/phoneNumberText"
             android:layout_toRightOf="@+id/phoneNumberText"
-            android:layout_toEndOf="@+id/phoneNumberText"
-            android:inputType="phone"/>
+            android:layout_toEndOf="@+id/phoneNumberText" />
 
         <Spinner
             android:id="@+id/productCategorySpinner"
@@ -185,9 +208,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Done"
-            android:layout_below="@+id/isAuctionSpinner"
             android:textAlignment="center"
-            android:textStyle="normal|bold" />
+            android:textStyle="normal|bold"
+            android:layout_below="@+id/isAuctionSpinner"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="22dp" />
 
 
 

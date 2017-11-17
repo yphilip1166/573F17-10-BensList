@@ -117,6 +117,9 @@ public class ViewUploadedProductsActivity extends MyAppCompatActivity implements
             TextView productDescription = (TextView) view.findViewById(R.id.productListingProductDescription);
             productDescription.setText("Description: " + product.getDescription());
 
+            TextView productCondition = (TextView) view.findViewById(R.id.productCondition);
+            productCondition.setText("Condition: " + product.getCondition());
+
             TextView productPrice = (TextView) view.findViewById(R.id.productListingProductPrice);
             productPrice.setText("Price: " + product.getPrice());
 
