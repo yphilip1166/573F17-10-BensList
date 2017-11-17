@@ -72,8 +72,8 @@ public class SearchUsers extends MyAppCompatActivity implements View.OnClickList
                             String key = userSnapshot.getKey().toString();
 
                             //User user = userSnapshot.getValue(User.class);
-                            if (userSnapshot.child("name").getValue(String.class)== null) continue;
-                            if (userSnapshot.child("name").getValue(String.class).equals(searchQuery)) {
+                            if (userSnapshot.child("name").getValue()== null) continue;
+                            if (userSnapshot.child("name").getValue().toString().equals(searchQuery)) {
                                 if (mBlockedUsers.contains(key)) {
                                     isBlocked = true;
                                     Toast.makeText(SearchUsers.this, "You have blocked this user.",
