@@ -118,14 +118,18 @@ View.OnClickListener {
                 EditText productDescription = (EditText) findViewById(R.id.editProductDescription);
                 EditText productLocation = (EditText) findViewById(R.id.editLocation);
                 EditText productPhoneNumber = (EditText) findViewById(R.id.editPhoneNumber);
+                EditText productQuantity = (EditText) findViewById(R.id.editQuantity);
 
                 EditText priceText = (EditText) findViewById(R.id.editPrice);
                 EditText distanceText = (EditText) findViewById(R.id.editDistance);
 
                 String price = priceText.getText().toString();
                 String phoneNumber = productPhoneNumber.getText().toString();
+                String quantity = productQuantity.getText().toString();
                 int phoneNumberlen = 0;
                 for (char c: phoneNumber.toCharArray()) if (Character.isDigit(c)) phoneNumberlen++;
+
+
 
                 if(productName.getText().toString().trim().equals("")||
                         productDescription.getText().toString().trim().equals("")||
@@ -133,7 +137,8 @@ View.OnClickListener {
                         productPhoneNumber.getText().toString().trim().equals("")||
                         priceText.getText().toString().trim().equals("")||
                         distanceText.getText().toString().trim().equals("")||
-                        price.toString().trim().equals(""))
+                        price.toString().trim().equals("")||
+                        productQuantity.toString().trim().equals(""))
                 {
                     Log.v("YHG", "Some field is missing");
                     Toast.makeText(v.getContext(), "Some required product information missing", Toast.LENGTH_LONG).show();
@@ -141,6 +146,8 @@ View.OnClickListener {
                 } else if (phoneNumberlen!=10) {
                     Toast.makeText(v.getContext(), "Phone number is not valid", Toast.LENGTH_LONG).show();
                     break;
+                } else if (quantity.contains("-") || quantity.contains(".")){
+                    Toast.makeText(v.getContext(), "quantity is not valid", Toast.LENGTH_LONG).show();
                 }
 
                 Log.v("YHG", "Product Information:"+productName.getText().toString()  + "," +
@@ -149,12 +156,21 @@ View.OnClickListener {
                         productPhoneNumber.getText().toString() + "," +
                         priceText.getText().toString() + "," +
                         distanceText.getText().toString() + "," +
-                        price.toString());
+                        price.toString() + "," +
+                        quantity.toString());
 
                 //double distance = Double.parseDouble(distanceText.getText().toString());
+                int quantityAsInt = 0;
+                try {
+                    quantityAsInt = Integer.parseInt(quantity);
+                } catch (NumberFormatException e) {
+                    Toast.makeText(v.getContext(), "Quantity not a number", Toast.LENGTH_LONG).show();
+                }
+
                 try {
                     double distance = Double.parseDouble(distanceText.getText().toString());
                     int decimalPoint = price.indexOf('.');
+
                     double priceAsDouble = 0.0;
                     if (decimalPoint == -1) {
                         priceAsDouble = Double.parseDouble(price);
@@ -182,7 +198,7 @@ View.OnClickListener {
                     Product product = Product.writeNewProductToDatabase(productName.getText().toString(),
                             productDescription.getText().toString(), condition, priceAsDouble,
                             productLocation.getText().toString(), productPhoneNumber.getText().toString(),
-                            itemCategory, currentUserName, ref.getKey(), distance, isAuction);
+                            itemCategory, currentUserName, ref.getKey(), distance, isAuction, quantityAsInt);
 
                     ref.setValue(product);
 

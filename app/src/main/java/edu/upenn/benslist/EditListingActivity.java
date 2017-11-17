@@ -65,14 +65,12 @@ public class EditListingActivity extends MyAppCompatActivity implements View.OnC
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String name = dataSnapshot.child("name").getValue(String.class);
-
                 if (type.equals("uploads")) {
                     List<Product> productsIveUploaded = new LinkedList<>();
                     for (DataSnapshot productSnapshot : dataSnapshot.child(
                             "productsIveUploaded").getChildren()) {
                         Product product = productSnapshot.getValue(Product.class);
                         productsIveUploaded.add(product);
-                        Log.v("string",productSnapshot.getKey());
 
                     }
                     addProductsToView(productsIveUploaded, name);
@@ -119,6 +117,9 @@ public class EditListingActivity extends MyAppCompatActivity implements View.OnC
 
             TextView uploaderName = (TextView) view.findViewById(R.id.productListingUploaderName);
             uploaderName.setText("Uploader Name: " + name);
+
+            TextView productQuantity = (TextView) view.findViewById(R.id.productListingProductQuantity);
+            productQuantity.setText("Number of Items Left: " + product.getQuantity());
 
             Button removeButton = (Button) view.findViewById(R.id.removeItem);
             removeButton.setOnClickListener(new View.OnClickListener() {

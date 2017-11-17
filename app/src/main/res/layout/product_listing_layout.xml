@@ -54,6 +54,13 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 
+    <TextView
+        android:id="@+id/productListingProductQuantity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+
     <Button
         android:id="@+id/productListingCheckOutListingButton"
         android:layout_width="match_parent"

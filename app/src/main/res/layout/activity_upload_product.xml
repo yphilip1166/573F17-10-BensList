@@ -167,6 +167,7 @@
             android:layout_toRightOf="@+id/phoneNumberText"
             android:layout_toEndOf="@+id/phoneNumberText" />
 
+
         <Spinner
             android:id="@+id/productCategorySpinner"
             android:layout_width="wrap_content"
@@ -203,17 +204,41 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
+        <TextView
+            android:id="@+id/textQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/isAuctionSpinner"
+            android:text="Enter Product Quantity:"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/editQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/editPhoneNumber"
+            android:layout_alignLeft="@+id/editLocation"
+            android:layout_alignRight="@+id/editPhoneNumber"
+            android:layout_alignStart="@+id/editLocation"
+            android:layout_below="@+id/isAuctionSpinner"
+            android:ems="10"
+            android:inputType="number" />
+
         <Button
             android:id="@+id/doneButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/editPhoneNumber"
+            android:layout_alignRight="@+id/editPhoneNumber"
+            android:layout_below="@+id/textQuantity"
+            android:layout_marginTop="35dp"
             android:text="Done"
             android:textAlignment="center"
             android:textStyle="normal|bold"
-            android:layout_below="@+id/isAuctionSpinner"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="22dp" />
+            android:layout_alignParentStart="true" />
 
 
 

@@ -45,6 +45,10 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
     private boolean isAuction;
     private double bidPrice;
 
+    //YP 20171108
+    private int quantity;
+    private int numItemsLeft;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +57,8 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
         this.uploaderID = getIntent().getStringExtra("UploaderID");
         this.productID = getIntent().getStringExtra("ProductID");
         this.isAuction = getIntent().getBooleanExtra("isAuction", false);
+        this.quantity = getIntent().getIntExtra("Quantity", 0);
+        this.numItemsLeft = getIntent().getIntExtra("NumItemsLeft", 0);
         this.bidPrice = getIntent().getDoubleExtra("BidPrice", 0.0);
 
 
@@ -76,6 +82,9 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
         if(isAuction) {
             TextView bidPriceText = (TextView) findViewById(R.id.confirmedBidPrice);
             bidPriceText.setText("Confirmed Bid Price: " + this.bidPrice);
+        } else {
+            TextView quantityText = (TextView) findViewById(R.id.confirmedQuantity);
+            quantityText.setText("Confirmed Quantity: " + this.quantity);
         }
     }
 
@@ -131,14 +140,16 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
                             ref.setValue(uploaderUserName);
                         }
 
+                        DatabaseReference productRef = FirebaseDatabase.getInstance().getReference()
+                                .child("products").child(productID);
+
                         if(isAuction)
                         {
-                            DatabaseReference productRef = FirebaseDatabase.getInstance().getReference()
-                                    .child("products").child(productID);
                             productRef.child("curAuctionPrice").setValue(bidPrice);
                         }
                         else {
-
+                            int remaining = numItemsLeft-quantity;
+                            productRef.child("quantity").setValue(remaining);
                             Product product = snapshot.child("products").child(productID).getValue(Product.class);
                             DatabaseReference ref = mDatabase.child("users").child(currentUserID).child(
                                     "productsIveBought").push();
