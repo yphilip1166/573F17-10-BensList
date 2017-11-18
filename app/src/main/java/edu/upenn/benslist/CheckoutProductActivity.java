@@ -100,7 +100,13 @@ public class CheckoutProductActivity extends MyAppCompatActivity implements View
         switch (v.getId()) {
             case (R.id.detailedListingConfirmPurchase) : {
                 EditText quantityText = (EditText) findViewById(R.id.editQuantity);
-                int quantityAsInt = Integer.parseInt(quantityText.getText().toString());
+                int quantityAsInt;
+                try {
+                    quantityAsInt = Integer.parseInt(quantityText.getText().toString());
+                } catch (Exception e) {
+                    Toast.makeText(this, "Quantity is not specified", Toast.LENGTH_SHORT).show();
+                    break;
+                }
                 if(quantityAsInt == 0) {
                     Toast.makeText(this, "Quantity could not be 0.", Toast.LENGTH_SHORT).show();
                     break;
@@ -118,7 +124,6 @@ public class CheckoutProductActivity extends MyAppCompatActivity implements View
                     startActivity(i);
                     break;
                 }
-
             }
 
             case (R.id.submitReviewButton) :
