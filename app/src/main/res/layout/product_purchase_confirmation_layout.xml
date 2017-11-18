@@ -26,12 +26,20 @@
         android:layout_marginStart="46dp" />
 
     <Button
+        android:id="@+id/chatButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/userRatingSpinner"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="56dp" />
+
+    <Button
         android:text="Add This User To Your Favorites"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rateProductText"
+        android:layout_below="@+id/chatButton"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="22dp"
         android:id="@+id/addUserToFavsButton" />
 
     <TextView
