@@ -52,6 +52,7 @@ public class RemoveWishListActivity extends MyAppCompatActivity implements View.
                 DatabaseReference mUserReference = FirebaseDatabase.getInstance().getReference()
                         .child("users").child(fbuser.getUid());
                 final String currentUserID = fbuser.getUid();
+                product.removeWisher(currentUserID);
                 mUserReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {

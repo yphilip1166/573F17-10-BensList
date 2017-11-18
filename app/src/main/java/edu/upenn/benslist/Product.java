@@ -273,19 +273,19 @@ public class Product implements Serializable, Comparable {
         Log.v("wisher in product get2 ", wisher.size()+"");
     }
 
-//    public void removeWisher(String w){
-//        wisher.remove(w);
-//        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-//        mDatabase.child("products").child(productID).child("wisher").setValue(wisher);
-//    }
+    public void removeWisher(String w){
+        wisher.remove(w);
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("products").child(productID).child("wisher").setValue(wisher);
+    }
 
     public List<String> getWisher() {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         List<String> temp = new LinkedList<>();
 //        DatabaseReference ref = mDatabase.child("products").child(productID).get
 //        wisher = mDatabase.child("products").child(productID).child("wisher").getValue();
-        Log.v("wisher in product get", wisher.size()+"");
-        for (String x: wisher) Log.v("each wisher: ", x);
+//        Log.v("wisher in product get", wisher.size()+"");
+//        for (String x: wisher) Log.v("each wisher: ", x);
         return wisher;
     }
 
