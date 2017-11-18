@@ -39,6 +39,7 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
     private static final int RESULT_LOAD_IMAGE = 1;
     private ImageView imageToUpload;
     private String itemCategory;
+    private String condition;
     private String currentUserName;
     private Product product;
     public static final String MESSAGES_CHILD = "inbox";
@@ -91,6 +92,30 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
         spinner.setSelection(categoryOptions.indexOf(itemCategory));
 
 
+        Spinner conditionSpinner = (Spinner) findViewById(R.id.conditionSpinner);
+        condition = product.getCondition();
+        ArrayList<String> conditionOptions = new ArrayList<String>
+                (Arrays.asList(getResources().getStringArray(R.array.condition_array)));
+        conditionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                condition = parentView.getItemAtPosition(position).toString();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+
+        });
+
+        ArrayAdapter<CharSequence> conditionAdapter = ArrayAdapter.createFromResource(this,
+                R.array.condition_array, android.R.layout.simple_spinner_item);
+        conditionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        conditionSpinner.setAdapter(conditionAdapter);
+        conditionSpinner.setSelection(conditionOptions.indexOf(condition));
+
+
         EditText editProductName = (EditText) findViewById(R.id.editProductName);
         editProductName.setText(product.getName());
 
@@ -108,6 +133,9 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
 
         EditText editPhoneNumber = (EditText) findViewById(R.id.editPhoneNumber);
         editPhoneNumber.setText(product.getPhoneNumber());
+
+        EditText editQuantity = (EditText) findViewById(R.id.editQuantity);
+        editQuantity.setText(product.getQuantity());
     }
 
 
@@ -146,7 +174,7 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
                         EditText productPhoneNumber = (EditText) findViewById(R.id.editPhoneNumber);
                         EditText priceText = (EditText) findViewById(R.id.editPrice);
                         EditText distanceText = (EditText) findViewById(R.id.editDistance);
-
+                        EditText productQuantity = (EditText) findViewById(R.id.editQuantity);
 
                         String price = priceText.getText().toString();
                         double distance = Double.parseDouble(String.valueOf(String.valueOf(distanceText.getText())));
@@ -180,6 +208,7 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
                         String phoneNumber = String.valueOf(productPhoneNumber.getText());
                         int priceCategory = getPriceLevel(priceAsDouble);
                         int locationCategory = getLocationLevel(distance);
+                        int quantityAsInt = Integer.parseInt(productQuantity.getText().toString());
                         price = "$" + priceAsDouble;
                         int decimalIndex = price.indexOf('.');
                         if (price.length() - decimalIndex == 2) {
@@ -188,6 +217,7 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
 
                         productRef.child("category").setValue(itemCategory);
                         productRef.child("description").setValue(description);
+                        productRef.child("condition").setValue(condition);
                         productRef.child("distance").setValue(distance);
                         productRef.child("location").setValue(location);
                         productRef.child("name").setValue(name);
@@ -196,9 +226,11 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
                         productRef.child("priceAsDouble").setValue(priceAsDouble);
                         productRef.child("priceCategory").setValue(priceCategory);
                         productRef.child("locationCategory").setValue(locationCategory);
+                        productRef.child("quantity").setValue(quantityAsInt);
                         Log.v("wait addr: ", productRef.child("wisher").toString());
                         setGeneralProduct(product.getProductID(), description, distance, location, name,
-                                phoneNumber, price, priceAsDouble, priceCategory, locationCategory);
+                                phoneNumber, price, priceAsDouble, priceCategory, locationCategory,
+                                quantityAsInt);
                         Log.v("wish update in edit:", currentUserName);
                         List<String> w= product.getWisher();
                         Log.v("wisher in edit get", w.size()+"");
@@ -233,13 +265,15 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
 
     private void setGeneralProduct(String productID, String description, double distance,
                                    String location, String name, String phoneNumber, String price,
-                                   double priceAsDouble, int priceCategory, int locationCategory) {
+                                   double priceAsDouble, int priceCategory, int locationCategory,
+                                   int quantity) {
         System.out.println("Product ID is: " + productID);
         DatabaseReference productRef = FirebaseDatabase.getInstance().getReference()
                 .child("products").child(productID);
 
         productRef.child("category").setValue(itemCategory);
         productRef.child("description").setValue(description);
+        productRef.child("condition").setValue(condition);
         productRef.child("distance").setValue(distance);
         productRef.child("location").setValue(location);
         productRef.child("name").setValue(name);
@@ -248,6 +282,8 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
         productRef.child("priceAsDouble").setValue(priceAsDouble);
         productRef.child("priceCategory").setValue(priceCategory);
         productRef.child("locationCategory").setValue(locationCategory);
+        productRef.child("quantity").setValue(quantity);
+
     }
 
     private int getPriceLevel(double price) {

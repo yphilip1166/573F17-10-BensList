@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/productListingLinearLayout"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:weightSum="1">
 
     <TextView
         android:id="@+id/productListingProductName"
@@ -12,6 +13,12 @@
 
     <TextView
         android:id="@+id/productListingProductDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/productListingProductCondition"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -46,13 +53,22 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
+
+    <TextView
+        android:id="@+id/productListingProductQuantity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+
     <Button
         android:id="@+id/productListingCheckOutListingButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Check Out This Listing"
         android:textAlignment="center"
-        android:textStyle="normal|bold" />
+        android:textStyle="normal|bold"
+        android:layout_weight="0.04" />
 
 
 </LinearLayout>

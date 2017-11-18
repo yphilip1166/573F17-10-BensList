@@ -162,12 +162,37 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/productCategorySpinner"
+            android:layout_toLeftOf="@+id/editQuantity"
+            android:layout_toStartOf="@+id/editQuantity"
+            android:text="Enter Quantity"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/editQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/productCategorySpinner"
+            android:ems="10"
+            android:inputType="number" />
+
         <Button
             android:id="@+id/doneButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Done"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_below="@+id/productCategorySpinner"
+            android:layout_marginTop="75dp"
+            android:text="Done"
             android:textAlignment="center"
             android:textStyle="normal|bold" />
 

@@ -65,15 +65,14 @@ public class EditListingActivity extends MyAppCompatActivity implements View.OnC
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String name = dataSnapshot.child("name").getValue(String.class);
-
                 if (type.equals("uploads")) {
                     List<Product> productsIveUploaded = new LinkedList<>();
                     for (DataSnapshot productSnapshot : dataSnapshot.child(
                             "productsIveUploaded").getChildren()) {
                         Product product = productSnapshot.getValue(Product.class);
                         Log.v("wish help products: ", product.toString());
+                        Log.v("debug","after");
                         productsIveUploaded.add(product);
-                        Log.v("string",productSnapshot.getKey());
 
                     }
                     addProductsToView(productsIveUploaded, name);
@@ -104,8 +103,10 @@ public class EditListingActivity extends MyAppCompatActivity implements View.OnC
 
             TextView productDescription = (TextView) view.findViewById(R.id.productListingProductDescription);
             System.out.println("product description is: " + product.getDescription());
-
             productDescription.setText("Description: " + product.getDescription());
+
+            TextView productCondition = (TextView) view.findViewById(R.id.productListingProductCondition);
+            productCondition.setText("Condition: " + product.getCondition());
 
             TextView productPrice = (TextView) view.findViewById(R.id.productListingProductPrice);
             productPrice.setText("Price: " + product.getPrice());
@@ -118,6 +119,9 @@ public class EditListingActivity extends MyAppCompatActivity implements View.OnC
 
             TextView uploaderName = (TextView) view.findViewById(R.id.productListingUploaderName);
             uploaderName.setText("Uploader Name: " + name);
+
+            TextView productQuantity = (TextView) view.findViewById(R.id.productListingProductQuantity);
+            productQuantity.setText("Number of Items Left: " + product.getQuantity());
 
             Button removeButton = (Button) view.findViewById(R.id.removeItem);
             removeButton.setOnClickListener(new View.OnClickListener() {
@@ -151,11 +155,12 @@ public class EditListingActivity extends MyAppCompatActivity implements View.OnC
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if((requestCode == 15 || requestCode == 16) && resultCode == RESULT_OK) {
+        if((requestCode == 15 || requestCode == 16)) {
             Intent refresh = new Intent(this, EditListingActivity.class);
             FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
             String currentUserID = fbUser.getUid();
             refresh.putExtra("UserId", currentUserID);
+            android.os.SystemClock.sleep(300);
             startActivity(refresh);
             this.finish();
         }

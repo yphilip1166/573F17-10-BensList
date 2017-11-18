@@ -22,7 +22,7 @@ import java.util.Set;
 
 public class Product implements Serializable, Comparable {
 
-    public String name, description, price, location, phoneNumber, category;
+    public String name, description, condition, price, location, phoneNumber, category;
     public String uploaderID;
     public String uploaderName;
     public List<String> reviews;
@@ -41,6 +41,8 @@ public class Product implements Serializable, Comparable {
     public double curAuctionPrice;
 
     public List<String> wisher;
+    //PY 20171108
+    public int quantity;
 
     public Product() {
         this.name = "";
@@ -62,68 +64,17 @@ public class Product implements Serializable, Comparable {
         this.isAuctionClosed = true;
         this.curAuctionPrice = 0.0;
         this.wisher = new LinkedList<>();
+        this.condition = "Not Available";
+        this.quantity = 1;
     }
 
 
-    public Product(String name, String description, double priceAsDouble, String location,
+    public Product(String name, String description, String condition, double priceAsDouble, String location,
                    String phoneNumber, String category, String uploaderID, String uploaderName, String productId,
-                   double distance) {
+                   double distance, boolean isAuction, int quantity) {
         this.name = name;
         this.description = description;
-        this.location = location;
-        this.phoneNumber = phoneNumber;
-        this.category = category;
-        this.uploaderID = uploaderID;
-        this.uploaderName = uploaderName;
-        this.reviews = new LinkedList<>();
-        numProducts++;
-        this.productID = productId;
-        this.isAuction = false;
-        this.isAuctionClosed = true;
-        this.curAuctionPrice = 0.0;
-        this.wisher = new LinkedList<>();
-
-        //TODO - new stuff April 13th (JP)
-        this.priceAsDouble = priceAsDouble;
-        this.price = "$" + priceAsDouble;
-        int decimalIndex = price.indexOf('.');
-        if (price.length() - decimalIndex == 2) {
-            price += "0";
-        }
-
-        if (priceAsDouble < 0) {
-            this.priceCategory = -1;
-        }
-        if (priceAsDouble <= 99.99) {
-            this.priceCategory = 1;
-        }
-        else if (priceAsDouble <= 199.99) {
-            this.priceCategory = 2;
-        }
-        else {
-            this.priceCategory = 3;
-        }
-
-        if (distance < 0) {
-            this.locationCategory = -1;
-        }
-        if (distance <= 9.99) {
-            this.locationCategory = 1;
-        }
-        else if (distance <= 19.99) {
-            this.locationCategory = 2;
-        }
-        else {
-            this.locationCategory = 3;
-        }
-        this.distance = distance;
-    }
-
-    public Product(String name, String description, double priceAsDouble, String location,
-                   String phoneNumber, String category, String uploaderID, String uploaderName, String productId,
-                   double distance, boolean isAuction) {
-        this.name = name;
-        this.description = description;
+        this.condition = condition;
         this.location = location;
         this.phoneNumber = phoneNumber;
         this.category = category;
@@ -136,6 +87,7 @@ public class Product implements Serializable, Comparable {
         this.isAuctionClosed = false;
         this.curAuctionPrice = priceAsDouble;
         this.wisher = new LinkedList<>();
+        this.quantity = quantity;
 
         this.priceAsDouble = priceAsDouble;
         this.price = "$" + priceAsDouble;
@@ -172,30 +124,33 @@ public class Product implements Serializable, Comparable {
         this.distance = distance;
     }
 
+
     //this functino works fine
-    public static Product writeNewProductToDatabase(String name, String description,
-                                                         double priceAsDouble, String location, String phoneNumber,
-                                                         String category, String currentUserName, String productId,
-                                                         double distance) {
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
-        String currentUserID = fbUser.getUid();
-        Product newProduct = new Product(name, description, priceAsDouble, location, phoneNumber,
-                category, currentUserID, currentUserName, productId, distance);
-        //mDatabase.child("products").child(newProduct.getProductID()).setValue(newProduct);
-        return newProduct;
-    }
+
+//    public static Product writeNewProductToDatabase(String name, String description,
+//                                                         double priceAsDouble, String location, String phoneNumber,
+//                                                         String category, String currentUserName, String productId,
+//                                                         double distance) {
+//        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+//        FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
+//        String currentUserID = fbUser.getUid();
+//        Product newProduct = new Product(name, description, priceAsDouble, location, phoneNumber,
+//                category, currentUserID, currentUserName, productId, distance);
+//        //mDatabase.child("products").child(newProduct.getProductID()).setValue(newProduct);
+//        return newProduct;
+//    }
 
     //this is for generating auction product
-    public static Product writeNewProductToDatabase(String name, String description,
+    public static Product writeNewProductToDatabase(String name, String description, String condition,
                                                     double priceAsDouble, String location, String phoneNumber,
                                                     String category, String currentUserName, String productId,
-                                                    double distance, boolean isAuction) {
+                                                    double distance, boolean isAuction, int quantity) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
         String currentUserID = fbUser.getUid();
-        Product newProduct = new Product(name, description, priceAsDouble, location, phoneNumber,
-                category, currentUserID, currentUserName, productId, distance, isAuction);
+        Product newProduct = new Product(name, description,condition, priceAsDouble, location, phoneNumber,
+                category, currentUserID, currentUserName, productId, distance, isAuction, quantity);
+
         //mDatabase.child("products").child(newProduct.getProductID()).setValue(newProduct);
         return newProduct;
     }
@@ -208,6 +163,10 @@ public class Product implements Serializable, Comparable {
     public double getPriceAsDouble() {
         return priceAsDouble;
     }
+
+    public int getQuantity() { return quantity; }
+
+    public void setQuantity(int quantity) { this.quantity = quantity; }
 
     public void setDistance(double distance) {
         this.distance = distance;
@@ -264,6 +223,11 @@ public class Product implements Serializable, Comparable {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    //SJ 20171116
+    public void setCondition(String condition) {this.condition = condition; }
+
+    public String getCondition() { return condition; }
 
     public String getPrice() {
         return price;

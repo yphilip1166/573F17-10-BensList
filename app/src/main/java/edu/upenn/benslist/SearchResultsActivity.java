@@ -206,6 +206,9 @@ public class SearchResultsActivity extends MyAppCompatActivity implements View.O
             TextView productDescription = (TextView) view.findViewById(R.id.productListingProductDescription);
             productDescription.setText("Description: " + product.getDescription());
 
+            TextView productCondition = (TextView) view.findViewById(R.id.productListingProductCondition);
+            productCondition.setText("Condition: " + product.getCondition());
+
             TextView productPrice = (TextView) view.findViewById(R.id.productListingProductPrice);
             productPrice.setText("Price: " + product.getPrice());
 
@@ -220,6 +223,9 @@ public class SearchResultsActivity extends MyAppCompatActivity implements View.O
 
             TextView isProductAuction = (TextView) view.findViewById(R.id.isProductAuction);
             isProductAuction.setText("Is Auction: " + product.getAuctionString());
+
+            TextView productQuantity = (TextView) view.findViewById(R.id.productListingProductQuantity);
+            productQuantity.setText("Number of Items Left " + product.getQuantity());
 
             Button checkOutButton = (Button) view.findViewById(R.id.productListingCheckOutListingButton);
             checkOutButton.setOnClickListener(new View.OnClickListener() {

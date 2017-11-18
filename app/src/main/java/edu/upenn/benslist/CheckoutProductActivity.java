@@ -26,6 +26,7 @@ public class CheckoutProductActivity extends MyAppCompatActivity implements View
 
     private Product product;
     private double bidPrice;
+    private int numItemsLeft;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +75,10 @@ public class CheckoutProductActivity extends MyAppCompatActivity implements View
         TextView uploaderName = (TextView) findViewById(R.id.detailedListingUploaderName);
         uploaderName.setText("Uploader Name: " + product.getUploaderName());
 
+        TextView curQuantity = (TextView) findViewById(R.id.detailedListingCurQuantity);
+        uploaderName.setText("Left:  " + product.getQuantity());
+        numItemsLeft = product.getQuantity();
+
         TextView curBidPrice = (TextView) findViewById(R.id.detailedListingCurPrice);
         curBidPrice.setText("Cur Bid Price: " + product.curAuctionPrice);
     }
@@ -94,11 +99,26 @@ public class CheckoutProductActivity extends MyAppCompatActivity implements View
     public void onClick(View v) {
         switch (v.getId()) {
             case (R.id.detailedListingConfirmPurchase) : {
-                Intent i = new Intent(this, ProductPurchaseConfirmationActivity.class);
-                i.putExtra("UploaderID", product.getUploaderID());
-                i.putExtra("ProductID", product.getProductID());
-                startActivity(i);
-                break;
+                EditText quantityText = (EditText) findViewById(R.id.editQuantity);
+                int quantityAsInt = Integer.parseInt(quantityText.getText().toString());
+                if(quantityAsInt == 0) {
+                    Toast.makeText(this, "Quantity could not be 0.", Toast.LENGTH_SHORT).show();
+                    break;
+                } else if(quantityAsInt > numItemsLeft) {
+                    Toast.makeText(this, "Sorry, you're asking for more than what's left.",
+                            Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                else {
+                    Intent i = new Intent(this, ProductPurchaseConfirmationActivity.class);
+                    i.putExtra("UploaderID", product.getUploaderID());
+                    i.putExtra("ProductID", product.getProductID());
+                    i.putExtra("Quantity", quantityAsInt);
+                    i.putExtra("NumItemsLeft", numItemsLeft);
+                    startActivity(i);
+                    break;
+                }
+
             }
 
             case (R.id.submitReviewButton) :
