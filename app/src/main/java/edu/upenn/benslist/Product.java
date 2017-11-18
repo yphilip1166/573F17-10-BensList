@@ -125,21 +125,6 @@ public class Product implements Serializable, Comparable {
     }
 
 
-    //this functino works fine
-
-//    public static Product writeNewProductToDatabase(String name, String description,
-//                                                         double priceAsDouble, String location, String phoneNumber,
-//                                                         String category, String currentUserName, String productId,
-//                                                         double distance) {
-//        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-//        FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
-//        String currentUserID = fbUser.getUid();
-//        Product newProduct = new Product(name, description, priceAsDouble, location, phoneNumber,
-//                category, currentUserID, currentUserName, productId, distance);
-//        //mDatabase.child("products").child(newProduct.getProductID()).setValue(newProduct);
-//        return newProduct;
-//    }
-
     //this is for generating auction product
     public static Product writeNewProductToDatabase(String name, String description, String condition,
                                                     double priceAsDouble, String location, String phoneNumber,
@@ -281,10 +266,10 @@ public class Product implements Serializable, Comparable {
 //        DatabaseReference ref = mDatabase.child("products").child(productID).child("wisher").push();
 //        ref.setValue(w);
         mDatabase.child("products").child(productID).child("wisher").setValue(wisher);
-        DatabaseReference productRef = FirebaseDatabase.getInstance().getReference().
-                child("users").child(uploaderID).child("productsIveUploaded").child(productID);
-        productRef.child("wisher").setValue(wisher);
-        Log.v("wish in up: ", productRef.child("wisher").toString());
+//        DatabaseReference productRef = FirebaseDatabase.getInstance().getReference().
+//                child("users").child(uploaderID).child("productsIveUploaded").child(productID);
+//        productRef.child("wisher").setValue(wisher);
+//        Log.v("wish in up: ", productRef.child("wisher").toString());
         Log.v("wisher in product get2 ", wisher.size()+"");
     }
 

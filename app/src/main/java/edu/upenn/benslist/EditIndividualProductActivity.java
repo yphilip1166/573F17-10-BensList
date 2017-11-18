@@ -135,7 +135,7 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
         editPhoneNumber.setText(product.getPhoneNumber());
 
         EditText editQuantity = (EditText) findViewById(R.id.editQuantity);
-        editQuantity.setText(product.getQuantity());
+        editQuantity.setText(Integer.toString(product.getQuantity()));
     }
 
 
@@ -152,14 +152,13 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
 
                 Intent returnIntent = new Intent(this, EditListingActivity.class);
 
-                FirebaseUser fbuser = FirebaseAuth.getInstance().getCurrentUser();
-                DatabaseReference mUserReference = FirebaseDatabase.getInstance().getReference()
-                        .child("users").child(fbuser.getUid());
+                final FirebaseUser fbuser = FirebaseAuth.getInstance().getCurrentUser();
+                DatabaseReference mUserReference = FirebaseDatabase.getInstance().getReference();
                 mUserReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String productRefKey = "";
-                        for (DataSnapshot productSnapshot : dataSnapshot.child(
+                        for (DataSnapshot productSnapshot : dataSnapshot.child("users").child(fbuser.getUid()).child(
                                 "productsIveUploaded").getChildren()) {
                             Product snapshotProduct = productSnapshot.getValue(Product.class);
                             if (snapshotProduct.getProductID().equals(product.getProductID())) {
@@ -227,12 +226,16 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
                         productRef.child("priceCategory").setValue(priceCategory);
                         productRef.child("locationCategory").setValue(locationCategory);
                         productRef.child("quantity").setValue(quantityAsInt);
+                        Log.v("wish get: ", dataSnapshot.child("products").child(product.getProductID()).child("wisher").getValue().toString());
+                        List<String> w= (List<String>)dataSnapshot.child("products").child(product.getProductID()).child("wisher").getValue();
+                        productRef.child("wisher").setValue(dataSnapshot.child("products").child(product.getProductID()).child("wisher").getValue());
+                        product.setWisher(w);
                         Log.v("wait addr: ", productRef.child("wisher").toString());
                         setGeneralProduct(product.getProductID(), description, distance, location, name,
                                 phoneNumber, price, priceAsDouble, priceCategory, locationCategory,
                                 quantityAsInt);
                         Log.v("wish update in edit:", currentUserName);
-                        List<String> w= product.getWisher();
+                        List<String> wx= product.getWisher();
                         Log.v("wisher in edit get", w.size()+"");
                         for (String x: w) Log.v("each wisher in edit: ", x);
                         sendNotification(w);
