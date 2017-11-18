@@ -28,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by tylerdouglas on 4/19/17.
@@ -41,6 +42,7 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
     private String condition;
     private String currentUserName;
     private Product product;
+    public static final String MESSAGES_CHILD = "inbox";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,11 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
         setContentView(R.layout.activity_upload_product);
         this.currentUserName = getIntent().getStringExtra("Username");
         this.product = (Product) getIntent().getExtras().getSerializable("Product");
+//        String productID= getIntent().getStringExtra("ProductID");
+//        this.product =  FirebaseDatabase.getInstance().getReference()
+//                .child("products").child(productID).getValue(Product.class);
+        Log.v("wish ei: ", product.productID);
+        Log.v("wish product in ei: ", product.toString());
         populateProductFields();
 
     }
@@ -143,14 +150,13 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
 
                 Intent returnIntent = new Intent(this, EditListingActivity.class);
 
-                FirebaseUser fbuser = FirebaseAuth.getInstance().getCurrentUser();
-                DatabaseReference mUserReference = FirebaseDatabase.getInstance().getReference()
-                        .child("users").child(fbuser.getUid());
+                final FirebaseUser fbuser = FirebaseAuth.getInstance().getCurrentUser();
+                DatabaseReference mUserReference = FirebaseDatabase.getInstance().getReference();
                 mUserReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String productRefKey = "";
-                        for (DataSnapshot productSnapshot : dataSnapshot.child(
+                        for (DataSnapshot productSnapshot : dataSnapshot.child("users").child(fbuser.getUid()).child(
                                 "productsIveUploaded").getChildren()) {
                             Product snapshotProduct = productSnapshot.getValue(Product.class);
                             if (snapshotProduct.getProductID().equals(product.getProductID())) {
@@ -218,10 +224,19 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
                         productRef.child("priceCategory").setValue(priceCategory);
                         productRef.child("locationCategory").setValue(locationCategory);
                         productRef.child("quantity").setValue(quantityAsInt);
-
+//                        Log.v("wish get: ", dataSnapshot.child("products").child(product.getProductID()).child("wisher").getValue().toString());
+                        List<String> w= (List<String>)dataSnapshot.child("products").child(product.getProductID()).child("wisher").getValue();
+                        productRef.child("wisher").setValue(dataSnapshot.child("products").child(product.getProductID()).child("wisher").getValue());
+                        product.setWisher(w);
+                        Log.v("wait addr: ", productRef.child("wisher").toString());
                         setGeneralProduct(product.getProductID(), description, distance, location, name,
                                 phoneNumber, price, priceAsDouble, priceCategory, locationCategory,
                                 quantityAsInt);
+                        Log.v("wish update in edit:", currentUserName);
+                        List<String> wx= product.getWisher();
+//                        Log.v("wisher in edit get", w.size()+"");
+//                        for (String x: w) Log.v("each wisher in edit: ", x);
+                        if (w!=null) sendNotification(w);
                     }
 
                     @Override
@@ -235,6 +250,17 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
                 break;
             default :
                 break;
+        }
+    }
+
+    private void sendNotification(List<String> ws){
+        for (String toUserId: ws){
+            String mUserId= "SYSTEM NOTIFICATION";
+//            String toUserId= ;
+            String channelID =  mUserId.compareTo(toUserId)>0? mUserId + toUserId: toUserId + mUserId;
+            Log.v("wish ChID send: ", channelID);
+            Message message = new Message("Product: "+ product.getName()+" in your wishlist has been updated.", "System Notification");
+            FirebaseDatabase.getInstance().getReference().child(MESSAGES_CHILD).child(channelID).push().setValue(message);
         }
     }
 

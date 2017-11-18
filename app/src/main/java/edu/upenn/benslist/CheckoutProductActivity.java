@@ -144,6 +144,9 @@ public class CheckoutProductActivity extends MyAppCompatActivity implements View
                 final String currentUserID = fbUser.getUid();
                 DatabaseReference ref = mDatabase.child("users").child(currentUserID).child("productsInWishList").push();
                 ref.setValue(product);
+                product.addWisher(currentUserID);
+                Log.v("wish update1: ", currentUserID);
+                Log.v("wish product: ", product.toString());
                 break;
 
             // YHG20171107

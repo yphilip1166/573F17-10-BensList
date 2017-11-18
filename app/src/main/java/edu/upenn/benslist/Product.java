@@ -1,5 +1,7 @@
 package edu.upenn.benslist;
 
+import android.util.Log;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -38,6 +40,7 @@ public class Product implements Serializable, Comparable {
     public boolean isAuctionClosed;
     public double curAuctionPrice;
 
+    public List<String> wisher;
     //PY 20171108
     public int quantity;
 
@@ -60,6 +63,7 @@ public class Product implements Serializable, Comparable {
         this.isAuction = false;
         this.isAuctionClosed = true;
         this.curAuctionPrice = 0.0;
+        this.wisher = new LinkedList<>();
         this.condition = "Not Available";
         this.quantity = 1;
     }
@@ -82,6 +86,7 @@ public class Product implements Serializable, Comparable {
         this.isAuction = isAuction;
         this.isAuctionClosed = false;
         this.curAuctionPrice = priceAsDouble;
+        this.wisher = new LinkedList<>();
         this.quantity = quantity;
 
         this.priceAsDouble = priceAsDouble;
@@ -119,21 +124,6 @@ public class Product implements Serializable, Comparable {
         this.distance = distance;
     }
 
-
-    //this functino works fine
-
-//    public static Product writeNewProductToDatabase(String name, String description,
-//                                                         double priceAsDouble, String location, String phoneNumber,
-//                                                         String category, String currentUserName, String productId,
-//                                                         double distance) {
-//        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-//        FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
-//        String currentUserID = fbUser.getUid();
-//        Product newProduct = new Product(name, description, priceAsDouble, location, phoneNumber,
-//                category, currentUserID, currentUserName, productId, distance);
-//        //mDatabase.child("products").child(newProduct.getProductID()).setValue(newProduct);
-//        return newProduct;
-//    }
 
     //this is for generating auction product
     public static Product writeNewProductToDatabase(String name, String description, String condition,
@@ -264,6 +254,42 @@ public class Product implements Serializable, Comparable {
     }
 
 
+    // 11.16.2017 Carlton
+    public void addWisher(String w){
+        wisher.add(w);
+        for (String s: wisher) {
+            Log.v("wisher: ", s );
+        }
+        Log.v("product id in add: ", this.productID);
+        Log.v("wisher in product add ", wisher.size()+"");
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+//        DatabaseReference ref = mDatabase.child("products").child(productID).child("wisher").push();
+//        ref.setValue(w);
+        mDatabase.child("products").child(productID).child("wisher").setValue(wisher);
+//        DatabaseReference productRef = FirebaseDatabase.getInstance().getReference().
+//                child("users").child(uploaderID).child("productsIveUploaded").child(productID);
+//        productRef.child("wisher").setValue(wisher);
+//        Log.v("wish in up: ", productRef.child("wisher").toString());
+        Log.v("wisher in product get2 ", wisher.size()+"");
+    }
+
+    public void removeWisher(String w){
+        wisher.remove(w);
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("products").child(productID).child("wisher").setValue(wisher);
+    }
+
+    public List<String> getWisher() {
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        List<String> temp = new LinkedList<>();
+//        DatabaseReference ref = mDatabase.child("products").child(productID).get
+//        wisher = mDatabase.child("products").child(productID).child("wisher").getValue();
+//        Log.v("wisher in product get", wisher.size()+"");
+//        for (String x: wisher) Log.v("each wisher: ", x);
+        return wisher;
+    }
+
+    public void setWisher(List<String> w) {this.wisher=w;}
 
     //haven't tested it out yet, but this function should work fine
     public void addReview(String review) {
@@ -380,7 +406,7 @@ public class Product implements Serializable, Comparable {
 
     @Override
     public String toString() {
-        String ans = name + "\n" + description;
+        String ans = name + "\n" + description + "\n" + wisher.size();
         return ans;
     }
 

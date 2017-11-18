@@ -69,6 +69,8 @@ public class EditListingActivity extends MyAppCompatActivity implements View.OnC
                     for (DataSnapshot productSnapshot : dataSnapshot.child(
                             "productsIveUploaded").getChildren()) {
                         Product product = productSnapshot.getValue(Product.class);
+                        Log.v("wish help products: ", product.toString());
+                        Log.v("debug","after");
                         productsIveUploaded.add(product);
 
                     }
@@ -91,9 +93,9 @@ public class EditListingActivity extends MyAppCompatActivity implements View.OnC
         final Context thisContext = this;
 
         for (final Product product : products) {
-
+            Log.v("wish help in loop: ", product.toString());
             View view = LayoutInflater.from(this).inflate(R.layout.edit_products_listing_layout, mLinearLayout, false);
-
+            List<String> wishers= product.getWisher();
             TextView productName = (TextView) view.findViewById(R.id.productListingProductName);
             System.out.println("product name is: " + product.getName());
             productName.setText("Name: " + product.getName());
@@ -137,6 +139,7 @@ public class EditListingActivity extends MyAppCompatActivity implements View.OnC
                 public void onClick(View v) {
                     Intent editProduct = new Intent(thisContext, EditIndividualProductActivity.class);
                     editProduct.putExtra("Username", userId);
+                    Log.v("wish product in el: ", product.toString());
                     editProduct.putExtra("Product", (Serializable) product);
                     startActivityForResult(editProduct, 15);
                 }
