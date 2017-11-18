@@ -161,6 +161,16 @@ public class UserProfileActivity extends AppCompatActivity {
             }
         });
 
+        Button blockedUsers = (Button) findViewById(R.id.blockedUsers);
+        blockedUsers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(v.getContext(), BlockedUsersActivity.class);
+                i.putExtra("UserId", currentUserID);
+                startActivity(i);
+            }
+        });
+
         Button wishList = (Button) findViewById(R.id.WishListButton);
         wishList.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -54,6 +54,8 @@
         <activity android:name=".EditIndividualProductActivity" />
         <activity android:name=".WishListActivity" />
         <activity android:name=".RemoveWishListActivity" />
+        <activity android:name=".BlockedUsersActivity" />
+        <activity android:name=".UnblockUserActivity" />
     </application>
 
 </manifest>

@@ -13,20 +13,31 @@
             android:id="@+id/WishListButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/favoriteUsers"
             android:layout_weight="1"
-            android:text="View my wish list" />
+            android:text="View my wish list"
+            android:layout_below="@+id/prevousProducts"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
         <Button
             android:id="@+id/favoriteUsers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/prevousProducts"
-            android:layout_centerHorizontal="true"
             android:layout_weight="1"
-            android:text="View Favorite Users" />
+            android:text="View Favorite Users"
+            android:layout_below="@+id/WishListButton"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:id="@+id/blockedUsers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="View Blocked Users"
+            android:layout_below="@+id/favoriteUsers"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
         <Button
             android:id="@+id/prevousProducts"

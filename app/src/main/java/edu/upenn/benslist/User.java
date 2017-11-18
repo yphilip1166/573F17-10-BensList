@@ -21,21 +21,21 @@ import java.util.Set;
 
 public class User implements Serializable {
 
-    private String name;
-    private int age;
-    private List<String> favoriteUsersIveBoughtFrom;
-    private int sumRatings;
-    private int numRatings;
-    private double rating;
-    private List<Product> productsIveUploaded;
-    private List<Product> productsIveBought;
+    public String name;
+    public int age;
+    public List<String> favoriteUsersIveBoughtFrom;
+    public int sumRatings;
+    public int numRatings;
+    public double rating;
+    public List<Product> productsIveUploaded;
+    public List<Product> productsIveBought;
 
-    private List<String> blockedUsers;
+    public List<String> blockedUsers;
 
-    private String email;
-    private String address;
-    private String interests;
-    private String userId;
+    public String email;
+    public String address;
+    public String interests;
+    public String userId;
 
     public User() {
         this.name = "";

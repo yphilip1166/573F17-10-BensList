@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -47,9 +48,6 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
         setContentView(R.layout.activity_upload_product);
         this.currentUserName = getIntent().getStringExtra("Username");
         this.product = (Product) getIntent().getExtras().getSerializable("Product");
-
-
-
         populateProductFields();
 
     }
@@ -110,7 +108,6 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
         conditionSpinner.setAdapter(conditionAdapter);
         conditionSpinner.setSelection(conditionOptions.indexOf(condition));
 
-
         EditText editProductName = (EditText) findViewById(R.id.editProductName);
         editProductName.setText(product.getName());
 
@@ -128,9 +125,8 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
 
         EditText editPhoneNumber = (EditText) findViewById(R.id.editPhoneNumber);
         editPhoneNumber.setText(product.getPhoneNumber());
-
         EditText editQuantity = (EditText) findViewById(R.id.editQuantity);
-        editQuantity.setText(product.getQuantity());
+        editQuantity.setText(Integer.toString(product.getQuantity()));
     }
 
 
