@@ -80,7 +80,6 @@ public class ViewUsersProfileActivity extends MyAppCompatActivity implements Vie
         viewFavoriteUsersButton.setOnClickListener(this);
         previousPurchasesButton.setOnClickListener(this);
         reportUserButton.setOnClickListener(this);
-
         messageUserButton.setOnClickListener(this);
     }
 
@@ -122,6 +121,7 @@ public class ViewUsersProfileActivity extends MyAppCompatActivity implements Vie
                 newIntent.putExtra("UserId", userId);
                 newIntent.putExtra("Type", "uploads");
                 startActivityForResult(newIntent, RESULT_VIEW_UPLOADED_PRODUCTS);
+                finish();
                 break;
 
             case (R.id.viewPreviousPurchasesButton) :
@@ -129,12 +129,14 @@ public class ViewUsersProfileActivity extends MyAppCompatActivity implements Vie
                 i.putExtra("UserId", userId);
                 i.putExtra("Type", "previousPurchases");
                 startActivityForResult(i, RESULT_VIEW_PREVIOUS_PURCHASES);
+                finish();
                 break;
 
             case (R.id.viewFavoriteUsersButton) :
                 Intent intent = new Intent(this, FavoriteUsersActivity.class);
                 intent.putExtra("UserId", userId);
                 startActivityForResult(intent, RESULT_VIEW_FAVORITE_USERS);
+                finish();
                 break;
 
             case (R.id.reportUserButton) :
@@ -147,6 +149,7 @@ public class ViewUsersProfileActivity extends MyAppCompatActivity implements Vie
                 ref.setValue(userId);
                 Intent iHome = new Intent(this, HomePageActivity.class);
                 startActivity(iHome);
+                finish();
                 break;
 
             case (R.id.messageUserButton) :
@@ -154,6 +157,7 @@ public class ViewUsersProfileActivity extends MyAppCompatActivity implements Vie
                 mIntent.putExtra("UserId", userId);
                 mIntent.putExtra("Name", name);
                 startActivity(mIntent);
+                finish();
                 break;
 
             default :

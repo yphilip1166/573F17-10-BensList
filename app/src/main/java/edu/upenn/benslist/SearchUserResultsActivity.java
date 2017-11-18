@@ -109,6 +109,7 @@ public class SearchUserResultsActivity extends MyAppCompatActivity implements Vi
                     Intent i = new Intent(thisContext, UserProfileActivity.class);
                     i.putExtra("User", (Serializable) user);
                     startActivity(i);
+
                 }
             });
 
@@ -123,10 +124,12 @@ public class SearchUserResultsActivity extends MyAppCompatActivity implements Vi
             case (R.id.filterSearchResultsButton) :
                 Intent i = new Intent(this, FilterSearchResultsActivity.class);
                 startActivityForResult(i, RESULT_GO_TO_FILTER_SEARCH_RESULTS);
+                finish();
                 break;
             case (R.id.goBackToHomePageFromSearchResultsButton) :
                 Intent intent = new Intent(this, HomePageActivity.class);
                 startActivity(intent);
+                finish();
                 break;
             default :
                 break;

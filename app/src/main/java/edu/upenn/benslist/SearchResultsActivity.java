@@ -251,11 +251,13 @@ public class SearchResultsActivity extends MyAppCompatActivity implements View.O
                 i.putExtra("Search Category", searchCategory);
                 i.putExtra("Search Query", searchQuery);
                 startActivity(i);
+                finish();
                 break;
 
             case (R.id.goBackToHomePageFromSearchResultsButton) :
                 Intent intent = new Intent(this, HomePageActivity.class);
                 startActivity(intent);
+                finish();
                 break;
 
             case (R.id.sortResultsByPriceButton) :
@@ -273,6 +275,7 @@ public class SearchResultsActivity extends MyAppCompatActivity implements View.O
                 newIntent.putExtra("Far Location", farLocationFilter);
 
                 startActivity(newIntent);
+                finish();
                 break;
 
             default :

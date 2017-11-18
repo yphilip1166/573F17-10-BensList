@@ -138,8 +138,8 @@ public class BlockedUsersActivity extends MyAppCompatActivity implements View.On
     public void onClick(View v){
         switch (v.getId()) {
             case (R.id.doneViewingProductsButton) :
-                Intent returnIntent = new Intent(this, ViewUsersProfileActivity.class);
-                setResult(RESULT_OK, returnIntent);
+                Intent intent = new Intent(this, HomePageActivity.class);
+                startActivity(intent);
                 finish();
                 break;
             default :

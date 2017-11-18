@@ -95,6 +95,7 @@ public class SearchUsers extends MyAppCompatActivity implements View.OnClickList
                                     Intent i = new Intent(thisContext, ViewUsersProfileActivity.class);
                                     i.putExtra("UserId", userSnapshot.getKey());
                                     startActivity(i);
+                                    finish();
                                 }
                             }
                         }
