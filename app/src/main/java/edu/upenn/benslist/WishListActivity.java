@@ -41,7 +41,7 @@ public class WishListActivity extends MyAppCompatActivity implements View.OnClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.edit_listing_layout);
+        setContentView(R.layout.wishlist_init_layout);
         this.userId = getIntent().getStringExtra("UserId");
         mUserReference = FirebaseDatabase.getInstance().getReference()
                 .child("users").child(userId);
