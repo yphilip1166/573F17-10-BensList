@@ -40,6 +40,9 @@ public class Product implements Serializable, Comparable {
     public boolean isAuctionClosed;
     public double curAuctionPrice;
 
+    //YHG 20171119
+    public String curBuyer;
+
     public List<String> wisher;
     //PY 20171108
     public int quantity;
@@ -63,9 +66,11 @@ public class Product implements Serializable, Comparable {
         this.isAuction = false;
         this.isAuctionClosed = true;
         this.curAuctionPrice = 0.0;
+        this.curBuyer = "";
         this.wisher = new LinkedList<>();
         this.condition = "Not Available";
         this.quantity = 1;
+
     }
 
 
@@ -86,6 +91,7 @@ public class Product implements Serializable, Comparable {
         this.isAuction = isAuction;
         this.isAuctionClosed = false;
         this.curAuctionPrice = priceAsDouble;
+        this.curBuyer = "";
         this.wisher = new LinkedList<>();
         this.quantity = quantity;
 
@@ -125,7 +131,7 @@ public class Product implements Serializable, Comparable {
     }
 
 
-    //this is for generating auction product
+    //this is for generating auction product - YHG
     public static Product writeNewProductToDatabase(String name, String description, String condition,
                                                     double priceAsDouble, String location, String phoneNumber,
                                                     String category, String currentUserName, String productId,
@@ -247,6 +253,9 @@ public class Product implements Serializable, Comparable {
 
     public void setCurAuctionPrice(double price){this.curAuctionPrice = price;}
     public double getCurAuctionPrice(){return curAuctionPrice;}
+
+    public void setCurBuyer(String curBuyer){this.curBuyer = curBuyer;}
+    public String getCurBuyer(){return this.curBuyer;}
 
     public String getAuctionString(){
         if(isAuction)return "YES";

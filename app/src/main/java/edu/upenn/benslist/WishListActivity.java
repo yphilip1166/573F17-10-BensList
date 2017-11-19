@@ -32,7 +32,7 @@ import java.util.List;
  * Created by Carlton on 11/7/17.
  */
 
-public class WishListActivity extends MyAppCompatActivity{
+public class WishListActivity extends MyAppCompatActivity implements View.OnClickListener{
     private ViewGroup mLinearLayout;
     private String userId;
     private DatabaseReference mUserReference;
@@ -41,11 +41,14 @@ public class WishListActivity extends MyAppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.wish_list_layout);
+        setContentView(R.layout.edit_listing_layout);
         this.userId = getIntent().getStringExtra("UserId");
         mUserReference = FirebaseDatabase.getInstance().getReference()
                 .child("users").child(userId);
-        mLinearLayout = (ViewGroup) findViewById(R.id.wishListingLinearLayout);
+        Button doneButton = (Button) findViewById(R.id.doneViewingProductsButton);
+        doneButton.setOnClickListener(this);
+
+        mLinearLayout = (ViewGroup) findViewById(R.id.uploadedProductsLinearLayout);
     }
 
     @Override
@@ -76,7 +79,7 @@ public class WishListActivity extends MyAppCompatActivity{
     }
 
     protected void addProductsFromWishList(List<Product> products) {
-        mLinearLayout.removeAllViewsInLayout();
+//        mLinearLayout.removeAllViewsInLayout();
         final Context thisContext = this;
 
         //add each product to the activity
@@ -129,7 +132,7 @@ public class WishListActivity extends MyAppCompatActivity{
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
 
         //Detects request codes
         if(requestCode==REQUEST_CODE && resultCode == Activity.RESULT_OK) {
@@ -137,6 +140,20 @@ public class WishListActivity extends MyAppCompatActivity{
             refresh.putExtra("UserId", userId);
             startActivity(refresh);
             this.finish();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case (R.id.doneViewingProductsButton) :
+                Intent returnIntent = new Intent(this, ViewUsersProfileActivity.class);
+                setResult(RESULT_OK, returnIntent);
+                finish();
+                break;
+            default :
+                break;
+
         }
     }
 }

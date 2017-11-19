@@ -28,6 +28,7 @@ public class CheckoutProductActivity extends MyAppCompatActivity implements View
     private double bidPrice;
     private int numItemsLeft;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +82,9 @@ public class CheckoutProductActivity extends MyAppCompatActivity implements View
 
         TextView curBidPrice = (TextView) findViewById(R.id.detailedListingCurPrice);
         curBidPrice.setText("Cur Bid Price: " + product.curAuctionPrice);
+
+        TextView curBidBuyer = (TextView) findViewById(R.id.detailedListingCurBuyer);
+        curBidBuyer.setText("Current Bid Buyer: " + product.curBuyer);
     }
 
     protected void addCommentsSection() {
@@ -100,7 +104,13 @@ public class CheckoutProductActivity extends MyAppCompatActivity implements View
         switch (v.getId()) {
             case (R.id.detailedListingConfirmPurchase) : {
                 EditText quantityText = (EditText) findViewById(R.id.editQuantity);
-                int quantityAsInt = Integer.parseInt(quantityText.getText().toString());
+                int quantityAsInt;
+                try {
+                    quantityAsInt = Integer.parseInt(quantityText.getText().toString());
+                } catch (Exception e) {
+                    Toast.makeText(this, "Quantity is not specified", Toast.LENGTH_SHORT).show();
+                    break;
+                }
                 if(quantityAsInt == 0) {
                     Toast.makeText(this, "Quantity could not be 0.", Toast.LENGTH_SHORT).show();
                     break;
@@ -118,7 +128,6 @@ public class CheckoutProductActivity extends MyAppCompatActivity implements View
                     startActivity(i);
                     break;
                 }
-
             }
 
             case (R.id.submitReviewButton) :
@@ -169,9 +178,6 @@ public class CheckoutProductActivity extends MyAppCompatActivity implements View
                 }
                 break;
             }
-
-
-
             default :
                 break;
         }

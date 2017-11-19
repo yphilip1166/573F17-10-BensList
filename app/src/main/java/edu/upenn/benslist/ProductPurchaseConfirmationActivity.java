@@ -39,6 +39,7 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
     private DatabaseReference mDatabase;
     FirebaseUser fbUser;
     String currentUserID;
+    String name;
     private boolean favorite;
 
     //YHG 20171107
@@ -48,6 +49,7 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
     //YP 20171108
     private int quantity;
     private int numItemsLeft;
+    private boolean confirmed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,11 +75,32 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
 
         Button addUserButton = (Button) findViewById(R.id.addUserToFavsButton);
         Button doneButton = (Button) findViewById(R.id.doneRatingButton);
+        Button chatButton = (Button) findViewById(R.id.chatButton);
+        chatButton.setText("CHAT TO CONFIRM WHERE & WHEN");
         addUserButton.setOnClickListener(this);
         doneButton.setOnClickListener(this);
+        chatButton.setOnClickListener(this);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         fbUser = FirebaseAuth.getInstance().getCurrentUser();
         currentUserID = fbUser.getUid();
+        DatabaseReference mDatabase2 = FirebaseDatabase.getInstance().getReference().child("users");
+        FirebaseUser fbuser2 = FirebaseAuth.getInstance().getCurrentUser();
+        final String currentUserID2 = fbuser2.getUid();
+
+        mDatabase2.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                name = dataSnapshot.child(currentUserID2).child("name").getValue(String.class);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        if(name == null)
+            Log.v("YHG", "2, name is null");
+        else
+            Log.v("YHG", name);
 
         if(isAuction) {
             TextView bidPriceText = (TextView) findViewById(R.id.confirmedBidPrice);
@@ -107,11 +130,21 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
                 Toast.makeText(this, "Added user to favorite", Toast.LENGTH_SHORT).show();
                 break;
 
-            case (R.id.doneRatingButton) :
+            case (R.id.chatButton) :
+                confirmed = true;
+                Intent mIntent = new Intent(this, InboxMessageActivity.class);
+                mIntent.putExtra("UserId", currentUserID);
+                mIntent.putExtra("Name", name);
+                startActivity(mIntent);
+                break;
 
-                final String name = fbUser.getDisplayName();
+            case (R.id.doneRatingButton) :
+                if(!confirmed) {
+                    Toast.makeText(this, "Haven't confirmed with the owner yet.", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+
                 final Context thisContext = this;
-                final String currentUserID = fbUser.getUid();
                 mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
 
                     @Override
@@ -142,10 +175,14 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
 
                         DatabaseReference productRef = FirebaseDatabase.getInstance().getReference()
                                 .child("products").child(productID);
-
+                        if(name == null)
+                            Log.v("YHG", "1, name is null");
+                        else
+                            Log.v("YHG", name + "");
                         if(isAuction)
                         {
                             productRef.child("curAuctionPrice").setValue(bidPrice);
+                            productRef.child("curBuyer").setValue(name);
                         }
                         else {
                             int remaining = numItemsLeft-quantity;
@@ -155,8 +192,6 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
                                     "productsIveBought").push();
                             ref.setValue(product);
                         }
-
-
 
                         //double newRating = uploader.addRating(Integer.parseInt(rating));
                         //mDatabase.child("users").child(uploaderID).child("rating").setValue(newRating);
