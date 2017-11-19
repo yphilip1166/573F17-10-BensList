@@ -325,6 +325,7 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
             Uri imageSelected = data.getData();
             imageToUpload.setImageURI(imageSelected);
         }
+        finish();
     }
 
 

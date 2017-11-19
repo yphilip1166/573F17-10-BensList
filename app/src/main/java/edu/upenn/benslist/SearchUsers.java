@@ -58,7 +58,7 @@ public class SearchUsers extends MyAppCompatActivity implements View.OnClickList
         switch (v.getId()) {
 
             case (R.id.searchUserButton):
-                ValueEventListener userListener = new ValueEventListener() {
+                mUserReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Set<String> mBlockedUsers = new HashSet<String>();
@@ -95,7 +95,7 @@ public class SearchUsers extends MyAppCompatActivity implements View.OnClickList
                                     Intent i = new Intent(thisContext, ViewUsersProfileActivity.class);
                                     i.putExtra("UserId", userSnapshot.getKey());
                                     startActivity(i);
-                                    finish();
+                                    break;
                                 }
                             }
                         }
@@ -112,14 +112,18 @@ public class SearchUsers extends MyAppCompatActivity implements View.OnClickList
                                 Toast.LENGTH_SHORT).show();
                         // [END_EXCLUDE]
                     }
-                };
-                mUserReference.addValueEventListener(userListener);
-
+                });
+                finish();
                 break;
 
             case (R.id.goBackToHomePageButton):
                 Intent intent = new Intent(this, HomePageActivity.class);
                 startActivity(intent);
+                finish();
+                break;
+
+            default :
+                finish();
                 break;
         }
 

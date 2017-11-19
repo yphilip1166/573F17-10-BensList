@@ -290,6 +290,7 @@ public class SearchResultsActivity extends MyAppCompatActivity implements View.O
 
 
         super.onActivityResult(requestCode, resultCode, data);
+        finish();
         if (requestCode == RESULT_GO_TO_FILTER_SEARCH_RESULTS && resultCode == RESULT_OK) {
 
         }

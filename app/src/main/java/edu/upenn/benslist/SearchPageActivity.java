@@ -63,6 +63,7 @@ public class SearchPageActivity extends MyAppCompatActivity implements AdapterVi
                 i.putExtra("Search Query", searchQuery);
                 i.putExtra("Sort By Price", false);
                 startActivity(i);
+                finish();
                 break;
 
             default :

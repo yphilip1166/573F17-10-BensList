@@ -66,8 +66,8 @@ public class ViewUsersProfileActivity extends MyAppCompatActivity implements Vie
         Button viewFavoriteUsersButton = (Button) findViewById(R.id.viewFavoriteUsersButton);
         Button previousPurchasesButton = (Button) findViewById(R.id.viewPreviousPurchasesButton);
         Button reportUserButton = (Button) findViewById(R.id.reportUserButton);
-
         Button messageUserButton = (Button) findViewById(R.id.messageUserButton);
+        Button backButton = (Button) findViewById(R.id.backButton);
 
         usersNameText = (TextView) findViewById(R.id.usersNameTextField);
         usersAgeText = (TextView) findViewById(R.id.usersAgeTextField);
@@ -81,6 +81,7 @@ public class ViewUsersProfileActivity extends MyAppCompatActivity implements Vie
         previousPurchasesButton.setOnClickListener(this);
         reportUserButton.setOnClickListener(this);
         messageUserButton.setOnClickListener(this);
+        backButton.setOnClickListener(this);
     }
 
     @Override
@@ -160,6 +161,12 @@ public class ViewUsersProfileActivity extends MyAppCompatActivity implements Vie
                 finish();
                 break;
 
+            case(R.id.backButton):
+                Intent searchIntent = new Intent(this, SearchUsers.class);
+                startActivity(searchIntent);
+                finish();
+                break;
+
             default :
                 break;
         }
@@ -199,6 +206,7 @@ public class ViewUsersProfileActivity extends MyAppCompatActivity implements Vie
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        finish();
     }
 
 
