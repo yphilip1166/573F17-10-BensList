@@ -148,7 +148,7 @@ public class ViewUsersProfileActivity extends MyAppCompatActivity implements Vie
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference().
                         child("users").child(mUserId).child("blockedUsers").push();
                 ref.setValue(userId);
-                Intent iHome = new Intent(this, HomePageActivity.class);
+                Intent iHome = new Intent(this, SearchUsers.class);
                 startActivity(iHome);
                 finish();
                 break;
@@ -162,7 +162,7 @@ public class ViewUsersProfileActivity extends MyAppCompatActivity implements Vie
                 break;
 
             case(R.id.backButton):
-                Intent searchIntent = new Intent(this, SearchUsers.class);
+                Intent searchIntent = new Intent(this, HomePageActivity.class);
                 startActivity(searchIntent);
                 finish();
                 break;
