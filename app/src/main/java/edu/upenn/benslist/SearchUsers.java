@@ -113,7 +113,6 @@ public class SearchUsers extends MyAppCompatActivity implements View.OnClickList
                         // [END_EXCLUDE]
                     }
                 });
-                finish();
                 break;
 
             case (R.id.goBackToHomePageButton):
