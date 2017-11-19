@@ -28,6 +28,7 @@ public class CheckoutProductActivity extends MyAppCompatActivity implements View
     private double bidPrice;
     private int numItemsLeft;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +82,9 @@ public class CheckoutProductActivity extends MyAppCompatActivity implements View
 
         TextView curBidPrice = (TextView) findViewById(R.id.detailedListingCurPrice);
         curBidPrice.setText("Cur Bid Price: " + product.curAuctionPrice);
+
+        TextView curBidBuyer = (TextView) findViewById(R.id.detailedListingCurBuyer);
+        curBidBuyer.setText("Current Bid Buyer: " + product.curBuyer);
     }
 
     protected void addCommentsSection() {
@@ -174,9 +178,6 @@ public class CheckoutProductActivity extends MyAppCompatActivity implements View
                 }
                 break;
             }
-
-
-
             default :
                 break;
         }

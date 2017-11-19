@@ -115,6 +115,13 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
+        <TextView
+            android:id="@+id/detailedListingCurBuyer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Current bid buyer:"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
         <RelativeLayout
             android:orientation="vertical"
             android:layout_width="match_parent"

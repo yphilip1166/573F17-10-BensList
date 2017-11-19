@@ -83,7 +83,24 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
         mDatabase = FirebaseDatabase.getInstance().getReference();
         fbUser = FirebaseAuth.getInstance().getCurrentUser();
         currentUserID = fbUser.getUid();
-        name = fbUser.getDisplayName();
+        DatabaseReference mDatabase2 = FirebaseDatabase.getInstance().getReference().child("users");
+        FirebaseUser fbuser2 = FirebaseAuth.getInstance().getCurrentUser();
+        final String currentUserID2 = fbuser2.getUid();
+
+        mDatabase2.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                name = dataSnapshot.child(currentUserID2).child("name").getValue(String.class);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        if(name == null)
+            Log.v("YHG", "2, name is null");
+        else
+            Log.v("YHG", name);
 
         if(isAuction) {
             TextView bidPriceText = (TextView) findViewById(R.id.confirmedBidPrice);
@@ -158,10 +175,14 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
 
                         DatabaseReference productRef = FirebaseDatabase.getInstance().getReference()
                                 .child("products").child(productID);
-
+                        if(name == null)
+                            Log.v("YHG", "1, name is null");
+                        else
+                            Log.v("YHG", name + "");
                         if(isAuction)
                         {
                             productRef.child("curAuctionPrice").setValue(bidPrice);
+                            productRef.child("curBuyer").setValue(name);
                         }
                         else {
                             int remaining = numItemsLeft-quantity;
