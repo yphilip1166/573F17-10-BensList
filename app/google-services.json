@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "411733005514",
-    "firebase_url": "https://s17-37-benslist.firebaseio.com",
-    "project_id": "s17-37-benslist",
-    "storage_bucket": "s17-37-benslist.appspot.com"
+    "project_number": "683033114101",
+    "firebase_url": "https://f17-benslist-group10.firebaseio.com",
+    "project_id": "f17-benslist-group10",
+    "storage_bucket": "f17-benslist-group10.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:411733005514:android:c0a056d3df080ca9",
+        "mobilesdk_app_id": "1:683033114101:android:c0a056d3df080ca9",
         "android_client_info": {
           "package_name": "edu.upenn.benslist"
         }
       },
       "oauth_client": [
         {
-          "client_id": "411733005514-p0g663bhqhs2b7ou4rhbr0heu7sdrflr.apps.googleusercontent.com",
+          "client_id": "683033114101-orporvg4ef16j0i4ihg442jtpl6r2a41.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCHDCQ85Hwfu6Lv59Yt7Xc6-syPf0Rk8W4"
+          "current_key": "AIzaSyDtAFNJ94lFVHFVyAskgodirPNidogTiPE"
         }
       ],
       "services": {
@@ -29,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "411733005514-p0g663bhqhs2b7ou4rhbr0heu7sdrflr.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2

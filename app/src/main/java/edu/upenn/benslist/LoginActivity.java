@@ -206,7 +206,7 @@ public class LoginActivity extends AppCompatActivity {
                                 } catch(FirebaseAuthUserCollisionException e) {
                                     error.append("User already exists");
                                 } catch(FirebaseException e) {
-                                    error.append("Weak Password");
+                                    error.append(e.getMessage());
                                 }catch(Exception e) {
                                     error.append("Failed");
                                 }
