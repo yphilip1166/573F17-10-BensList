@@ -44,6 +44,7 @@ public class Product implements Serializable, Comparable {
     public String curBuyer;
 
     public List<String> wisher;
+    public List<String> bider;
     //PY 20171108
     public int quantity;
 
@@ -68,6 +69,7 @@ public class Product implements Serializable, Comparable {
         this.curAuctionPrice = 0.0;
         this.curBuyer = "";
         this.wisher = new LinkedList<>();
+        this.bider = new LinkedList<>();
         this.condition = "Not Available";
         this.quantity = 1;
 
@@ -93,6 +95,7 @@ public class Product implements Serializable, Comparable {
         this.curAuctionPrice = priceAsDouble;
         this.curBuyer = "";
         this.wisher = new LinkedList<>();
+        this.bider= new LinkedList<>();
         this.quantity = quantity;
 
         this.priceAsDouble = priceAsDouble;
@@ -282,10 +285,34 @@ public class Product implements Serializable, Comparable {
         Log.v("wisher in product get2 ", wisher.size()+"");
     }
 
+    public void addBider(String b){
+        bider.add(b);
+        for (String s: bider) {
+            Log.v("bider: ", s );
+        }
+        Log.v("product id in add: ", this.productID);
+        Log.v("bider in product add ", bider.size()+"");
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+//        DatabaseReference ref = mDatabase.child("products").child(productID).child("wisher").push();
+//        ref.setValue(w);
+        mDatabase.child("products").child(productID).child("bider").setValue(bider);
+//        DatabaseReference productRef = FirebaseDatabase.getInstance().getReference().
+//                child("users").child(uploaderID).child("productsIveUploaded").child(productID);
+//        productRef.child("wisher").setValue(wisher);
+//        Log.v("wish in up: ", productRef.child("wisher").toString());
+        Log.v("bider in product get2 ", bider.size()+"");
+    }
+
     public void removeWisher(String w){
         wisher.remove(w);
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("products").child(productID).child("wisher").setValue(wisher);
+    }
+
+    public void removeBider(String b){
+        bider.remove(b);
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("products").child(productID).child("bider").setValue(bider);
     }
 
     public List<String> getWisher() {
@@ -298,7 +325,13 @@ public class Product implements Serializable, Comparable {
         return wisher;
     }
 
+    public List<String> getBider() {
+        return bider;
+    }
+
     public void setWisher(List<String> w) {this.wisher=w;}
+
+    public void setBider(List<String> b) {this.bider= b;}
 
     //haven't tested it out yet, but this function should work fine
     public void addReview(String review) {

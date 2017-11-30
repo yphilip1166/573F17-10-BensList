@@ -18,6 +18,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashSet;
+import java.util.List;
+
 /**
  * Created by johnquinn on 3/14/17.
  */
@@ -27,7 +30,7 @@ public class CheckoutProductActivity extends MyAppCompatActivity implements View
     private Product product;
     private double bidPrice;
     private int numItemsLeft;
-
+    public static final String MESSAGES_CHILD = "inbox";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +104,9 @@ public class CheckoutProductActivity extends MyAppCompatActivity implements View
 
     @Override
     public void onClick(View v) {
+        final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
+        final String currentUserID = fbUser.getUid();
         switch (v.getId()) {
             case (R.id.detailedListingConfirmPurchase) : {
                 EditText quantityText = (EditText) findViewById(R.id.editQuantity);
@@ -149,14 +155,11 @@ public class CheckoutProductActivity extends MyAppCompatActivity implements View
 
 
             case (R.id.AddToWishList) :
-                final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-                FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
-                final String currentUserID = fbUser.getUid();
                 DatabaseReference ref = mDatabase.child("users").child(currentUserID).child("productsInWishList").push();
                 ref.setValue(product);
                 product.addWisher(currentUserID);
-                Log.v("wish update1: ", currentUserID);
-                Log.v("wish product: ", product.toString());
+//                Log.v("wish update1: ", currentUserID);
+//                Log.v("wish product: ", product.toString());
                 break;
 
             // YHG20171107
@@ -166,6 +169,11 @@ public class CheckoutProductActivity extends MyAppCompatActivity implements View
                 bidPrice = Double.parseDouble(bidPriceText.getText().toString());
                 Log.v("YHG", "curBidPrice: " + product.getCurAuctionPrice() + " editBidPrice: " + bidPrice);
                 if(bidPrice >= product.getCurAuctionPrice()) {
+                    if (product!=null && product.getBider()!=null) sendNotification(product.getBider());
+//                    final DatabaseReference mD = FirebaseDatabase.getInstance().getReference();
+//                    FirebaseUser fU = FirebaseAuth.getInstance().getCurrentUser();
+//                    final String cID = fbUser.getUid();
+                    product.addBider(currentUserID);
                     Intent i = new Intent(this, ProductPurchaseConfirmationActivity.class);
                     i.putExtra("UploaderID", product.getUploaderID());
                     i.putExtra("ProductID", product.getProductID());
@@ -181,6 +189,18 @@ public class CheckoutProductActivity extends MyAppCompatActivity implements View
             }
             default :
                 break;
+        }
+    }
+
+    private void sendNotification(List<String> ss){
+        HashSet<String> ws = new HashSet<>(ss);
+        for (String toUserId: ws){
+            String mUserId= "SYSTEM NOTIFICATION";
+//            String toUserId= ;
+            String channelID =  mUserId.compareTo(toUserId)>0? mUserId + toUserId: toUserId + mUserId;
+            Log.v("wish ChID send: ", channelID);
+            Message message = new Message("Product: "+ product.getName()+" you bid has been updated.", "System Notification");
+            FirebaseDatabase.getInstance().getReference().child(MESSAGES_CHILD).child(channelID).push().setValue(message);
         }
     }
 
