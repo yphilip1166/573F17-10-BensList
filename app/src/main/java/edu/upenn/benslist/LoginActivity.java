@@ -84,6 +84,17 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+
+        Button mResetPasswordButton = (Button) findViewById(R.id.reset_button);
+        mResetPasswordButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resetPassword();
+            }
+        });
+
+
+
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
 
@@ -170,6 +181,9 @@ public class LoginActivity extends AppCompatActivity {
         if (email.equals("") || password.equals("")) {
             Toast.makeText(LoginActivity.this, "Please fill in both email and password before registering",
                     Toast.LENGTH_SHORT).show();
+        } else if (!email.contains("upenn.edu")) {
+            Toast.makeText(LoginActivity.this, "Please use Penn email",
+                    Toast.LENGTH_SHORT).show();
         } else {
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -192,7 +206,7 @@ public class LoginActivity extends AppCompatActivity {
                                 } catch(FirebaseAuthUserCollisionException e) {
                                     error.append("User already exists");
                                 } catch(FirebaseException e) {
-                                    error.append("Weak Password");
+                                    error.append(e.getMessage());
                                 }catch(Exception e) {
                                     error.append("Failed");
                                 }
@@ -204,5 +218,27 @@ public class LoginActivity extends AppCompatActivity {
                     });
         }
     }
+
+    private void resetPassword() {
+        final String email = mEmailView.getText().toString().trim();
+
+        if (email.equals("")) {
+            Toast.makeText(LoginActivity.this, "Please fill in email to reset password",
+                    Toast.LENGTH_SHORT).show();
+        }
+
+        mAuth.sendPasswordResetEmail(email)
+                .addOnCompleteListener(new OnCompleteListener() {
+                    @Override
+                    public void onComplete(@NonNull Task task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(LoginActivity.this, "We have sent you instructions to reset your password!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Failed to send reset email!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
 }
 

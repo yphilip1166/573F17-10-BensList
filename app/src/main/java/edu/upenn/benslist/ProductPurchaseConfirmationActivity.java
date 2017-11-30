@@ -50,6 +50,7 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
     private int quantity;
     private int numItemsLeft;
     private boolean confirmed = false;
+    private String uploaderName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,7 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
         setContentView(R.layout.product_purchase_confirmation_layout);
 
         this.uploaderID = getIntent().getStringExtra("UploaderID");
+        this.uploaderName = getIntent().getStringExtra("UploaderName");
         this.productID = getIntent().getStringExtra("ProductID");
         this.isAuction = getIntent().getBooleanExtra("isAuction", false);
         this.quantity = getIntent().getIntExtra("Quantity", 0);
@@ -133,8 +135,8 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
             case (R.id.chatButton) :
                 confirmed = true;
                 Intent mIntent = new Intent(this, InboxMessageActivity.class);
-                mIntent.putExtra("UserId", currentUserID);
-                mIntent.putExtra("Name", name);
+                mIntent.putExtra("UserId", uploaderID);
+                mIntent.putExtra("Name", uploaderName);
                 startActivity(mIntent);
                 break;
 

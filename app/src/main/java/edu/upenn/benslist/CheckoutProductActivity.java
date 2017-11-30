@@ -122,6 +122,7 @@ public class CheckoutProductActivity extends MyAppCompatActivity implements View
                 else {
                     Intent i = new Intent(this, ProductPurchaseConfirmationActivity.class);
                     i.putExtra("UploaderID", product.getUploaderID());
+                    i.putExtra("UploaderName", product.getUploaderName());
                     i.putExtra("ProductID", product.getProductID());
                     i.putExtra("Quantity", quantityAsInt);
                     i.putExtra("NumItemsLeft", numItemsLeft);
