@@ -171,6 +171,7 @@ public class CheckoutProductActivity extends MyAppCompatActivity implements View
                     i.putExtra("ProductID", product.getProductID());
                     i.putExtra("isAuction", true);
                     i.putExtra("BidPrice", bidPrice);
+                    i.putExtra("isBid",true);
                     startActivity(i);
                 }
                 else

@@ -48,6 +48,8 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
     private boolean confirmed = false;
     private String uploaderName;
 
+    private boolean bid = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +62,7 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
         this.quantity = getIntent().getIntExtra("Quantity", 0);
         this.numItemsLeft = getIntent().getIntExtra("NumItemsLeft", 0);
         this.bidPrice = getIntent().getDoubleExtra("BidPrice", 0.0);
-
+        this.bid = getIntent().getBooleanExtra("isBid", false);
 
         Spinner spinner = (Spinner) findViewById(R.id.userRatingSpinner);
         spinner.setOnItemSelectedListener(this);
@@ -137,7 +139,7 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
                 break;
 
             case (R.id.doneRatingButton) :
-                if(!confirmed) {
+                if(!confirmed && !bid) {
                     Toast.makeText(this, "Haven't confirmed with the owner yet.", Toast.LENGTH_SHORT).show();
                     break;
                 }
