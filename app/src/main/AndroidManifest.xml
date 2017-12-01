@@ -32,22 +32,22 @@
             </intent-filter>
         </activity>
         <activity android:name=".AboutActivity" />
-        <activity android:name=".TermsActivity"></activity>
-        <activity android:name=".SearchPageActivity"/>
-        <activity android:name=".FilterSearchResultsActivity"/>
-        <activity android:name=".SearchResultsActivity"/>
-        <activity android:name=".HomePageActivity"/>
-        <activity android:name=".UploadProductActivity"/>
-        <activity android:name=".CheckoutProductActivity"/>
-        <activity android:name=".UserProfileActivity"/>
-        <activity android:name=".SearchUsers"/>
-        <activity android:name=".ProductPurchaseConfirmationActivity"/>
-        <activity android:name=".MyProductsActivity"/>
-        <activity android:name=".ViewUploadedProductsActivity"/>
-        <activity android:name=".ViewUsersProfileActivity"/>
-        <activity android:name=".PublicForumActivity"/>
-        <activity android:name=".FavoriteUsersActivity"/>
-        <activity android:name=".InboxMessageActivity"/>
+        <activity android:name=".TermsActivity" />
+        <activity android:name=".SearchPageActivity" />
+        <activity android:name=".FilterSearchResultsActivity" />
+        <activity android:name=".SearchResultsActivity" />
+        <activity android:name=".HomePageActivity" />
+        <activity android:name=".UploadProductActivity" />
+        <activity android:name=".CheckoutProductActivity" />
+        <activity android:name=".UserProfileActivity" />
+        <activity android:name=".SearchUsers" />
+        <activity android:name=".ProductPurchaseConfirmationActivity" />
+        <activity android:name=".MyProductsActivity" />
+        <activity android:name=".ViewUploadedProductsActivity" />
+        <activity android:name=".ViewUsersProfileActivity" />
+        <activity android:name=".PublicForumActivity" />
+        <activity android:name=".FavoriteUsersActivity" />
+        <activity android:name=".InboxMessageActivity" />
         <activity android:name=".EditListingActivity" />
         <activity android:name=".RemoveProductActivity" />
         <activity android:name=".EditIndividualProductActivity" />
@@ -55,6 +55,7 @@
         <activity android:name=".RemoveWishListActivity" />
         <activity android:name=".BlockedUsersActivity" />
         <activity android:name=".UnblockUserActivity" />
+        <activity android:name=".MessageBoxActivity"></activity>
     </application>
 
 </manifest>

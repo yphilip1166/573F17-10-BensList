@@ -200,10 +200,10 @@ public class InboxMessageActivity extends MyAppCompatActivity
                 //Won't Display the username because there is an issue with mUsername
                 Message message = new Message(mMessageEditText.getText().toString(), mUsername);
                 mFirebaseDatabaseReference.child(MESSAGES_CHILD).child(channelID).push().setValue(message);
+                mFirebaseDatabaseReference.child("users").child(mUserId).child("friends").push().setValue(toUserId);
                 mMessageEditText.setText("");
             }
         });
-
 
     }
 

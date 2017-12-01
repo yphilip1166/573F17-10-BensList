@@ -37,12 +37,14 @@ public class HomePageActivity extends MyAppCompatActivity implements View.OnClic
         Button userProfilePage = (Button) findViewById(R.id.profilePage);
         Button searchUsers = (Button) findViewById(R.id.searchUsers);
         Button editListings = (Button) findViewById(R.id.edit_listings);
+        Button friendList = (Button) findViewById(R.id.friend_list);
 
         uploadProductButton.setOnClickListener(this);
         searchProductsButton.setOnClickListener(this);
         userProfilePage.setOnClickListener(this);
         searchUsers.setOnClickListener(this);
         editListings.setOnClickListener(this);
+        friendList.setOnClickListener(this);
 
         FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
         currentUserID = fbUser.getUid();
@@ -96,6 +98,11 @@ public class HomePageActivity extends MyAppCompatActivity implements View.OnClic
                 Intent editUploadedProduct = new Intent(this, EditListingActivity.class);
                 editUploadedProduct.putExtra("UserId", currentUserID);
                 startActivity(editUploadedProduct);
+                break;
+            case (R.id.friend_list):
+                Intent i2 = new Intent(this, MessageBoxActivity.class);
+                i2.putExtra("UserId", currentUserID);
+                startActivity(i2);
                 break;
             default :
                 break;
