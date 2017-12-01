@@ -42,7 +42,6 @@ public class FavoriteUsersActivity extends MyAppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.favorite_users);
 
-        //User user = (User) getIntent().getSerializableExtra("User");
         this.userId = getIntent().getStringExtra("UserId");
         mUserReference = FirebaseDatabase.getInstance().getReference()
                 .child("users").child(userId);

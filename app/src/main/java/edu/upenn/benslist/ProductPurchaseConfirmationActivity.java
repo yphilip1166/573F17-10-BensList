@@ -195,13 +195,6 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
                             ref.setValue(product);
                         }
 
-                        //double newRating = uploader.addRating(Integer.parseInt(rating));
-                        //mDatabase.child("users").child(uploaderID).child("rating").setValue(newRating);
-                        //DatabaseReference ref = productSnapshot.getRef();
-                        //System.out.println(ref.getKey());
-
-                        //mUserReference.child(currentUserID).child("productsIveUploaded").child(
-                                //ref.getKey()).setValue(product.getName());
                     }
 
                     @Override

@@ -201,14 +201,6 @@ implements GoogleApiClient.OnConnectionFailedListener {
                 }
             });
 
-//            mAddMessageImageView = (ImageView) findViewById(R.id.addMessageImageView);
-//            mAddMessageImageView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    //Todo include capability to send images if we want to
-//                }
-//            });
-
         }
 
         @Override

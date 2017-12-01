@@ -224,7 +224,6 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
                         productRef.child("priceCategory").setValue(priceCategory);
                         productRef.child("locationCategory").setValue(locationCategory);
                         productRef.child("quantity").setValue(quantityAsInt);
-//                        Log.v("wish get: ", dataSnapshot.child("products").child(product.getProductID()).child("wisher").getValue().toString());
                         List<String> w= (List<String>)dataSnapshot.child("products").child(product.getProductID()).child("wisher").getValue();
                         productRef.child("wisher").setValue(dataSnapshot.child("products").child(product.getProductID()).child("wisher").getValue());
                         product.setWisher(w);
@@ -234,8 +233,7 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
                                 quantityAsInt);
                         Log.v("wish update in edit:", currentUserName);
                         List<String> wx= product.getWisher();
-//                        Log.v("wisher in edit get", w.size()+"");
-//                        for (String x: w) Log.v("each wisher in edit: ", x);
+
                         if (w!=null) sendNotification(w);
                     }
 
