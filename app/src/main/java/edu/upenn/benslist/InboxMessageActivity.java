@@ -202,6 +202,7 @@ public class InboxMessageActivity extends MyAppCompatActivity
                 mFirebaseDatabaseReference.child(MESSAGES_CHILD).child(channelID).push().setValue(message);
                 mFirebaseDatabaseReference.child("users").child(mUserId).child("friends").push().setValue(toUserId);
                 mMessageEditText.setText("");
+                Log.v("YHG","sendMessage add Friend: " + mUserId +" "+ toUserId);
             }
         });
 

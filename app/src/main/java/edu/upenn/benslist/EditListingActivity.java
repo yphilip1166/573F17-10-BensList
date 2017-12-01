@@ -41,6 +41,7 @@ public class EditListingActivity extends MyAppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_listing_layout);
         this.userId = getIntent().getStringExtra("UserId");
+        Log.v("YHG", "UserId in editListing " + this.userId);
         this.type = "uploads";
         mUserReference = FirebaseDatabase.getInstance().getReference()
                 .child("users").child(userId);

@@ -45,7 +45,8 @@ public class MessageBoxActivity extends MyAppCompatActivity implements View.OnCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_box);
-        userId = getIntent().getStringExtra("UserID");
+        this.userId = getIntent().getStringExtra("UserId");
+        Log.v("YHG", "UserId in MessageBox " + this.userId);
         mUserReference = FirebaseDatabase.getInstance().getReference()
                 .child("users").child(userId);
         mLinearLayout = (ViewGroup) findViewById(R.id.messageHeadersLinearLayout);
@@ -58,12 +59,12 @@ public class MessageBoxActivity extends MyAppCompatActivity implements View.OnCl
         mUserReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
+                    Log.v("YHG","enter messageBox onDataChange");
                     List<String> allFriends = new ArrayList<String>();
                     for (DataSnapshot productSnapshot : dataSnapshot.child(
                             "friends").getChildren()) {
                         String friendId = productSnapshot.getValue(String.class);
-
+                        Log.v("YHG","looping friendID "+friendId);
                         allFriends.add(friendId);
                         //productsIveUploaded.add(product);
                     }
@@ -80,10 +81,13 @@ public class MessageBoxActivity extends MyAppCompatActivity implements View.OnCl
     }
 
     private void addFriendsToView(List<String> friends){
+
         mLinearLayout.removeAllViewsInLayout();
         final Context thisContext = this;
-        View view = LayoutInflater.from(this).inflate(R.layout.friend_box,mLinearLayout, false);
+
         for(final String friendName : friends){
+            Log.v("YHG", "friend name: " + friendName);
+            View view = LayoutInflater.from(this).inflate(R.layout.friend_box,mLinearLayout, false);
 
             TextView fName = (TextView) view.findViewById(R.id.friendName);
 
