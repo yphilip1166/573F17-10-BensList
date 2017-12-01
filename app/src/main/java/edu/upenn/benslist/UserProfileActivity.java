@@ -178,17 +178,6 @@ public class UserProfileActivity extends AppCompatActivity {
         if(requestCode==REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             Uri selectedImage = data.getData();
             Bitmap bitmap = null;
-            /*
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
-                ImageButton imageButton = (ImageButton) findViewById(R.id.imageButton);
-                imageButton.setImageBitmap(bitmap);
-            } catch (FileNotFoundException e) {
-                Log.d("debugging", "FileNotFound exception for choosing profile picture");
-            } catch (IOException e) {
-                Log.d("debugging", "IOException exception for choosing profile picture");
-
-            }*/
         }
     }
 

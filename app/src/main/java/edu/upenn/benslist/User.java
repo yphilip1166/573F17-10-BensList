@@ -1,7 +1,5 @@
 package edu.upenn.benslist;
 
-import android.provider.ContactsContract;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -9,10 +7,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by johnquinn on 3/13/17.
@@ -130,11 +126,6 @@ public class User implements Serializable {
 
     //Adds a user to the set of blocked users
     protected void addBlockedUser(String user) {
-        /*blockedUsers.add(user);
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
-        mDatabase.child("users").child(mFirebaseUser.getUid()).child("blockedUsers").setValue(blockedUsers);*/
     }
 
     protected double addRating(int rating) {

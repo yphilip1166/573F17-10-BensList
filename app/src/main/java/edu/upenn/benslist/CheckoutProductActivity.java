@@ -2,17 +2,14 @@ package edu.upenn.benslist;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -158,8 +155,6 @@ public class CheckoutProductActivity extends MyAppCompatActivity implements View
                 DatabaseReference ref = mDatabase.child("users").child(currentUserID).child("productsInWishList").push();
                 ref.setValue(product);
                 product.addWisher(currentUserID);
-//                Log.v("wish update1: ", currentUserID);
-//                Log.v("wish product: ", product.toString());
                 break;
 
             // YHG20171107
@@ -170,9 +165,6 @@ public class CheckoutProductActivity extends MyAppCompatActivity implements View
                 Log.v("YHG", "curBidPrice: " + product.getCurAuctionPrice() + " editBidPrice: " + bidPrice);
                 if(bidPrice >= product.getCurAuctionPrice()) {
                     if (product!=null && product.getBider()!=null) sendNotification(product.getBider());
-//                    final DatabaseReference mD = FirebaseDatabase.getInstance().getReference();
-//                    FirebaseUser fU = FirebaseAuth.getInstance().getCurrentUser();
-//                    final String cID = fbUser.getUid();
                     product.addBider(currentUserID);
                     Intent i = new Intent(this, ProductPurchaseConfirmationActivity.class);
                     i.putExtra("UploaderID", product.getUploaderID());
@@ -196,9 +188,7 @@ public class CheckoutProductActivity extends MyAppCompatActivity implements View
         HashSet<String> ws = new HashSet<>(ss);
         for (String toUserId: ws){
             String mUserId= "SYSTEM NOTIFICATION";
-//            String toUserId= ;
             String channelID =  mUserId.compareTo(toUserId)>0? mUserId + toUserId: toUserId + mUserId;
-            Log.v("wish ChID send: ", channelID);
             Message message = new Message("Product: "+ product.getName()+" you bid has been updated.", "System Notification");
             FirebaseDatabase.getInstance().getReference().child(MESSAGES_CHILD).child(channelID).push().setValue(message);
         }

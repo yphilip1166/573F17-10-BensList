@@ -145,7 +145,6 @@ public class Product implements Serializable, Comparable {
         Product newProduct = new Product(name, description,condition, priceAsDouble, location, phoneNumber,
                 category, currentUserID, currentUserName, productId, distance, isAuction, quantity);
 
-        //mDatabase.child("products").child(newProduct.getProductID()).setValue(newProduct);
         return newProduct;
     }
 
@@ -269,38 +268,14 @@ public class Product implements Serializable, Comparable {
     // 11.16.2017 Carlton
     public void addWisher(String w){
         wisher.add(w);
-        for (String s: wisher) {
-            Log.v("wisher: ", s );
-        }
-        Log.v("product id in add: ", this.productID);
-        Log.v("wisher in product add ", wisher.size()+"");
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-//        DatabaseReference ref = mDatabase.child("products").child(productID).child("wisher").push();
-//        ref.setValue(w);
         mDatabase.child("products").child(productID).child("wisher").setValue(wisher);
-//        DatabaseReference productRef = FirebaseDatabase.getInstance().getReference().
-//                child("users").child(uploaderID).child("productsIveUploaded").child(productID);
-//        productRef.child("wisher").setValue(wisher);
-//        Log.v("wish in up: ", productRef.child("wisher").toString());
-        Log.v("wisher in product get2 ", wisher.size()+"");
     }
 
     public void addBider(String b){
         bider.add(b);
-        for (String s: bider) {
-            Log.v("bider: ", s );
-        }
-        Log.v("product id in add: ", this.productID);
-        Log.v("bider in product add ", bider.size()+"");
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-//        DatabaseReference ref = mDatabase.child("products").child(productID).child("wisher").push();
-//        ref.setValue(w);
         mDatabase.child("products").child(productID).child("bider").setValue(bider);
-//        DatabaseReference productRef = FirebaseDatabase.getInstance().getReference().
-//                child("users").child(uploaderID).child("productsIveUploaded").child(productID);
-//        productRef.child("wisher").setValue(wisher);
-//        Log.v("wish in up: ", productRef.child("wisher").toString());
-        Log.v("bider in product get2 ", bider.size()+"");
     }
 
     public void removeWisher(String w){
@@ -318,10 +293,6 @@ public class Product implements Serializable, Comparable {
     public List<String> getWisher() {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         List<String> temp = new LinkedList<>();
-//        DatabaseReference ref = mDatabase.child("products").child(productID).get
-//        wisher = mDatabase.child("products").child(productID).child("wisher").getValue();
-//        Log.v("wisher in product get", wisher.size()+"");
-//        for (String x: wisher) Log.v("each wisher: ", x);
         return wisher;
     }
 
