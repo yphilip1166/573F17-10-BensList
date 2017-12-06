@@ -28,6 +28,15 @@ import java.util.List;
 
 public class MessageBoxActivity extends MyAppCompatActivity implements View.OnClickListener{
 
+    private class Friend{
+        public String fId;
+        public String fName;
+        public Friend(String fi, String fn){
+            fId = fi;
+            fName = fn;
+        }
+    }
+
     private ViewGroup messageHeadersLayout;
     private DatabaseReference mMessageReference;
     private DatabaseReference mUserReference;
@@ -60,12 +69,20 @@ public class MessageBoxActivity extends MyAppCompatActivity implements View.OnCl
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                     Log.v("YHG","enter messageBox onDataChange");
-                    List<String> allFriends = new ArrayList<String>();
+                    List<Friend> allFriends = new ArrayList<Friend>();
                     for (DataSnapshot productSnapshot : dataSnapshot.child(
                             "friends").getChildren()) {
-                        String friendId = productSnapshot.getValue(String.class);
+                        String friends= productSnapshot.getValue(String.class);
+                        String[] ss = friends.split(",");
+                        if(ss.length != 2) continue;
+                        String friendId = ss[0];
+                        String friendName = ss[1];
+
                         Log.v("YHG","looping friendID "+friendId);
-                        allFriends.add(friendId);
+
+
+
+                        allFriends.add(new Friend(friendId, friendName));
                         //productsIveUploaded.add(product);
                     }
                     addFriendsToView(allFriends);
@@ -80,12 +97,14 @@ public class MessageBoxActivity extends MyAppCompatActivity implements View.OnCl
         });
     }
 
-    private void addFriendsToView(List<String> friends){
+    private void addFriendsToView(List<Friend> friends){
 
         mLinearLayout.removeAllViewsInLayout();
         final Context thisContext = this;
 
-        for(final String friendName : friends){
+        for(final Friend friend : friends){
+            String friendName = friend.fName;
+            final String friendId = friend.fId;
             Log.v("YHG", "friend name: " + friendName);
             View view = LayoutInflater.from(this).inflate(R.layout.friend_box,mLinearLayout, false);
 
@@ -99,7 +118,7 @@ public class MessageBoxActivity extends MyAppCompatActivity implements View.OnCl
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(thisContext, ViewUsersProfileActivity.class);
-                    i.putExtra("UserId", friendName);
+                    i.putExtra("UserId", friendId);
                     startActivity(i);
                 }
             });
