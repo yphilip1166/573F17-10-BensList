@@ -1,20 +1,15 @@
 package edu.upenn.benslist;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -205,10 +200,11 @@ public class InboxMessageActivity extends MyAppCompatActivity
                 //Won't Display the username because there is an issue with mUsername
                 Message message = new Message(mMessageEditText.getText().toString(), mUsername);
                 mFirebaseDatabaseReference.child(MESSAGES_CHILD).child(channelID).push().setValue(message);
+                mFirebaseDatabaseReference.child("users").child(mUserId).child("friends").push().setValue(toUserId);
                 mMessageEditText.setText("");
+                Log.v("YHG","sendMessage add Friend: " + mUserId +" "+ toUserId);
             }
         });
-
 
     }
 
@@ -235,9 +231,6 @@ public class InboxMessageActivity extends MyAppCompatActivity
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        // An unresolvable error has occurred and Google APIs (including Sign-In) will not
-        // be available.t
-        Log.d(TAG, "onConnectionFailed:" + connectionResult);
         Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
     }
 }

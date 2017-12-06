@@ -40,4 +40,11 @@
         android:text="Edit My Listings"
         android:textStyle="bold" />
 
+    <Button
+        android:id="@+id/friend_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View My Friends"
+        android:textStyle="bold" />
+
 </LinearLayout>

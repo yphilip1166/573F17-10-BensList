@@ -127,28 +127,16 @@ public class UserProfileActivity extends AppCompatActivity {
             }
         });
 
-//        Button viewMyProducts = (Button) findViewById(R.id.viewProductsButton);
-//        viewMyProducts.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent i = new Intent(v.getContext(), ViewUploadedProductsActivity.class);
-//                i.putExtra("UserId", currentUserID);
-//                i.putExtra("Type", "uploads");
-//                startActivity(i);
-//
-//            }
-//        });
-
-//        Button previousPurchases = (Button) findViewById(R.id.prevousProducts);
-//        previousPurchases.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent i = new Intent(v.getContext(), ViewUploadedProductsActivity.class);
-//                i.putExtra("Type", "previousPurchases");
-//                i.putExtra("UserId", currentUserID);
-//                startActivity(i);
-//            }
-//        });
+        Button previousPurchases = (Button) findViewById(R.id.prevousProducts);
+        previousPurchases.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(v.getContext(), ViewUploadedProductsActivity.class);
+                i.putExtra("Type", "previousPurchases");
+                i.putExtra("UserId", currentUserID);
+                startActivity(i);
+            }
+        });
 
 
         Button favoriteUsers = (Button) findViewById(R.id.favoriteUsers);
@@ -190,17 +178,6 @@ public class UserProfileActivity extends AppCompatActivity {
         if(requestCode==REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             Uri selectedImage = data.getData();
             Bitmap bitmap = null;
-            /*
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
-                ImageButton imageButton = (ImageButton) findViewById(R.id.imageButton);
-                imageButton.setImageBitmap(bitmap);
-            } catch (FileNotFoundException e) {
-                Log.d("debugging", "FileNotFound exception for choosing profile picture");
-            } catch (IOException e) {
-                Log.d("debugging", "IOException exception for choosing profile picture");
-
-            }*/
         }
     }
 

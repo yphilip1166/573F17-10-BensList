@@ -5,9 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,7 +12,6 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.util.*;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -52,6 +48,8 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
     private boolean confirmed = false;
     private String uploaderName;
 
+    private boolean bid = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +62,7 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
         this.quantity = getIntent().getIntExtra("Quantity", 0);
         this.numItemsLeft = getIntent().getIntExtra("NumItemsLeft", 0);
         this.bidPrice = getIntent().getDoubleExtra("BidPrice", 0.0);
-
+        this.bid = getIntent().getBooleanExtra("isBid", false);
 
         Spinner spinner = (Spinner) findViewById(R.id.userRatingSpinner);
         spinner.setOnItemSelectedListener(this);
@@ -141,7 +139,7 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
                 break;
 
             case (R.id.doneRatingButton) :
-                if(!confirmed) {
+                if(!confirmed && !bid) {
                     Toast.makeText(this, "Haven't confirmed with the owner yet.", Toast.LENGTH_SHORT).show();
                     break;
                 }
@@ -195,13 +193,6 @@ public class ProductPurchaseConfirmationActivity extends AppCompatActivity imple
                             ref.setValue(product);
                         }
 
-                        //double newRating = uploader.addRating(Integer.parseInt(rating));
-                        //mDatabase.child("users").child(uploaderID).child("rating").setValue(newRating);
-                        //DatabaseReference ref = productSnapshot.getRef();
-                        //System.out.println(ref.getKey());
-
-                        //mUserReference.child(currentUserID).child("productsIveUploaded").child(
-                                //ref.getKey()).setValue(product.getName());
                     }
 
                     @Override

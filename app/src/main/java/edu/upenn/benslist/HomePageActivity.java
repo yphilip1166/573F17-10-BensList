@@ -2,13 +2,9 @@ package edu.upenn.benslist;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -42,15 +38,18 @@ public class HomePageActivity extends MyAppCompatActivity implements View.OnClic
         Button userProfilePage = (Button) findViewById(R.id.profilePage);
         Button searchUsers = (Button) findViewById(R.id.searchUsers);
         Button editListings = (Button) findViewById(R.id.edit_listings);
+        Button friendList = (Button) findViewById(R.id.friend_list);
 
         uploadProductButton.setOnClickListener(this);
         searchProductsButton.setOnClickListener(this);
         userProfilePage.setOnClickListener(this);
         searchUsers.setOnClickListener(this);
         editListings.setOnClickListener(this);
+        friendList.setOnClickListener(this);
 
         FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
         currentUserID = fbUser.getUid();
+        Log.v("YHG", "UserId in HomePage " + currentUserID);
         mUserReference = FirebaseDatabase.getInstance().getReference()
                 .child("users").child(currentUserID);
     }
@@ -101,6 +100,11 @@ public class HomePageActivity extends MyAppCompatActivity implements View.OnClic
                 Intent editUploadedProduct = new Intent(this, EditListingActivity.class);
                 editUploadedProduct.putExtra("UserId", currentUserID);
                 startActivity(editUploadedProduct);
+                break;
+            case (R.id.friend_list):
+                Intent i2 = new Intent(this, MessageBoxActivity.class);
+                i2.putExtra("UserId", currentUserID);
+                startActivity(i2);
                 break;
             default :
                 break;

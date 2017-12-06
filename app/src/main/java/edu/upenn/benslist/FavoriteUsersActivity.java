@@ -3,15 +3,10 @@ package edu.upenn.benslist;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -42,7 +37,6 @@ public class FavoriteUsersActivity extends MyAppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.favorite_users);
 
-        //User user = (User) getIntent().getSerializableExtra("User");
         this.userId = getIntent().getStringExtra("UserId");
         mUserReference = FirebaseDatabase.getInstance().getReference()
                 .child("users").child(userId);

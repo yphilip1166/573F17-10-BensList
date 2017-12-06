@@ -4,11 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -224,7 +219,6 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
                         productRef.child("priceCategory").setValue(priceCategory);
                         productRef.child("locationCategory").setValue(locationCategory);
                         productRef.child("quantity").setValue(quantityAsInt);
-//                        Log.v("wish get: ", dataSnapshot.child("products").child(product.getProductID()).child("wisher").getValue().toString());
                         List<String> w= (List<String>)dataSnapshot.child("products").child(product.getProductID()).child("wisher").getValue();
                         productRef.child("wisher").setValue(dataSnapshot.child("products").child(product.getProductID()).child("wisher").getValue());
                         product.setWisher(w);
@@ -234,8 +228,7 @@ public class EditIndividualProductActivity extends MyAppCompatActivity implement
                                 quantityAsInt);
                         Log.v("wish update in edit:", currentUserName);
                         List<String> wx= product.getWisher();
-//                        Log.v("wisher in edit get", w.size()+"");
-//                        for (String x: w) Log.v("each wisher in edit: ", x);
+
                         if (w!=null) sendNotification(w);
                     }
 
